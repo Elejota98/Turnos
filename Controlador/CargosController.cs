@@ -2,6 +2,7 @@
 using Servicios;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
@@ -40,6 +41,13 @@ namespace Controlador
             {
                 return rta = "ERROR";
             }
+        }
+        public static DataTable ListarCargos()
+        {
+            DataTable dt = new DataTable();
+            RepositorioCargos Datos = new RepositorioCargos();
+            dt = Datos.ListarCargos();
+            return dt;
         }
     }
 }

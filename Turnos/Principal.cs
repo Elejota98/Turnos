@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace Turnos
         public Principal()
         {
             InitializeComponent();
-            MedidasFormularios();
+            Inicio();
         }
         #region Funciones
 
@@ -138,6 +139,63 @@ namespace Turnos
 
         #endregion
 
+        #region Empleados
+
+        public void ListarCargos()
+        {
+            try
+            {
+                cboCargo.DataSource = CargosController.ListarCargos();
+                cboCargo.DisplayMember = "NombreCargo";
+                cboCargo.ValueMember = "IdCargo";
+            }
+            catch (Exception ex )
+            {
+
+                MensajeError(ex.ToString());
+            }
+
+
+        }
+        public void ListarSedes()
+        {
+            try
+            {
+                cboSede.DataSource = SedesController.ListarSedes();
+                cboSede.DisplayMember = "NombreSede";
+                cboSede.ValueMember = "IdSede";
+            }
+            catch (Exception ex )
+            {
+
+                MensajeError(ex.ToString());
+            }
+        }
+
+        public void RegistrarEmpleado()
+        {
+            string rta = "";
+            Empleados empleados = new Empleados();
+            empleados.Documento = txtDocumento.Text;
+            empleados.NombreEmpleado = txtNombre.Text;
+            empleados.ApellidoEmpleado = txtApellidos.Text;
+            empleados.TelefonoEmpleado = txtTelefono.Text;
+            empleados.IdTarjeta = ObtenerIdTarjeta();
+            empleados.IdCargo = Convert.ToInt32(cboCargo.SelectedValue.ToString());
+            empleados.IdSede = Convert.ToInt32(cboCargo.SelectedValue.ToString());
+
+            rta = 
+
+                
+
+        }
+
+
+
+
+
+        #endregion
+
         #endregion
 
         #region Parametros
@@ -146,6 +204,39 @@ namespace Turnos
             this.Size = new Size(1024, 768);
 
         }
+
+        public void Inicio()
+        {
+            MedidasFormularios();
+            if (CargarImagenes())
+            {
+               
+            }
+          
+        }
+
+        public bool CargarImagenes()
+        {
+            bool ok = false;
+            //fondoEmpleado.BackgroundImage = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Imagenes\fondoEmpleados.png"));
+
+            string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Imagenes\Encabezado.png");
+            if (File.Exists(imagePath))
+            {
+                pnTitulo.BackgroundImage = Image.FromFile(imagePath);
+                BackgroundImageLayout = ImageLayout.Stretch;
+                ok = true;
+            }
+
+            else
+            {
+                ok = false;
+            }
+            return ok;
+
+        }
+
+  
         #endregion
 
         #region Mensajes
@@ -163,10 +254,19 @@ namespace Turnos
 
         private void Principal_Load(object sender, EventArgs e)
         {
-            TabPrincipal.SelectedTab = Asistencia;
+            TabPrincipal.SelectedTab = Menu;
             TabPrincipal.Appearance = TabAppearance.FlatButtons;
             TabPrincipal.ItemSize = new Size(0, 1);
             TabPrincipal.SizeMode = TabSizeMode.Fixed;
+        }
+
+        private void btnEmpleados_Click(object sender, EventArgs e)
+        {
+            TabPrincipal.SelectedTab = Empleados;
+            ListarCargos();
+            ListarSedes();
+
+
         }
     }
 }

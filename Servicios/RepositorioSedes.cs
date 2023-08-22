@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -66,5 +67,35 @@ namespace Servicios
             }
             return rta;
         }
+        public DataTable ListarSedes()
+        {
+            DataTable tabla = new DataTable();
+            SqlDataReader resultado;
+            SqlConnection sqlCon = new SqlConnection();
+            try
+            {
+                sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
+                SqlCommand comando = new SqlCommand("P_ListarSedes", sqlCon);
+                comando.CommandType = CommandType.StoredProcedure;
+                sqlCon.Open();
+                resultado = comando.ExecuteReader();
+                tabla.Load(resultado);
+                return tabla;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                if (sqlCon.State == ConnectionState.Open) sqlCon.Close();
+            }
+
+
+
+        }
+
     }
 }

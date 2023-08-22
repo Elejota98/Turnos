@@ -20,6 +20,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Servicios", "Servicios\Servicios.csproj", "{5335E56E-EB41-485B-993A-93DDF955E1F0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Imagenes", "Imagenes", "{7FDE834B-8C11-4CCB-B658-0BAA188D5055}"
+	ProjectSection(SolutionItems) = preProject
+		C:\Users\Administrador\Pictures\Encabezado.png = C:\Users\Administrador\Pictures\Encabezado.png
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Botones", "Botones", "{43CD5DDD-921D-4F71-B413-105ABA10DEA5}"
 EndProject

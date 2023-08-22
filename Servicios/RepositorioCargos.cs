@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -67,6 +68,33 @@ namespace Servicios
             }
 
             return rta;
+        }
+
+        public DataTable ListarCargos()
+        {
+            DataTable tabla = new DataTable();
+            SqlDataReader resultado;
+            SqlConnection sqlCon = new SqlConnection();
+            try
+            {
+                sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
+                SqlCommand comando = new SqlCommand("P_ListarCargos", sqlCon);
+                comando.CommandType = CommandType.StoredProcedure;
+                sqlCon.Open();
+                resultado = comando.ExecuteReader();
+                tabla.Load(resultado);
+                return tabla;
+            }
+            catch (Exception ex )
+            {
+
+                throw ex ;
+            }
+            finally
+            {
+                if (sqlCon.State == ConnectionState.Open) sqlCon.Close();
+            }
+
         }
     }
 }

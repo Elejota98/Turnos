@@ -2,6 +2,7 @@
 using Servicios;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
@@ -40,6 +41,14 @@ namespace Controlador
                 return rta;
             }
             return rta;
+        }
+        public static DataTable ListarSedes()
+        {
+            DataTable dt = new DataTable();
+            RepositorioSedes Datos = new RepositorioSedes();
+            dt = Datos.ListarSedes();
+            return dt;
+
         }
     }
 }
