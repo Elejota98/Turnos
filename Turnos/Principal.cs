@@ -22,6 +22,7 @@ namespace Turnos
             InitializeComponent();
             Inicio();
         }
+
         #region Funciones
 
         #region Tarjetas
@@ -171,7 +172,6 @@ namespace Turnos
                 MensajeError(ex.ToString());
             }
         }
-
         public void RegistrarEmpleado()
         {
             string rta = "";
@@ -183,16 +183,52 @@ namespace Turnos
             empleados.IdTarjeta = ObtenerIdTarjeta();
             empleados.IdCargo = Convert.ToInt32(cboCargo.SelectedValue.ToString());
             empleados.IdSede = Convert.ToInt32(cboCargo.SelectedValue.ToString());
+            if (empleados.Documento == string.Empty)
+            {
+                MensajeError("Falta ingresar un documento");
+                txtDocumento.Focus();
+            }
+            else if (empleados.NombreEmpleado == string.Empty || empleados.ApellidoEmpleado == string.Empty)
+            {
+                MensajeError("Falta ingresar por lo menos un nombre o un apellido");
+                txtNombre.Focus();
+            }
+            else if (empleados.IdTarjeta == "ERROR")
+            {
+                MensajeError("Es necesario registrar al empleado con una tarjeta");
 
-            rta = 
+            }
+            else
+            {
 
-                
+                rta = EmpleadosController.RegistrarEmpleado(empleados);
+
+                if (rta.Equals("OK"))
+                {
+                    MensajeOk("Empleado guardado correctamente");
+                }
+                else
+                {
+                    MensajeError("Hubo un error en el momento de registrar el empleado");
+                }
+            }   
 
         }
 
 
 
+        #endregion
 
+        #region EncriptarClave
+
+
+        static string EncriptarClave(string clave)
+        {
+            // Generar un hash bcrypt para la clave
+            string hashedClave = BCrypt.HashPassword(clave, BCrypt.GenerateSalt());
+
+            return hashedClave;
+        }
 
         #endregion
 
@@ -267,6 +303,11 @@ namespace Turnos
             ListarSedes();
 
 
+        }
+
+        private void btnGuardar_Click(object sender, EventArgs e)
+        {
+            RegistrarEmpleado();
         }
     }
 }

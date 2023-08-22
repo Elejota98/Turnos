@@ -177,6 +177,7 @@
             this.btnGuardar.Size = new System.Drawing.Size(141, 59);
             this.btnGuardar.TabIndex = 14;
             this.btnGuardar.UseVisualStyleBackColor = true;
+            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
             // txtDocumento
             // 
