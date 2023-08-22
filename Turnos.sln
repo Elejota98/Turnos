@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Turnos", "Turnos\Turnos.csproj", "{9A18757B-64E8-4CEE-9131-35BA025B96B8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Controladores", "Controladores", "{3C2E994D-56FD-4A07-8CF3-375AE0C33CBE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Servicios", "Servicios", "{3050D687-E2BD-44F4-B533-70C1C587DD71}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modelos", "Modelos", "{E4A65462-E1D2-4EB2-AE53-70AE2B5DCC5D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vistas", "Vistas", "{751D75B2-BDCB-42ED-8170-AF779A64E108}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modelo", "Modelo\Modelo.csproj", "{6FD670CC-CE10-45E5-B2D0-5363306A4888}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controlador", "Controlador\Controlador.csproj", "{B024C817-BD98-444F-B637-C3C5BE2B4FAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Servicios", "Servicios\Servicios.csproj", "{5335E56E-EB41-485B-993A-93DDF955E1F0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Imagenes", "Imagenes", "{7FDE834B-8C11-4CCB-B658-0BAA188D5055}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Botones", "Botones", "{43CD5DDD-921D-4F71-B413-105ABA10DEA5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9A18757B-64E8-4CEE-9131-35BA025B96B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A18757B-64E8-4CEE-9131-35BA025B96B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A18757B-64E8-4CEE-9131-35BA025B96B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A18757B-64E8-4CEE-9131-35BA025B96B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FD670CC-CE10-45E5-B2D0-5363306A4888}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FD670CC-CE10-45E5-B2D0-5363306A4888}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FD670CC-CE10-45E5-B2D0-5363306A4888}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FD670CC-CE10-45E5-B2D0-5363306A4888}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B024C817-BD98-444F-B637-C3C5BE2B4FAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B024C817-BD98-444F-B637-C3C5BE2B4FAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B024C817-BD98-444F-B637-C3C5BE2B4FAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B024C817-BD98-444F-B637-C3C5BE2B4FAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5335E56E-EB41-485B-993A-93DDF955E1F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5335E56E-EB41-485B-993A-93DDF955E1F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5335E56E-EB41-485B-993A-93DDF955E1F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5335E56E-EB41-485B-993A-93DDF955E1F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9A18757B-64E8-4CEE-9131-35BA025B96B8} = {751D75B2-BDCB-42ED-8170-AF779A64E108}
+		{6FD670CC-CE10-45E5-B2D0-5363306A4888} = {E4A65462-E1D2-4EB2-AE53-70AE2B5DCC5D}
+		{B024C817-BD98-444F-B637-C3C5BE2B4FAC} = {3C2E994D-56FD-4A07-8CF3-375AE0C33CBE}
+		{5335E56E-EB41-485B-993A-93DDF955E1F0} = {3050D687-E2BD-44F4-B533-70C1C587DD71}
+		{43CD5DDD-921D-4F71-B413-105ABA10DEA5} = {7FDE834B-8C11-4CCB-B658-0BAA188D5055}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {18519AA6-FA5C-40FA-B4E6-7430A3625C3F}
+	EndGlobalSection
+EndGlobal
