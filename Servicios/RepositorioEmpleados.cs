@@ -1,9 +1,11 @@
-﻿using Modelo;
+﻿using EGlobalT.Device.SmartCard;
+using Modelo;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,8 +31,8 @@ namespace Servicios
                 comando.Parameters.Add("@IdTarjeta", SqlDbType.VarChar).Value = empleados.IdTarjeta;
                 comando.Parameters.Add("@IdSede", SqlDbType.Int).Value = empleados.IdSede;
                 sqlCon.Open();
-                rta = comando.ExecuteNonQuery() == 1 ? "OK" : "ERROR";
-
+                comando.ExecuteNonQuery();
+                rta = "OK";
             }
             catch (Exception ex )
             {
@@ -44,6 +46,122 @@ namespace Servicios
 
             return rta;
         }
+
+        public DataTable VerificarExisteEmpleadoPorTarjeta(Empleados empleados)
+        {
+            DataTable tabla = new DataTable();
+            SqlConnection sqlCon = new SqlConnection();
+            SqlDataReader resultado;
+            try
+            {
+                sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
+                SqlCommand comando = new SqlCommand("P_VerificarExisteEmpleadoPorTarjeta", sqlCon);
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.Add("@IdTarjeta", SqlDbType.VarChar).Value = empleados.IdTarjeta;
+                sqlCon.Open();
+                resultado = comando.ExecuteReader();
+                tabla.Load(resultado);
+                return tabla;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+                
+            }
+            finally
+            {
+                if (sqlCon.State == ConnectionState.Open) sqlCon.Close();
+            }
+
+        }
+
+        public DataTable VerificarExisteEmpleado(Empleados empleados)
+        {
+            DataTable tabla = new DataTable();
+            SqlConnection sqlCon = new SqlConnection();
+            SqlDataReader resultado;
+            try
+            {
+                sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
+                SqlCommand comando = new SqlCommand("P_ValidarExisteEmpleado", sqlCon);
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.Add("@Documento", SqlDbType.VarChar).Value = empleados.Documento;
+                sqlCon.Open();
+                resultado = comando.ExecuteReader();
+                tabla.Load(resultado);
+                return tabla;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+            finally
+            {
+                if (sqlCon.State == ConnectionState.Open) sqlCon.Close();
+            }
+
+        }
+
+        public DataTable BuscarEmpleadosPorDocumento(Empleados empleados)
+        {
+            DataTable tabla = new DataTable();
+            SqlConnection sqlCon = new SqlConnection();
+            SqlDataReader resultado;
+            try
+            {
+                sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
+                SqlCommand comando = new SqlCommand("P_BuscarEmpleadoPorDocumento", sqlCon);
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.Add("@Documento", SqlDbType.VarChar).Value = empleados.Documento;
+                sqlCon.Open();
+                resultado = comando.ExecuteReader();
+                tabla.Load(resultado);
+                return tabla;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+            finally
+            {
+                if (sqlCon.State == ConnectionState.Open) sqlCon.Close();
+            }
+        }
+
+        public DataTable ListarEmpleados()
+        {
+            DataTable tabla = new DataTable();
+            SqlConnection sqlCon = new SqlConnection();
+            SqlDataReader resultado;
+            try
+            {
+                sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
+                string cadena = ("SELECT * FROM T_EMPLEADOS WHERE ESTADO=1");
+                SqlCommand comando = new SqlCommand(cadena, sqlCon);
+                sqlCon.Open();
+                SqlDataReader rta = comando.ExecuteReader();
+                tabla.Load(rta);
+                return tabla;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                if (sqlCon.State == ConnectionState.Open) sqlCon.Close();
+            }
+
+        }
+       
+
 
     }
 }

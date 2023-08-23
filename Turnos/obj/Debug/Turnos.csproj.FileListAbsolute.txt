@@ -40,3 +40,13 @@ D:\PROYECTOS\PARQUEARSE\Turnos\Turnos\obj\Debug\Turnos.csproj.CoreCompileInputs.
 D:\PROYECTOS\PARQUEARSE\Turnos\Turnos\obj\Debug\Turnos.csproj.CopyComplete
 D:\PROYECTOS\PARQUEARSE\Turnos\Turnos\obj\Debug\Turnos.exe
 D:\PROYECTOS\PARQUEARSE\Turnos\Turnos\obj\Debug\Turnos.pdb
+D:\PROYECTOS\PARQUEARSE\Turnos\Turnos\bin\Debug\BCrypt.Net-Next.dll
+D:\PROYECTOS\PARQUEARSE\Turnos\Turnos\bin\Debug\System.Buffers.dll
+D:\PROYECTOS\PARQUEARSE\Turnos\Turnos\bin\Debug\System.Memory.dll
+D:\PROYECTOS\PARQUEARSE\Turnos\Turnos\bin\Debug\System.Numerics.Vectors.dll
+D:\PROYECTOS\PARQUEARSE\Turnos\Turnos\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+D:\PROYECTOS\PARQUEARSE\Turnos\Turnos\bin\Debug\BCrypt.Net-Next.xml
+D:\PROYECTOS\PARQUEARSE\Turnos\Turnos\bin\Debug\System.Buffers.xml
+D:\PROYECTOS\PARQUEARSE\Turnos\Turnos\bin\Debug\System.Memory.xml
+D:\PROYECTOS\PARQUEARSE\Turnos\Turnos\bin\Debug\System.Numerics.Vectors.xml
+D:\PROYECTOS\PARQUEARSE\Turnos\Turnos\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml

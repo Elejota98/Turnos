@@ -11,6 +11,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BCrypt.Net;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Diagnostics.Eventing.Reader;
 
 namespace Turnos
 {
@@ -59,6 +62,51 @@ namespace Turnos
             }
 
             return idTarjeta;
+
+        }
+        public bool VerificarTarjetaExiste(string idTarjeta)
+        {
+            Tarjetas tarjetas = new Tarjetas();
+            tarjetas.IdTarjeta = idTarjeta;
+            DataTable tabla;
+            bool ok = false;
+            try
+            {
+                tabla = TarjetasController.VerificarExisteTarjeta(tarjetas);
+                if (tabla.Rows.Count > 0)
+                {
+                    ok = false;
+                }
+                else
+                {
+                    ok = true;
+                }
+
+            }
+            catch (Exception ex )
+            {
+
+                MensajeError("Error" + ex.ToString());
+            }
+            return ok;
+
+        }
+
+        public bool RegistrarTarjetas(string idTarjeta)
+        {
+            bool ok = false;
+            Tarjetas tarjetas = new Tarjetas();
+            string rta = "";
+            rta = TarjetasController.RegistrarTarjetas(tarjetas);
+            if (rta.Equals("OK"))
+            {
+                ok = true;
+            }
+            else
+            {
+                ok = false;
+            }
+            return ok;
 
         }
         #endregion
@@ -172,6 +220,11 @@ namespace Turnos
                 MensajeError(ex.ToString());
             }
         }
+
+        public void ListarEmpleados()
+        {
+            dvgListadoEmpleados.DataSource = EmpleadosController.ListarEmpleados();
+        }
         public void RegistrarEmpleado()
         {
             string rta = "";
@@ -193,29 +246,34 @@ namespace Turnos
                 MensajeError("Falta ingresar por lo menos un nombre o un apellido");
                 txtNombre.Focus();
             }
-            else if (empleados.IdTarjeta == "ERROR")
-            {
-                MensajeError("Es necesario registrar al empleado con una tarjeta");
-
-            }
             else
             {
+                empleados.Contraseña = EncriptarClave(empleados.Documento);
 
                 rta = EmpleadosController.RegistrarEmpleado(empleados);
 
                 if (rta.Equals("OK"))
                 {
                     MensajeOk("Empleado guardado correctamente");
+                    ListarEmpleados();
                 }
                 else
                 {
-                    MensajeError("Hubo un error en el momento de registrar el empleado");
+                    MensajeError(rta.ToString());
                 }
             }   
 
         }
 
+        public void BuscarEmpleadosPorDocumento()
+        {
+            Empleados empleados = new Empleados();
+            empleados.Documento = txtDocumentoBuscar.Text;
 
+            dvgListadoEmpleados.AutoGenerateColumns = true;
+
+            dvgListadoEmpleados.DataSource=EmpleadosController.BuscarEmpleadosPorDocumento(empleados);
+        }
 
         #endregion
 
@@ -224,10 +282,24 @@ namespace Turnos
 
         static string EncriptarClave(string clave)
         {
-            // Generar un hash bcrypt para la clave
-            string hashedClave = BCrypt.HashPassword(clave, BCrypt.GenerateSalt());
+            string claveNew = clave.Substring(clave.Length - 4);
 
-            return hashedClave;
+            // Generar un hash bcrypt para la clave
+          string  contraseñaEncriptada = BCrypt.Net.BCrypt.HashPassword(claveNew);
+            return contraseñaEncriptada;
+        }
+
+        #endregion
+
+        #region Asistencia
+
+        public void RegistrarIngreso()
+        {
+            Asistencias asistencia = new Asistencias();
+            asistencia.FechaEntrada = DateTime.Now;
+            asistencia.FechaSalida=DateTime.Now;
+            asistencia.Documento = "147258"; //Acá se debe traer el documento del suaurio que inicie sesión
+
         }
 
         #endregion
@@ -290,6 +362,7 @@ namespace Turnos
 
         private void Principal_Load(object sender, EventArgs e)
         {
+            Inicio();
             TabPrincipal.SelectedTab = Menu;
             TabPrincipal.Appearance = TabAppearance.FlatButtons;
             TabPrincipal.ItemSize = new Size(0, 1);
@@ -298,16 +371,43 @@ namespace Turnos
 
         private void btnEmpleados_Click(object sender, EventArgs e)
         {
+            lblTitulo.Text = "Gestión empleados";
             TabPrincipal.SelectedTab = Empleados;
             ListarCargos();
             ListarSedes();
-
+            ListarEmpleados();
 
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             RegistrarEmpleado();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            TabPrincipal.SelectedTab = ActualizarDatosEmpleado;         
+        }
+
+        private void cbActSede_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ListarSedes();
+        }
+
+        private void cboActCargo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ListarCargos();
+
+        }
+
+        private void txtDocumentoBuscar_TextChanged(object sender, EventArgs e)
+        {
+            BuscarEmpleadosPorDocumento();
+        }
+
+        private void btnIngreso_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

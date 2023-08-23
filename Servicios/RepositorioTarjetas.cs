@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Modelo;
 using EGlobalT.Device.SmartCardReaders;
 using EGlobalT.Device.SmartCardReaders.Entities;
+using System.Security.Cryptography;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace Servicios
 {
@@ -168,5 +170,32 @@ namespace Servicios
             return rta;
 
         }
+        public DataTable VerificarExisteTarjeta(Tarjetas tarjetas)
+        {
+            DataTable tabla = new DataTable();
+            SqlConnection sqlCon = new SqlConnection();
+            SqlDataReader Resultado;
+            try
+            {
+                sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
+                SqlCommand comando = new SqlCommand("P_ValidarExisteTarjeta", sqlCon);
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.Add("@IdTarjeta", SqlDbType.VarChar).Value = tarjetas.IdTarjeta;
+                sqlCon.Open();
+                Resultado = comando.ExecuteReader();
+                tabla.Load(Resultado);
+                return tabla;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+            finally
+            {
+                if (sqlCon.State == ConnectionState.Open) sqlCon.Close();
+            }
+        }
+
     }
 }

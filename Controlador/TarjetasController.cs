@@ -1,6 +1,8 @@
-﻿using Servicios;
+﻿using Modelo;
+using Servicios;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,6 +62,32 @@ namespace Controlador
             }
             return ok;
 
+
+        }
+
+        public static DataTable VerificarExisteTarjeta(Tarjetas tarjetas)
+        {
+            DataTable dt = new DataTable();
+            RepositorioTarjetas Datos = new RepositorioTarjetas();
+            dt = Datos.VerificarExisteTarjeta(tarjetas);
+            return dt;
+        }
+
+        public static string RegistrarTarjetas(Tarjetas tarjetas)
+        {
+            string rta = "";
+            RepositorioTarjetas Datos = new RepositorioTarjetas();
+            
+            rta = Datos.InsertarTarjetas(tarjetas);
+            if (rta.Equals("OK"))
+            {
+                rta = "OK";
+            }
+            else
+            {
+                rta = "ERROR";
+            }
+            return rta;
 
         }
     }
