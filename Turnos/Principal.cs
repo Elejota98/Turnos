@@ -295,10 +295,31 @@ namespace Turnos
 
         public void RegistrarIngreso()
         {
+            string idTarjeta = ObtenerIdTarjeta();
+            string rta = "";
+            DataTable tabla;
             Asistencias asistencia = new Asistencias();
             asistencia.FechaEntrada = DateTime.Now;
             asistencia.FechaSalida=DateTime.Now;
-            asistencia.Documento = "147258"; //Acá se debe traer el documento del suaurio que inicie sesión
+            tabla = AsistenciaController.ObtenerDocumentoPorTarjeta(idTarjeta);
+            if (tabla.Rows.Count > 0)
+            {
+                foreach (DataRow lstDatos in tabla.Rows)
+                {
+                    asistencia.Documento = lstDatos["Documento"].ToString();
+                }
+            }
+
+            rta = AsistenciaController.RegistrarAsistencia(asistencia);
+
+            if (rta.Equals("OK"))
+            {
+                MensajeOk("¡Registro exitoso!");
+            }
+            else
+            {
+                MensajeError(rta.ToString());
+            }
 
         }
 
@@ -372,6 +393,7 @@ namespace Turnos
         private void btnEmpleados_Click(object sender, EventArgs e)
         {
             lblTitulo.Text = "Gestión empleados";
+            lblTitulo.Visible = true;
             TabPrincipal.SelectedTab = Empleados;
             ListarCargos();
             ListarSedes();
@@ -407,7 +429,14 @@ namespace Turnos
 
         private void btnIngreso_Click(object sender, EventArgs e)
         {
+            RegistrarIngreso();
+        }
 
+        private void btnAsistencia_Click(object sender, EventArgs e)
+        {
+            lblTitulo.Text = "Aistencia empleados";
+            lblTitulo.Visible = true;
+            TabPrincipal.SelectedTab = Asistencia;
         }
     }
 }
