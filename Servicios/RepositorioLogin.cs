@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Servicios
 {
-    internal class RepositorioLogin
+    public class RepositorioLogin
     {
+
     }
 }
