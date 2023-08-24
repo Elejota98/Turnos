@@ -26,3 +26,17 @@ D:\PROYECTOS\PARQUEARSE\Turnos\Controlador\obj\Debug\Controlador.csproj.CoreComp
 D:\PROYECTOS\PARQUEARSE\Turnos\Controlador\obj\Debug\Controlador.csproj.CopyComplete
 D:\PROYECTOS\PARQUEARSE\Turnos\Controlador\obj\Debug\Controlador.dll
 D:\PROYECTOS\PARQUEARSE\Turnos\Controlador\obj\Debug\Controlador.pdb
+D:\PROYECTOS\Turnos\Controlador\bin\Debug\Controlador.dll
+D:\PROYECTOS\Turnos\Controlador\bin\Debug\Controlador.pdb
+D:\PROYECTOS\Turnos\Controlador\bin\Debug\Modelo.dll
+D:\PROYECTOS\Turnos\Controlador\bin\Debug\Servicios.dll
+D:\PROYECTOS\Turnos\Controlador\bin\Debug\EGlobalT.Device.SmartCardReaders.dll
+D:\PROYECTOS\Turnos\Controlador\bin\Debug\EGlobalT.Device.SmartCard.dll
+D:\PROYECTOS\Turnos\Controlador\bin\Debug\EGlobalT.Device.Tools.dll
+D:\PROYECTOS\Turnos\Controlador\bin\Debug\Modelo.pdb
+D:\PROYECTOS\Turnos\Controlador\bin\Debug\Servicios.pdb
+D:\PROYECTOS\Turnos\Controlador\obj\Debug\Controlador.csproj.AssemblyReference.cache
+D:\PROYECTOS\Turnos\Controlador\obj\Debug\Controlador.csproj.CoreCompileInputs.cache
+D:\PROYECTOS\Turnos\Controlador\obj\Debug\Controlador.csproj.CopyComplete
+D:\PROYECTOS\Turnos\Controlador\obj\Debug\Controlador.dll
+D:\PROYECTOS\Turnos\Controlador\obj\Debug\Controlador.pdb

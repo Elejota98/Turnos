@@ -44,8 +44,10 @@
     <Compile Include="Asistencias.cs" />
     <Compile Include="Cargos.cs" />
     <Compile Include="Empleados.cs" />
+    <Compile Include="HorasExtras.cs" />
     <Compile Include="Novedades.cs" />
     <Compile Include="Politicas.cs" />
+    <Compile Include="Retardos.cs" />
     <Compile Include="Sedes.cs" />
     <Compile Include="Tarjetas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

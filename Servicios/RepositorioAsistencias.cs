@@ -51,8 +51,7 @@ namespace Servicios
                 sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
                 SqlCommand comando = new SqlCommand("P_RegistrarAsistencia", sqlCon);
                 comando.CommandType = CommandType.StoredProcedure;
-                comando.Parameters.Add("@FechaEntrada",SqlDbType.DateTime).Value = DateTime.Now.ToString("yyyy-dd-mm HH:mm:ss");
-                comando.Parameters.Add("@FechaSalida", SqlDbType.DateTime).Value = DateTime.Now;
+                comando.Parameters.Add("@FechaEntrada", SqlDbType.DateTime).Value = asistencias.FechaEntrada;
                 comando.Parameters.Add("@Documento", SqlDbType.VarChar).Value = asistencias.Documento;
                 comando.Parameters.Add("@IdTurnoAplicado", SqlDbType.Int).Value = asistencias.IdTurnoAplicado;
                 sqlCon.Open();
@@ -98,6 +97,67 @@ namespace Servicios
             {
                 if (sqlCon.State == ConnectionState.Open) sqlCon.Close();
             }
+        }
+
+        public string ActualizaSalidaAsistencia(Asistencias asistencias)
+        {
+            string rta = "";
+            SqlConnection sqlCon = new SqlConnection();
+            try
+            {
+                sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
+                SqlCommand comando = new SqlCommand("P_RegistrarSalidaAsistencia", sqlCon);
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.Add("@IdAsistencia", SqlDbType.Int).Value = asistencias.IdAsistencia;
+                comando.Parameters.Add("@FechaSalida", SqlDbType.DateTime).Value = asistencias.FechaSalida;
+                comando.Parameters.Add("@Documento", SqlDbType.VarChar).Value = asistencias.Documento;
+                comando.Parameters.Add("@IdTurnoAplicado", SqlDbType.Int).Value = asistencias.IdTurnoAplicado;
+                sqlCon.Open();
+                comando.ExecuteNonQuery();
+                rta = "OK";
+            }
+            catch (Exception ex)
+            {
+
+                rta = "ERROR";
+            }
+            finally
+            {
+                if (sqlCon.State == ConnectionState.Open) sqlCon.Close();
+            }
+
+            return rta;
+        }
+
+        public  DataTable ValidarFechaSalida(Asistencias asistencias, int idSede)
+        {
+            DataTable tabla = new DataTable();
+            SqlConnection sqlCon = new SqlConnection();
+            SqlDataReader resultado;
+            try
+            {
+                sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
+                SqlCommand comando = new SqlCommand("P_ValidarFechaSalidaAsistencia", sqlCon);
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.Add("@Documento", SqlDbType.VarChar).Value = asistencias.Documento;
+                comando.Parameters.Add("@IdSede", SqlDbType.Int).Value = idSede;
+                sqlCon.Open();
+                resultado = comando.ExecuteReader();
+                tabla.Load(resultado);
+                return tabla;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+            finally
+            {
+                if (sqlCon.State == ConnectionState.Open) sqlCon.Close();
+            }
+
+
+
         }
 
     }

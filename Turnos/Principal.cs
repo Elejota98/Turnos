@@ -23,9 +23,10 @@ namespace Turnos
 
         #region Definiciones 
         public int idSede = Convert.ToInt32(ConfigurationManager.AppSettings["IdSede"]);
-
-        #endregion
         Tarjetas tarjetas = new Tarjetas();
+        #endregion
+
+
         public Principal()
         {
             InitializeComponent();
@@ -239,7 +240,6 @@ namespace Turnos
             empleados.NombreEmpleado = txtNombre.Text;
             empleados.ApellidoEmpleado = txtApellidos.Text;
             empleados.TelefonoEmpleado = txtTelefono.Text;
-            empleados.IdTarjeta = ObtenerIdTarjeta();
             empleados.IdCargo = Convert.ToInt32(cboCargo.SelectedValue.ToString());
             empleados.IdSede = Convert.ToInt32(cboCargo.SelectedValue.ToString());
             if (empleados.Documento == string.Empty)
@@ -265,7 +265,7 @@ namespace Turnos
                 }
                 else
                 {
-                    MensajeError(rta.ToString());
+                    MensajeError(rta);
                 }
             }   
 
@@ -309,13 +309,13 @@ namespace Turnos
 
             rta = AsistenciaController.RegistrarAsistencia(asistencia, idSede);
 
-            if (rta.Equals("OK"))
+            if (!rta.Equals("ERROR"))
             {
-                MensajeOk("¡Registro exitoso!");
+                MensajeOk(rta.ToString());
             }
             else
             {
-                MensajeError(rta.ToString());
+                MensajeError(rta);
             }
 
         }
@@ -434,6 +434,26 @@ namespace Turnos
             lblTitulo.Text = "Aistencia empleados";
             lblTitulo.Visible = true;
             TabPrincipal.SelectedTab = Asistencia;
+        }
+
+        private void btnRegistrarSalida_Click(object sender, EventArgs e)
+        {
+            string rta = "";
+            DataTable tabla;
+            Asistencias asistencia = new Asistencias();
+            asistencia.FechaEntrada = DateTime.Now;
+            asistencia.FechaSalida = DateTime.Now;
+
+            rta = AsistenciaController.ActualizarSalidaAsistencia(asistencia, idSede);
+
+            if (!rta.Equals("ERROR"))
+            {
+                MensajeOk(rta.ToString());
+            }
+            else
+            {
+                MensajeError(rta);
+            }
         }
     }
 }

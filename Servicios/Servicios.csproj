@@ -74,8 +74,10 @@
     <Compile Include="RepositorioConexion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositorioEmpleados.cs" />
+    <Compile Include="RepositorioHorasExtras.cs" />
     <Compile Include="RepositorioNovedades.cs" />
     <Compile Include="RepositorioPoliticas.cs" />
+    <Compile Include="RepositorioRetardos.cs" />
     <Compile Include="RepositorioSedes.cs" />
     <Compile Include="RepositorioTarjetas.cs" />
   </ItemGroup>

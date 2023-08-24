@@ -42,10 +42,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsistenciaController.cs" />
+    <Compile Include="ExtrasController.cs" />
     <Compile Include="PoliticasController.cs" />
     <Compile Include="CargosController.cs" />
     <Compile Include="EmpleadosController.cs" />
     <Compile Include="NovedadesController.cs" />
+    <Compile Include="RetardosController.cs" />
     <Compile Include="SedesController.cs" />
     <Compile Include="TarjetasController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

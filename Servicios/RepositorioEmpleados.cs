@@ -25,7 +25,7 @@ namespace Servicios
                 comando.Parameters.Add("@Documento", SqlDbType.VarChar).Value = empleados.Documento;
                 comando.Parameters.Add("@Nombres", SqlDbType.VarChar).Value = empleados.NombreEmpleado;
                 comando.Parameters.Add("@Apellidos", SqlDbType.VarChar).Value = empleados.ApellidoEmpleado;
-                comando.Parameters.Add("@Telefono", SqlDbType.Int).Value = empleados.TelefonoEmpleado;
+                comando.Parameters.Add("@Telefono", SqlDbType.BigInt).Value = empleados.TelefonoEmpleado;
                 comando.Parameters.Add("@Contraseña", SqlDbType.VarChar).Value = empleados.Contraseña;
                 comando.Parameters.Add("@IdCargo", SqlDbType.Int).Value = empleados.IdCargo;
                 comando.Parameters.Add("@IdTarjeta", SqlDbType.VarChar).Value = empleados.IdTarjeta;
@@ -37,7 +37,7 @@ namespace Servicios
             catch (Exception ex )
             {
 
-                rta = "ERROR";
+                rta = ex.ToString();
             }
             finally
             {

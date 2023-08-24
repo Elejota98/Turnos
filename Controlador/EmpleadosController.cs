@@ -16,13 +16,16 @@ namespace Controlador
         {
             string rta = "";
             RepositorioEmpleados Datos = new RepositorioEmpleados();
-            DataTable tabla;            
+            DataTable tabla;
             Tarjetas tarjetas = new Tarjetas();
-            tarjetas.IdTarjeta = empleados.IdTarjeta;
+            tarjetas.IdTarjeta = TarjetasController.ObtenerIdTarjeta();
+
+            if (tarjetas.IdTarjeta != "ERROR")
+            { 
             tabla = Datos.VerificarExisteEmpleado(empleados);
             if (tabla.Rows.Count > 0)
             {
-                rta = "El empleado con Documento "+empleados.Documento+" ya se encuentra registrado";
+                rta = "El empleado con Documento " + empleados.Documento + " ya se encuentra registrado";
             }
             else
             {
@@ -44,7 +47,7 @@ namespace Controlador
                         }
                         else
                         {
-                            rta = "ERROR";
+                            rta = rta.ToString();
                         }
                         return rta;
                     }
@@ -72,6 +75,11 @@ namespace Controlador
                         rta = "Error en el momento de guardar la tarjeta";
                     }
                 }
+            }
+        }
+            else
+            {
+                return rta = "Es necesario tener una lectora y una tarjeta puesta en la misma";
             }
 
             return rta;
