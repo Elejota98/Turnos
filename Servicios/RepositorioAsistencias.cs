@@ -12,7 +12,7 @@ namespace Servicios
     public class RepositorioAsistencias
     {
        
-        public DataTable ListarDatosTurnosAplicados(Asistencias asistencias)
+        public DataTable ListarDatosTurnosAplicados(Asistencias asistencias, int idSede)
         {
             DataTable tabla = new DataTable();
             SqlConnection sqlCon = new SqlConnection();
@@ -21,14 +21,13 @@ namespace Servicios
             try
             {
                 sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
-                string cadena = ("SELECT dbo.T_Turnos.HoraEntrada, dbo.T_Turnos.HoraSalida, dbo.T_TurnosAplicados.FechaAplicada," +
-                    " dbo.T_TurnosAplicados.IdTurnoAplicado FROM     dbo.T_Turnos INNER JOIN" +
-                    " dbo.T_TurnosAplicados ON dbo.T_Turnos.IdTurno = dbo.T_TurnosAplicados.IdTurno INNER JOIN" +
-                    " dbo.T_Empleados ON dbo.T_TurnosAplicados.Documento = dbo.T_Empleados.Documento  WHERE dbo.T_Empleados.Documento="+asistencias.Documento+"");
-                SqlCommand comando = new SqlCommand(cadena, sqlCon);
+                SqlCommand comando = new SqlCommand("P_ListarDatosTurnosAplicados", sqlCon);
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.Add("@Documento", SqlDbType.VarChar).Value = asistencias.Documento;
+                comando.Parameters.Add("@IdSede", SqlDbType.Int).Value = idSede;
                 sqlCon.Open();
-                SqlDataReader rta = comando.ExecuteReader();
-                tabla.Load(rta);
+                resultado = comando.ExecuteReader();
+                tabla.Load(resultado);
                 return tabla;
 
             }
@@ -50,9 +49,9 @@ namespace Servicios
             try
             {
                 sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
-                SqlCommand comando = new SqlCommand("P_RegistrarTarjetas", sqlCon);
+                SqlCommand comando = new SqlCommand("P_RegistrarAsistencia", sqlCon);
                 comando.CommandType = CommandType.StoredProcedure;
-                comando.Parameters.Add("@FechaEntrada",SqlDbType.DateTime).Value= DateTime.Now;
+                comando.Parameters.Add("@FechaEntrada",SqlDbType.DateTime).Value = DateTime.Now.ToString("yyyy-dd-mm HH:mm:ss");
                 comando.Parameters.Add("@FechaSalida", SqlDbType.DateTime).Value = DateTime.Now;
                 comando.Parameters.Add("@Documento", SqlDbType.VarChar).Value = asistencias.Documento;
                 comando.Parameters.Add("@IdTurnoAplicado", SqlDbType.Int).Value = asistencias.IdTurnoAplicado;

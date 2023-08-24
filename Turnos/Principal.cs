@@ -14,11 +14,17 @@ using System.Windows.Forms;
 using BCrypt.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Diagnostics.Eventing.Reader;
+using System.Configuration;
 
 namespace Turnos
 {
     public partial class Principal : Form
     {
+
+        #region Definiciones 
+        public int idSede = Convert.ToInt32(ConfigurationManager.AppSettings["IdSede"]);
+
+        #endregion
         Tarjetas tarjetas = new Tarjetas();
         public Principal()
         {
@@ -295,22 +301,13 @@ namespace Turnos
 
         public void RegistrarIngreso()
         {
-            string idTarjeta = ObtenerIdTarjeta();
             string rta = "";
             DataTable tabla;
             Asistencias asistencia = new Asistencias();
             asistencia.FechaEntrada = DateTime.Now;
             asistencia.FechaSalida=DateTime.Now;
-            tabla = AsistenciaController.ObtenerDocumentoPorTarjeta(idTarjeta);
-            if (tabla.Rows.Count > 0)
-            {
-                foreach (DataRow lstDatos in tabla.Rows)
-                {
-                    asistencia.Documento = lstDatos["Documento"].ToString();
-                }
-            }
 
-            rta = AsistenciaController.RegistrarAsistencia(asistencia);
+            rta = AsistenciaController.RegistrarAsistencia(asistencia, idSede);
 
             if (rta.Equals("OK"))
             {

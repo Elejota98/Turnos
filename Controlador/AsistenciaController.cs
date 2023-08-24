@@ -11,27 +11,47 @@ namespace Controlador
 {
     public class AsistenciaController
     {
-        public static string RegistrarAsistencia(Asistencias asistencias)
+        public static string RegistrarAsistencia(Asistencias asistencias, int idSede)
         {
             string rta = "";
             int tiempoRetardo = 0;
             int minutosDiferencia = 0;
+            string idTarjeta = string.Empty;
             TimeSpan horaIngreso = TimeSpan.Zero;
             DataTable tabla;
 
             RepositorioAsistencias Datos = new RepositorioAsistencias();
             try
             {
+                idTarjeta = TarjetasController.ObtenerIdTarjeta();
+
+                tabla = AsistenciaController.ObtenerDocumentoPorTarjeta(idTarjeta);
+                if (tabla.Rows.Count > 0)
+                {
+                    foreach (DataRow lstDatos in tabla.Rows)
+                    {
+                        asistencias.Documento = lstDatos["Documento"].ToString();
+                    }
+                }
+
+
                 //Traer la hora de ingreso
 
-                tabla = Datos.ListarDatosTurnosAplicados(asistencias);
+                tabla = Datos.ListarDatosTurnosAplicados(asistencias, idSede);
                 if (tabla.Rows.Count > 0)
                 {
                     for (int i = 0; i < tabla.Rows.Count; i++)
                     {
+
                         if (Convert.ToDateTime(tabla.Rows[i]["FechaAplicada"]).ToString("yyyy-MM-dd") == asistencias.FechaEntrada.ToString("yyyy-MM-dd"))
                         {
                             horaIngreso = (TimeSpan)tabla.Rows[i]["HoraEntrada"];
+                            asistencias.IdTurnoAplicado = Convert.ToInt32(tabla.Rows[i]["IdTurnoAplicado"]);
+
+                        }
+                        else
+                        {
+                            return rta = "El empleado no tiene turnos asignado para el día de hoy";
                         }
                     }
                 }
