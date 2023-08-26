@@ -21,6 +21,10 @@ namespace Turnos
 {
     public partial class Principal : Form
     {
+        public string Nombre;
+        public string Cargo;
+        public string Documento;
+        public long IdEstacionamiento;
 
         #region Definiciones 
         public int idSede = Convert.ToInt32(ConfigurationManager.AppSettings["IdSede"]);
@@ -404,6 +408,8 @@ namespace Turnos
 
         private void Principal_Load(object sender, EventArgs e)
         {
+            lblNombre.Text = Nombre + "!";
+            lblTitulo.Text = "Gestión de turnos";
             Inicio();
             TabPrincipal.SelectedTab = Menu;
             TabPrincipal.Appearance = TabAppearance.FlatButtons;
@@ -478,6 +484,13 @@ namespace Turnos
             {
                 MensajeError(rta);
             }
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            lblTitulo.Text = "Gestión de turnos";
+            lblTitulo.Visible = true;
+            TabPrincipal.SelectedTab = Menu;
         }
     }
 }

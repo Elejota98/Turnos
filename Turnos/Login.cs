@@ -21,21 +21,32 @@ namespace Turnos
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string rta = "";
              DtoLogin login = new DtoLogin();
             login.Documento = textBox1.Text;
             login.ContraseñaNueva = textBox2.Text;
-            
-            string rta = "";
-            rta = LoginController.ValidarInicioSesion(login);
-            if (rta.Equals("OK"))
+
+            if (login.Documento != null || login.Documento != string.Empty || login.ContraseñaNueva != null || login.ContraseñaNueva != string.Empty)
             {
-                Principal principal = new Principal();
-                principal.Show();
-                this.Hide();
+
+                DataTable tabla = new DataTable();
+                rta = LoginController.ValidarInicioSesion(login);
+                if (rta.Equals("OK"))
+                {
+                    Principal principal = new Principal();
+                    principal.Nombre = login.NombresEmpleado.ToString();
+                    principal.Show();
+                    this.Hide();
+
+                }
+                else
+                {
+                    MensajeError(rta.ToString());
+                }
             }
             else
             {
-                MensajeError(rta);
+                MensajeError("Faltan datos por ingresar");
             }
         }
 
@@ -47,6 +58,18 @@ namespace Turnos
         private void MensajeOk(string Mensaje)
         {
             MessageBox.Show(Mensaje, "Turnos - Parquearse Tecnología", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void timeFecha_Tick(object sender, EventArgs e)
+        {
+            lblHora.Text = DateTime.Now.ToString("hh:mm:ss tt");
+            lblFecha.Text = DateTime.Now.ToLongDateString();
+            lblFooter.Text = "© " + DateTime.Now.Year + " - Parquearse Tecnología";
+        }
+
+        private void Login_Load(object sender, EventArgs e)
+        {
+            timeFecha.Enabled= true;
         }
     }
 }

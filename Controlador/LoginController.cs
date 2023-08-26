@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,18 +37,19 @@ namespace Controlador
 
                     if (VerificarClave(login))
                     {
-                        rta = "OK";
+                        return rta = "OK";
                     }
 
                     else
                     {
-                        return rta = "Contraeña incorrecta";
+                        return rta = "Contraseña incorrecta";
+
                     }
                 }
                 else
                 {
-                    return rta = "El documento " + login.Documento + " del empleado se encuentra inactivo \n" +
-                        "O no se encuentra registrado en el sistema";
+                    return rta = "Error en la valdación de los datos";
+
                 }
             }
             catch (Exception ex)
