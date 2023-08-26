@@ -36,6 +36,7 @@
             this.btnEmpleados = new System.Windows.Forms.Button();
             this.Asistencia = new System.Windows.Forms.TabPage();
             this.pnAsistencia = new System.Windows.Forms.Panel();
+            this.btnRegistrarSalida = new System.Windows.Forms.Button();
             this.btnIngreso = new System.Windows.Forms.Button();
             this.Empleados = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -71,7 +72,6 @@
             this.label11 = new System.Windows.Forms.Label();
             this.cbActSede = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.btnRegistrarSalida = new System.Windows.Forms.Button();
             this.pnTitulo.SuspendLayout();
             this.TabPrincipal.SuspendLayout();
             this.Menu.SuspendLayout();
@@ -89,7 +89,7 @@
             this.pnTitulo.Controls.Add(this.lblTitulo);
             this.pnTitulo.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnTitulo.Location = new System.Drawing.Point(0, 0);
-            this.pnTitulo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pnTitulo.Margin = new System.Windows.Forms.Padding(2);
             this.pnTitulo.Name = "pnTitulo";
             this.pnTitulo.Size = new System.Drawing.Size(1009, 88);
             this.pnTitulo.TabIndex = 2;
@@ -114,7 +114,7 @@
             this.TabPrincipal.Controls.Add(this.ActualizarDatosEmpleado);
             this.TabPrincipal.Dock = System.Windows.Forms.DockStyle.Top;
             this.TabPrincipal.Location = new System.Drawing.Point(0, 88);
-            this.TabPrincipal.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TabPrincipal.Margin = new System.Windows.Forms.Padding(2);
             this.TabPrincipal.Name = "TabPrincipal";
             this.TabPrincipal.SelectedIndex = 0;
             this.TabPrincipal.Size = new System.Drawing.Size(1009, 1319);
@@ -125,9 +125,9 @@
             this.Menu.Controls.Add(this.btnAsistencia);
             this.Menu.Controls.Add(this.btnEmpleados);
             this.Menu.Location = new System.Drawing.Point(4, 22);
-            this.Menu.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Menu.Margin = new System.Windows.Forms.Padding(2);
             this.Menu.Name = "Menu";
-            this.Menu.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Menu.Padding = new System.Windows.Forms.Padding(2);
             this.Menu.Size = new System.Drawing.Size(1001, 1293);
             this.Menu.TabIndex = 0;
             this.Menu.Text = "tabMenu";
@@ -157,9 +157,9 @@
             // 
             this.Asistencia.Controls.Add(this.pnAsistencia);
             this.Asistencia.Location = new System.Drawing.Point(4, 22);
-            this.Asistencia.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Asistencia.Margin = new System.Windows.Forms.Padding(2);
             this.Asistencia.Name = "Asistencia";
-            this.Asistencia.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Asistencia.Padding = new System.Windows.Forms.Padding(2);
             this.Asistencia.Size = new System.Drawing.Size(1001, 1293);
             this.Asistencia.TabIndex = 1;
             this.Asistencia.Text = "tabAsistencia";
@@ -170,15 +170,26 @@
             this.pnAsistencia.Controls.Add(this.btnRegistrarSalida);
             this.pnAsistencia.Controls.Add(this.btnIngreso);
             this.pnAsistencia.Location = new System.Drawing.Point(2, 4);
-            this.pnAsistencia.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pnAsistencia.Margin = new System.Windows.Forms.Padding(2);
             this.pnAsistencia.Name = "pnAsistencia";
             this.pnAsistencia.Size = new System.Drawing.Size(1000, 589);
             this.pnAsistencia.TabIndex = 0;
             // 
+            // btnRegistrarSalida
+            // 
+            this.btnRegistrarSalida.Location = new System.Drawing.Point(416, 199);
+            this.btnRegistrarSalida.Margin = new System.Windows.Forms.Padding(2);
+            this.btnRegistrarSalida.Name = "btnRegistrarSalida";
+            this.btnRegistrarSalida.Size = new System.Drawing.Size(56, 44);
+            this.btnRegistrarSalida.TabIndex = 1;
+            this.btnRegistrarSalida.Text = "Registrar salida";
+            this.btnRegistrarSalida.UseVisualStyleBackColor = true;
+            this.btnRegistrarSalida.Click += new System.EventHandler(this.btnRegistrarSalida_Click);
+            // 
             // btnIngreso
             // 
             this.btnIngreso.Location = new System.Drawing.Point(174, 199);
-            this.btnIngreso.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnIngreso.Margin = new System.Windows.Forms.Padding(2);
             this.btnIngreso.Name = "btnIngreso";
             this.btnIngreso.Size = new System.Drawing.Size(56, 44);
             this.btnIngreso.TabIndex = 0;
@@ -192,7 +203,7 @@
             this.Empleados.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Empleados.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(180)))), ((int)(((byte)(77)))));
             this.Empleados.Location = new System.Drawing.Point(4, 22);
-            this.Empleados.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Empleados.Margin = new System.Windows.Forms.Padding(2);
             this.Empleados.Name = "Empleados";
             this.Empleados.Size = new System.Drawing.Size(1001, 1293);
             this.Empleados.TabIndex = 2;
@@ -219,7 +230,7 @@
             this.panel1.Controls.Add(this.cboSede);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1006, 589);
             this.panel1.TabIndex = 15;
@@ -228,7 +239,7 @@
             // 
             this.dvgListadoEmpleados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dvgListadoEmpleados.Location = new System.Drawing.Point(304, 50);
-            this.dvgListadoEmpleados.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dvgListadoEmpleados.Margin = new System.Windows.Forms.Padding(2);
             this.dvgListadoEmpleados.Name = "dvgListadoEmpleados";
             this.dvgListadoEmpleados.RowHeadersWidth = 51;
             this.dvgListadoEmpleados.RowTemplate.Height = 24;
@@ -262,7 +273,7 @@
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.Image = global::Turnos.Properties.Resources.btnActualizar;
             this.button2.Location = new System.Drawing.Point(413, 502);
-            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(92, 50);
             this.button2.TabIndex = 17;
@@ -287,7 +298,7 @@
             this.btnGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGuardar.Image = global::Turnos.Properties.Resources.btnGuardar;
             this.btnGuardar.Location = new System.Drawing.Point(285, 502);
-            this.btnGuardar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnGuardar.Margin = new System.Windows.Forms.Padding(2);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(92, 50);
             this.btnGuardar.TabIndex = 14;
@@ -409,7 +420,7 @@
             // 
             this.ActualizarDatosEmpleado.Controls.Add(this.panel2);
             this.ActualizarDatosEmpleado.Location = new System.Drawing.Point(4, 22);
-            this.ActualizarDatosEmpleado.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ActualizarDatosEmpleado.Margin = new System.Windows.Forms.Padding(2);
             this.ActualizarDatosEmpleado.Name = "ActualizarDatosEmpleado";
             this.ActualizarDatosEmpleado.Size = new System.Drawing.Size(1001, 1293);
             this.ActualizarDatosEmpleado.TabIndex = 3;
@@ -433,7 +444,7 @@
             this.panel2.Controls.Add(this.label12);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1001, 1293);
             this.panel2.TabIndex = 16;
@@ -468,7 +479,7 @@
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Image = global::Turnos.Properties.Resources.btnGuardar;
             this.button1.Location = new System.Drawing.Point(321, 567);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(106, 42);
             this.button1.TabIndex = 14;
@@ -576,17 +587,6 @@
             this.label12.TabIndex = 8;
             this.label12.Text = "Documento";
             // 
-            // btnRegistrarSalida
-            // 
-            this.btnRegistrarSalida.Location = new System.Drawing.Point(416, 199);
-            this.btnRegistrarSalida.Margin = new System.Windows.Forms.Padding(2);
-            this.btnRegistrarSalida.Name = "btnRegistrarSalida";
-            this.btnRegistrarSalida.Size = new System.Drawing.Size(56, 44);
-            this.btnRegistrarSalida.TabIndex = 1;
-            this.btnRegistrarSalida.Text = "Registrar salida";
-            this.btnRegistrarSalida.UseVisualStyleBackColor = true;
-            this.btnRegistrarSalida.Click += new System.EventHandler(this.btnRegistrarSalida_Click);
-            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -595,7 +595,7 @@
             this.Controls.Add(this.TabPrincipal);
             this.Controls.Add(this.pnTitulo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.Name = "Principal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

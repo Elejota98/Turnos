@@ -15,6 +15,7 @@ using BCrypt.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Diagnostics.Eventing.Reader;
 using System.Configuration;
+using System.Security.Cryptography;
 
 namespace Turnos
 {
@@ -285,15 +286,38 @@ namespace Turnos
 
         #region EncriptarClave
 
-
         static string EncriptarClave(string clave)
         {
             string claveNew = clave.Substring(clave.Length - 4);
 
-            // Generar un hash bcrypt para la clave
-          string  contraseñaEncriptada = BCrypt.Net.BCrypt.HashPassword(claveNew);
-            return contraseñaEncriptada;
+            using (Aes aesAlg = Aes.Create())
+            {
+                aesAlg.GenerateIV();
+                aesAlg.Key = Encoding.UTF8.GetBytes(claveNew);
+
+                ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+                using (MemoryStream msEncrypt = new MemoryStream())
+                {
+                    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+                    {
+                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                        {
+                            swEncrypt.Write(clave);
+                        }
+                    }
+                    return Convert.ToBase64String(aesAlg.IV.Concat(msEncrypt.ToArray()).ToArray());
+                }
+            }
         }
+
+        //static string EncriptarClave(string clave)
+        //{
+        //    string claveNew = clave.Substring(clave.Length - 4);
+
+        //    // Generar un hash bcrypt para la clave
+        //  string  contraseñaEncriptada = BCrypt.Net.BCrypt.HashPassword(claveNew);
+        //    return contraseñaEncriptada;
+        //}
 
         #endregion
 

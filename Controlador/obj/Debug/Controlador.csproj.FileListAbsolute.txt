@@ -40,3 +40,13 @@ D:\PROYECTOS\Turnos\Controlador\obj\Debug\Controlador.csproj.CoreCompileInputs.c
 D:\PROYECTOS\Turnos\Controlador\obj\Debug\Controlador.csproj.CopyComplete
 D:\PROYECTOS\Turnos\Controlador\obj\Debug\Controlador.dll
 D:\PROYECTOS\Turnos\Controlador\obj\Debug\Controlador.pdb
+D:\PROYECTOS\Turnos\Controlador\bin\Debug\BCrypt.Net-Next.dll
+D:\PROYECTOS\Turnos\Controlador\bin\Debug\System.Buffers.dll
+D:\PROYECTOS\Turnos\Controlador\bin\Debug\System.Memory.dll
+D:\PROYECTOS\Turnos\Controlador\bin\Debug\System.Numerics.Vectors.dll
+D:\PROYECTOS\Turnos\Controlador\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+D:\PROYECTOS\Turnos\Controlador\bin\Debug\BCrypt.Net-Next.xml
+D:\PROYECTOS\Turnos\Controlador\bin\Debug\System.Buffers.xml
+D:\PROYECTOS\Turnos\Controlador\bin\Debug\System.Memory.xml
+D:\PROYECTOS\Turnos\Controlador\bin\Debug\System.Numerics.Vectors.xml
+D:\PROYECTOS\Turnos\Controlador\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml

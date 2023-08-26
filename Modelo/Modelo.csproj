@@ -45,6 +45,7 @@
     <Compile Include="Cargos.cs" />
     <Compile Include="Empleados.cs" />
     <Compile Include="HorasExtras.cs" />
+    <Compile Include="DtoLogin.cs" />
     <Compile Include="Novedades.cs" />
     <Compile Include="Politicas.cs" />
     <Compile Include="Retardos.cs" />

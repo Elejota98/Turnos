@@ -11,7 +11,7 @@ namespace Servicios
 {
     public class RepositorioLogin
     {
-        public DataTable ConsultarContraseñaPorDocumento(Login login)
+        public DataTable ConsultarContraseñaPorDocumento(DtoLogin login)
         {
             DataTable tabla = new DataTable();
             SqlConnection sqlCon = new SqlConnection();
@@ -19,7 +19,7 @@ namespace Servicios
             try
             {
                 sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
-                string cadena = ("SELECT Documento,NombreEmpleado,ApellidoEmpleado,ContraseñaEmpleado FROM T_Empleados WHERE Estado=1");
+                string cadena = ("SELECT Documento,NombreEmpleado,ApellidoEmpleado,ContraseñaEmpleado FROM T_Empleados WHERE Estado=1 and Documento='"+login.Documento+"'");
                 SqlCommand comando = new SqlCommand(cadena, sqlCon);
                 sqlCon.Open();
                 resultado = comando.ExecuteReader();

@@ -64,7 +64,19 @@ namespace Controlador
                 }
                 else
                 {
-                    return rta = "No encuentran turnos asociados al empleado con documento " + asistencias.Documento + "";
+                    //INSERTAR IDTURNOAPLICADO NULL
+
+                    rta = Datos.RegistrarAsistenciaSinTurnoAsignado(asistencias);
+                    if (rta.Equals("OK"))
+                    {
+                        return rta = "¡Registro exitoso! \n Hora de entrada: " + asistencias.FechaEntrada + "";
+
+                    }
+                    else
+                    {
+                        return rta = "ERROR";
+                    }
+
                 }
 
 
@@ -253,7 +265,7 @@ namespace Controlador
                         rta = Datos.ActualizaSalidaAsistencia(asistencias);
                         if (rta.Equals("OK"))
                         {
-                            return rta = "¡Registro exitoso! \n Hora de dalida: " + asistencias.FechaEntrada + "" +
+                            return rta = "¡Registro exitoso! \n Hora de dalida: " + asistencias.FechaSalida + "" +
                                 " \n Tiempo extra: " + 0 + "";
                         }
                         else
@@ -266,7 +278,29 @@ namespace Controlador
                 
                 else
                 {
-                    return rta = "El empleado no tiene salidas pendientes para esta sede";
+
+                    //VALIDAR SALIDAS PENDIENTES IDTURNOAPLICADO NULL
+
+                    tabla = Datos.ValidarFechSalidaSinTurnoAplicado(asistencias);
+                    if (tabla.Rows.Count > 0)
+                    {
+                        for (int i = 0; i < tabla.Rows.Count; i++)
+                        {
+                            asistencias.IdAsistencia = Convert.ToInt32(tabla.Rows[i]["IdAsitencia"]);
+                        }
+
+                        rta = Datos.ActualizarSalidaSinTurnoAplicado(asistencias);
+
+                        if (rta.Equals("OK"))
+                        {
+                            return rta = "¡Registro exitoso! \n Hora de dalida: " + asistencias.FechaSalida + "";
+                        }
+                        else
+                        {
+                            return rta = "ERROR";
+                        }
+                    }
+
                 }
             }
 
