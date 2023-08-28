@@ -85,6 +85,83 @@ namespace Controlador
             return rta;
 
         }
+        public static string ActualizarEmpleados(Empleados empleados)
+        {
+            string rta = "";
+            RepositorioEmpleados Datos = new RepositorioEmpleados();
+            DataTable tabla;
+            Tarjetas tarjetas = new Tarjetas();
+            tarjetas.IdTarjeta = TarjetasController.ObtenerIdTarjeta();
+
+            if (tarjetas.IdTarjeta != "ERROR")
+            {
+                empleados.IdTarjeta = tarjetas.IdTarjeta;
+                    tabla = TarjetasController.VerificarExisteTarjeta(tarjetas);
+                    if (tabla.Rows.Count > 0)
+                    {
+                        tabla = Datos.VerificarExisteEmpleadoPorTarjeta(empleados);
+                        if (tabla.Rows.Count > 0)
+                        {
+                        rta = Datos.ActualizarDatosEmpleado(empleados);
+                        if (rta.Equals("OK"))
+                        {
+                            rta = "OK";
+                        }
+                        else
+                        {
+                            rta = rta.ToString();
+                        }
+                        return rta;
+                        }
+                    else
+                    {
+                        rta = Datos.ActualizarDatosEmpleado(empleados);
+                        if (rta.Equals("OK"))
+                        {
+                            rta = "OK";
+                        }
+                        else
+                        {
+                            rta = "Error en el momento de actualizar el empleado \n Informar a Tecnología";
+                        }
+                        return rta;
+                    }
+                    }
+                    else
+                    {
+
+                        rta = TarjetasController.RegistrarTarjetas(tarjetas);
+                        if (rta.Equals("OK"))
+                        {
+
+                        rta = Datos.ActualizarDatosEmpleado(empleados);
+                        if (rta.Equals("OK"))
+                            {
+                                rta = "OK";
+                            }
+                            else
+                            {
+                                rta = "Error en el momento de actualizar el empleado \n Informar a Tecnología";
+                            }
+                            return rta;
+                        }
+                        else
+                        {
+                            rta = "Error en el momento de guardar la tarjeta";
+                        }
+                    }
+                
+            }
+            else
+            {
+                return rta = "Es necesario tener una lectora y una tarjeta puesta en la misma";
+            }
+
+            return rta;
+
+        }
+
+
 
         public static DataTable BuscarEmpleadosPorDocumento(Empleados empleados)
         {

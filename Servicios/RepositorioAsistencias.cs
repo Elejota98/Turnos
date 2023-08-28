@@ -52,7 +52,7 @@ namespace Servicios
             {
                 sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
                 string cadena = ("INSERT INTO T_Asistencias(FechaEntrada,FechaSalida,Estado,Sincronizacion,Documento,IdTurnoAplicado) " +
-                    "VALUES(" + asistencias.FechaEntrada + ",'1900-01-01 00:00:00.000',1,0," + asistencias.Documento
+                    "VALUES(GETDATE(),'1900-01-01 00:00:00.000',1,0," + asistencias.Documento
                     + ", NULL)");
                 SqlCommand comando = new SqlCommand(cadena, sqlCon);
                 sqlCon.Open();
@@ -196,10 +196,11 @@ namespace Servicios
             SqlDataReader resultado;
             try
             {
-                string cadena = ("SELECT  TOP(1) dbo.T_Asistencias.IdAsitencia FROM    dbo.T_Asistencias INNER JOIN" +
+                sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
+                string cadena = ("SELECT  TOP(1) dbo.T_Asistencias.IdAsistencia FROM    dbo.T_Asistencias INNER JOIN" +
                     "   dbo.T_Empleados ON dbo.T_Asistencias.Documento = dbo.T_Empleados.Documento INNER JOIN" +
                     " dbo.T_Sedes ON dbo.T_Empleados.IdSede = dbo.T_Sedes.IdSede" +
-                    " WHERE dbo.T_Asistencias.Documento='"+asistencias.Documento+"' and dbo.T_Asistencias.IdTurnoAplicado IS NULL" +
+                    " WHERE dbo.T_Asistencias.Documento='"+asistencias.Documento+ "' and dbo.T_Asistencias.IdTurnoAplicado IS NULL AND dbo.T_Asistencias.FechaSalida = '1900-01-01 00:00:00.000' " +
                     "ORDER BY 1 DESC ");
                 SqlCommand comando = new SqlCommand(cadena, sqlCon);
                 sqlCon.Open();
@@ -225,7 +226,8 @@ namespace Servicios
 
             try
             {
-                string cadena = ("UPDATE T_Asistencias SET FechaSalida=@FechaSalida WHERE IdAsitencia="+asistencias.IdAsistencia+" AND ");
+                sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
+                string cadena = ("UPDATE T_Asistencias SET FechaSalida=GETDATE() WHERE IdAsistencia="+asistencias.IdAsistencia+"");
                 SqlCommand comando = new SqlCommand(cadena, sqlCon);
                 sqlCon.Open();
                 comando.ExecuteNonQuery();

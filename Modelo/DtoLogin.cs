@@ -13,6 +13,7 @@ namespace Modelo
         public string ContraseñaNueva { get; set; }
         public string NombresEmpleado { get; set; }
         public string ApellidosEmpleado { get; set; }
+        public string CargoEmpleado { get; set; }
 
     }
 }

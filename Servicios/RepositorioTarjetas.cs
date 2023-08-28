@@ -41,6 +41,7 @@ namespace Servicios
         public bool DetectarTarjeta()
         {
             bool ok = false;
+            Rspsta_Conexion_LECTOR resultado = new Rspsta_Conexion_LECTOR();
             Lectora_ACR122 lectora = new Lectora_ACR122();
             Rspsta_DetectarTarjeta_LECTOR detectar = new Rspsta_DetectarTarjeta_LECTOR();
             try

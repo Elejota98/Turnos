@@ -35,6 +35,7 @@ namespace Turnos
                 {
                     Principal principal = new Principal();
                     principal.Nombre = login.NombresEmpleado.ToString();
+                    principal.Cargo = login.CargoEmpleado.ToString();
                     principal.Show();
                     this.Hide();
 

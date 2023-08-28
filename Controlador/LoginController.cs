@@ -33,6 +33,7 @@ namespace Controlador
                         login.Contraseña = lstDatos["ContraseñaEmpleado"].ToString();
                         login.NombresEmpleado = lstDatos["NombreEmpleado"].ToString();
                         login.ApellidosEmpleado = lstDatos["ApellidoEmpleado"].ToString();
+                        login.CargoEmpleado = lstDatos["NombreCargo"].ToString();
                     }
 
                     if (VerificarClave(login))

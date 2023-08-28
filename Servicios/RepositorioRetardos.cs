@@ -20,7 +20,7 @@ namespace Servicios
             try
             {
                 sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
-                string cadena = ("SELECT      top (1)  dbo.T_Asistencias.IdAsitencia " +
+                string cadena = ("SELECT      top (1)  dbo.T_Asistencias.IdAsistencia " +
                             " FROM dbo.T_Turnos INNER JOIN " +
                          "dbo.T_TurnosAplicados ON dbo.T_Turnos.IdTurno = dbo.T_TurnosAplicados.IdTurno INNER JOIN "+
                          "dbo.T_Empleados ON dbo.T_TurnosAplicados.Documento = dbo.T_Empleados.Documento INNER JOIN "+

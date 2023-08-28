@@ -64,7 +64,32 @@ namespace Controlador
 
 
         }
+        
+        public static bool DetectarTarjeta()
+        {
+            bool ok = false;
+            try
+            {
+                RepositorioTarjetas Datos = new RepositorioTarjetas();
+                ok = Datos.DetectarTarjeta();
+                if (ok)
+                {
+                    ok = true;
+                }
+                else
+                {
+                    return ok;
+                }
 
+            }
+            catch (Exception ex )
+            {
+
+                ok = false;
+            }
+
+            return ok;
+        }
         public static DataTable VerificarExisteTarjeta(Tarjetas tarjetas)
         {
             DataTable dt = new DataTable();
@@ -72,7 +97,6 @@ namespace Controlador
             dt = Datos.VerificarExisteTarjeta(tarjetas);
             return dt;
         }
-
         public static string RegistrarTarjetas(Tarjetas tarjetas)
         {
             string rta = "";

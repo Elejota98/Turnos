@@ -47,6 +47,40 @@ namespace Servicios
             return rta;
         }
 
+        public string ActualizarDatosEmpleado(Empleados empleados)
+        {
+            string rta = "";
+            SqlConnection sqlCon = new SqlConnection();
+            try
+            {
+                sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
+                SqlCommand comando = new SqlCommand("P_ActualizarEmpleado", sqlCon);
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.Add("@Documento", SqlDbType.VarChar).Value = empleados.Documento;
+                comando.Parameters.Add("@Nombres", SqlDbType.VarChar).Value = empleados.NombreEmpleado;
+                comando.Parameters.Add("@Apellidos", SqlDbType.VarChar).Value = empleados.ApellidoEmpleado;
+                comando.Parameters.Add("@Telefono", SqlDbType.BigInt).Value = empleados.TelefonoEmpleado;
+                //comando.Parameters.Add("@Contraseña", SqlDbType.VarChar).Value = empleados.Contraseña;
+                comando.Parameters.Add("@IdCargo", SqlDbType.Int).Value = empleados.IdCargo;
+                comando.Parameters.Add("@IdTarjeta", SqlDbType.VarChar).Value = empleados.IdTarjeta;
+                comando.Parameters.Add("@IdSede", SqlDbType.Int).Value = empleados.IdSede;
+                sqlCon.Open();
+                comando.ExecuteNonQuery();
+                rta = "OK";
+            }
+            catch (Exception ex)
+            {
+
+                rta = ex.ToString();
+            }
+            finally
+            {
+                if (sqlCon.State == ConnectionState.Open) sqlCon.Close();
+            }
+
+            return rta;
+        }
+
         public DataTable VerificarExisteEmpleadoPorTarjeta(Empleados empleados)
         {
             DataTable tabla = new DataTable();
@@ -141,7 +175,10 @@ namespace Servicios
             try
             {
                 sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
-                string cadena = ("SELECT * FROM T_EMPLEADOS WHERE ESTADO=1");
+                string cadena = ("SELECT        dbo.T_Empleados.Documento, dbo.T_Empleados.NombreEmpleado, dbo.T_Empleados.ApellidoEmpleado," +
+                    " dbo.T_Empleados.TelefonoEmpleado, dbo.T_Empleados.IdTarjeta, dbo.T_Cargos.NombreCargo,  dbo.T_Sedes.NombreSede " +
+                    " FROM   dbo.T_Empleados INNER JOIN dbo.T_Sedes ON dbo.T_Empleados.IdSede = dbo.T_Sedes.IdSede INNER JOIN  dbo.T_Cargos ON dbo.T_Empleados.IdCargo = dbo.T_Cargos.IdCargo" +
+                    " WHERE dbo.T_Empleados.Estado=1 ");
                 SqlCommand comando = new SqlCommand(cadena, sqlCon);
                 sqlCon.Open();
                 SqlDataReader rta = comando.ExecuteReader();

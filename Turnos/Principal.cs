@@ -16,19 +16,24 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Diagnostics.Eventing.Reader;
 using System.Configuration;
 using System.Security.Cryptography;
+using System.Threading;
 
 namespace Turnos
 {
     public partial class Principal : Form
     {
+       
+
         public string Nombre;
         public string Cargo;
         public string Documento;
         public long IdEstacionamiento;
-
+        
         #region Definiciones 
         public int idSede = Convert.ToInt32(ConfigurationManager.AppSettings["IdSede"]);
         Tarjetas tarjetas = new Tarjetas();
+        int conteo = 0;
+        int tiempoMensaje = 5000;
         #endregion
 
 
@@ -37,6 +42,7 @@ namespace Turnos
             InitializeComponent();
             Inicio();
         }
+
 
         #region Funciones
 
@@ -56,14 +62,16 @@ namespace Turnos
                     }
                     else
                     {
-                        MensajeError("Ocurrió un error al obtener la id de la tarjeta \n * Verifique si la lectora está conectada \n * Verifique quitando la tarjeta y volviendola a colocar o si no cambie de tarjeta");
+                        idTarjeta = "NO TARJETA";
+
+
+                        //return idTarjeta =("Ocurrió un error al obtener la id de la tarjeta \n * Verifique si la lectora está conectada \n * Verifique quitando la tarjeta y volviendola a colocar o si no cambie de tarjeta");
 
                     }
                 }
                 else
                 {
-                    MensajeError("Ocurrió un error al obtener la id de la tarjeta \n * Verifique si la lectora está conectada \n * Verifique quitando la tarjeta y volviendola a colocar o si no cambie de tarjeta");
-
+                    idTarjeta = "ERROR";
                 }
             }
             catch (Exception ex)
@@ -120,6 +128,31 @@ namespace Turnos
             }
             return ok;
 
+        }
+        public bool DetectarTarjeta()
+        {
+            bool ok = false;
+
+            try
+            {
+                ok = TarjetasController.DetectarTarjeta();
+
+                if (ok)
+                {
+                    ok = true;
+                }
+                else
+                {
+                    return ok;
+                }
+            }
+            catch (Exception ex )
+            {
+
+                MensajeError(ex.ToString());
+            }
+            return ok;
+            
         }
         #endregion
 
@@ -233,9 +266,60 @@ namespace Turnos
             }
         }
 
+        public void ListarCargosAct()
+        {
+            try
+            {
+                cboActCargo.DataSource = CargosController.ListarCargos();
+                cboActCargo.DisplayMember = "NombreCargo";
+                cboActCargo.ValueMember = "IdCargo";
+            }
+            catch (Exception ex)
+            {
+
+                MensajeError(ex.ToString());
+            }
+
+
+        }
+        public void ListarSedesAct()
+        {
+            try
+            {
+                cbActSede.DataSource = SedesController.ListarSedes();
+                cbActSede.DisplayMember = "NombreSede";
+                cbActSede.ValueMember = "IdSede";
+            }
+            catch (Exception ex)
+            {
+
+                MensajeError(ex.ToString());
+            }
+        }
+
         public void ListarEmpleados()
         {
-            dvgListadoEmpleados.DataSource = EmpleadosController.ListarEmpleados();
+            DataTable tabla;
+            tabla = EmpleadosController.ListarEmpleados();
+            if (tabla.Rows.Count > 0)
+            {
+                dvgListadoEmpleados.DataSource = EmpleadosController.ListarEmpleados();
+                dvgListadoEmpleados.Columns[0].Visible = true;
+
+            }
+
+        }
+        public void ListarActEmpleados()
+        {
+            DataTable tabla;
+            tabla = EmpleadosController.ListarEmpleados();
+            if (tabla.Rows.Count > 0)
+            {
+                dvgActListadoEmpleados.DataSource = EmpleadosController.ListarEmpleados();
+                dvgActListadoEmpleados.Columns[0].Visible = true;
+
+            }
+
         }
         public void RegistrarEmpleado()
         {
@@ -273,6 +357,45 @@ namespace Turnos
                     MensajeError(rta);
                 }
             }   
+
+        }
+
+        public void ActualizarEmpleado()
+        {
+            string rta = "";
+            Empleados empleados = new Empleados();
+            empleados.Documento = tbActDocumento.Text;
+            empleados.NombreEmpleado = tbActNombres.Text;
+            empleados.ApellidoEmpleado = tbActApellidos.Text;
+            empleados.TelefonoEmpleado = tbActTelefono.Text;
+            empleados.IdCargo = Convert.ToInt32(cboActCargo.SelectedValue.ToString());
+            empleados.IdSede = Convert.ToInt32(cbActSede.SelectedValue.ToString());
+            if (empleados.Documento == string.Empty)
+            {
+                MensajeError("Falta ingresar un documento");
+                txtDocumento.Focus();
+            }
+            else if (empleados.NombreEmpleado == string.Empty || empleados.ApellidoEmpleado == string.Empty)
+            {
+                MensajeError("Falta ingresar por lo menos un nombre o un apellido");
+                txtNombre.Focus();
+            }
+            else
+            {
+                //empleados.Contraseña = EncriptarClave(empleados.Documento);
+
+                rta = EmpleadosController.ActualizarEmpleados(empleados);
+
+                if (rta.Equals("OK"))
+                {
+                    MensajeOk("Empleado actualizado correctamente");
+                    ListarActEmpleados();
+                }
+                else
+                {
+                    MensajeError(rta);
+                }
+            }
 
         }
 
@@ -337,15 +460,94 @@ namespace Turnos
 
             rta = AsistenciaController.RegistrarAsistencia(asistencia, idSede);
 
+
             if (!rta.Equals("ERROR"))
             {
-                MensajeOk(rta.ToString());
+                tmAsistencias.Stop();
+                lblMensaje.Text = rta;
+                pnAsistencia.Visible = true;
+                lblMensaje.BackColor = Color.FromArgb(139, 180, 77);
+                lblMensaje.ForeColor = Color.White;
+                lblMensaje.Update();
+                Thread.Sleep(tiempoMensaje);
+                Login login = new Login();
+                login.Show();
+                this.Hide();
+                //tmAsistencias.Start();
             }
             else
             {
-                MensajeError(rta);
+                tmAsistencias.Stop();
+                lblMensaje.Text = rta;
+                lblMensaje.Update();
+                tmAsistencias.Start();
             }
 
+        }
+        public void AsistenciaEmpleado()
+        {
+            string rta = "";
+            rta = ObtenerIdTarjeta();
+            if (rta != "ERROR" && rta !="NO TARJETA")
+            {
+                
+                DataTable tabla;
+                Asistencias asistencia = new Asistencias();
+                asistencia.FechaEntrada = DateTime.Now;
+                asistencia.FechaSalida = DateTime.Now;
+
+                rta = AsistenciaController.ActualizarSalidaAsistencia(asistencia, idSede);
+
+                if (rta.Equals("SIN SALIDA"))
+                {
+                    RegistrarIngreso();
+                }
+                else if (!rta.Equals("ERROR"))
+                {
+                    tmAsistencias.Stop();
+                    lblMensaje.Text = rta;
+                    lblMensaje.ForeColor = Color.White;                    
+                    pnAsistencia.Visible = true;
+                    lblMensaje.Update();
+                    Thread.Sleep(tiempoMensaje);
+                    Login login = new Login();
+                    login.Show();
+                    this.Hide();
+                    
+
+                }
+
+                else
+                {
+                    //tmAsistencias.Stop();
+                    //MensajeError(rta);
+                    //tmAsistencias.Start();
+
+                    tmAsistencias.Stop();
+                    lblMensaje.Text = rta.ToString();
+                    lblMensaje.ForeColor = Color.White;
+                     pnAsistencia.Visible = true;
+                    lblMensaje.Update();
+                Thread.Sleep(tiempoMensaje);
+                    Login login = new Login();
+                    login.Show();
+                    this.Hide();
+
+                }
+            }
+            else if(rta.Equals("NO TARJETA"))
+            {
+                rta = "No se encontró ninguna tarjeta en la lectora";
+                tmAsistencias.Stop();
+                lblMensaje.ForeColor = Color.White;
+                lblMensaje.Text = rta.ToString();
+                pnAsistencia.Visible = true;
+                lblMensaje.Update();
+                Thread.Sleep(tiempoMensaje);
+                Login login = new Login();
+                login.Show();
+                this.Hide();
+            }
         }
 
         #endregion
@@ -364,7 +566,7 @@ namespace Turnos
             MedidasFormularios();
             if (CargarImagenes())
             {
-               
+                label15.Visible = false;
             }
           
         }
@@ -375,6 +577,7 @@ namespace Turnos
             //fondoEmpleado.BackgroundImage = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Imagenes\fondoEmpleados.png"));
 
             string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Imagenes\Encabezado.png");
+
             if (File.Exists(imagePath))
             {
                 pnTitulo.BackgroundImage = Image.FromFile(imagePath);
@@ -406,15 +609,67 @@ namespace Turnos
 
         #endregion
 
-        private void Principal_Load(object sender, EventArgs e)
+        #region Botones
+
+        private void btnActVolver_Click(object sender, EventArgs e)
         {
-            lblNombre.Text = Nombre + "!";
-            lblTitulo.Text = "Gestión de turnos";
-            Inicio();
-            TabPrincipal.SelectedTab = Menu;
-            TabPrincipal.Appearance = TabAppearance.FlatButtons;
-            TabPrincipal.ItemSize = new Size(0, 1);
-            TabPrincipal.SizeMode = TabSizeMode.Fixed;
+            lblTitulo.Text = "Gestión empleados";
+            lblTitulo.Visible = true;
+            TabPrincipal.SelectedTab = Empleados;
+        }
+        private void btnAsistencia_Click_1(object sender, EventArgs e)
+        {
+            lblTitulo.Text = "Aistencia empleados";
+            lblTitulo.Visible = true;
+            pnAsistencia.Visible = false;
+            TabPrincipal.SelectedTab = Asistencia;
+            tmAsistencias.Start();
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow fila in dvgListadoEmpleados.Rows)
+            {
+                DataGridViewCheckBoxCell checkbox = fila.Cells[0] as DataGridViewCheckBoxCell;
+                if (Convert.ToBoolean(checkbox.Value))
+                {
+                    tbActDocumento.Text = fila.Cells[1].Value.ToString();
+                    tbActNombres.Text = fila.Cells[2].Value.ToString();
+                    tbActApellidos.Text = fila.Cells[3].Value.ToString();
+                    tbActTelefono.Text = fila.Cells[4].Value.ToString();
+                    tbActTarjeta.Text = fila.Cells[5].Value.ToString();
+                    cboActCargo.Text = fila.Cells[6].Value.ToString();
+                    cbActSede.Text = fila.Cells[7].Value.ToString();
+
+                }
+            }
+
+            TabPrincipal.SelectedTab = ActualizarDatosEmpleado;
+            lblTitulo.Text = "Actualizar datos empleados";
+            ListarCargosAct();
+            ListarSedesAct();
+            ListarActEmpleados();
+
+
+        }
+
+        private void cboActCargo_MouseClick(object sender, MouseEventArgs e)
+        {
+            ListarCargos();
+        }
+
+        private void cbActSede_MouseClick(object sender, MouseEventArgs e)
+        {
+            ListarSedes();
+        }
+
+        private void btnAsistencia_Click(object sender, EventArgs e)
+        {
+            lblTitulo.Text = "Aistencia empleados";
+            lblTitulo.Visible = true;
+            pnAsistencia.Visible = false;
+            TabPrincipal.SelectedTab = Asistencia;
+            tmAsistencias.Start();
         }
 
         private void btnEmpleados_Click(object sender, EventArgs e)
@@ -425,17 +680,63 @@ namespace Turnos
             ListarCargos();
             ListarSedes();
             ListarEmpleados();
-
         }
-
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             RegistrarEmpleado();
+            ListarActEmpleados();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnIngreso_Click(object sender, EventArgs e)
         {
-            TabPrincipal.SelectedTab = ActualizarDatosEmpleado;         
+            RegistrarIngreso();
+        }
+        private void btnRegistrarSalida_Click(object sender, EventArgs e)
+        {
+            string rta = "";
+            DataTable tabla;
+            Asistencias asistencia = new Asistencias();
+            asistencia.FechaEntrada = DateTime.Now;
+            asistencia.FechaSalida = DateTime.Now;
+
+            rta = AsistenciaController.ActualizarSalidaAsistencia(asistencia, idSede);
+
+            if (rta.Equals("SIN SALIDA"))
+            {
+                RegistrarIngreso();
+            }
+            else if (!rta.Equals("ERROR"))
+            {
+                MensajeOk(rta.ToString());
+            }
+
+            else
+            {
+                MensajeError(rta);
+            }
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            lblTitulo.Text = "Gestión de turnos";
+            lblTitulo.Visible = true;
+            TabPrincipal.SelectedTab = Menu;
+        }
+        #endregion
+
+        private void Principal_Load(object sender, EventArgs e)
+        {
+            lblNombre.Text = Nombre + "!";
+            lblTitulo.Text = "Gestión de turnos";
+            Inicio();
+            TabPrincipal.SelectedTab = Menu;
+            TabPrincipal.Appearance = TabAppearance.FlatButtons;
+            TabPrincipal.ItemSize = new Size(0, 1);
+            TabPrincipal.SizeMode = TabSizeMode.Fixed;
+            //if(Cargo!= "JEFE TALENTO HUMANO")
+            //{
+            //    btnEmpleados.Visible = false;
+            //}
         }
 
         private void cbActSede_SelectedIndexChanged(object sender, EventArgs e)
@@ -454,43 +755,43 @@ namespace Turnos
             BuscarEmpleadosPorDocumento();
         }
 
-        private void btnIngreso_Click(object sender, EventArgs e)
+        private void tmAsistencias_Tick(object sender, EventArgs e)
         {
-            RegistrarIngreso();
-        }
-
-        private void btnAsistencia_Click(object sender, EventArgs e)
-        {
-            lblTitulo.Text = "Aistencia empleados";
-            lblTitulo.Visible = true;
-            TabPrincipal.SelectedTab = Asistencia;
-        }
-
-        private void btnRegistrarSalida_Click(object sender, EventArgs e)
-        {
-            string rta = "";
-            DataTable tabla;
-            Asistencias asistencia = new Asistencias();
-            asistencia.FechaEntrada = DateTime.Now;
-            asistencia.FechaSalida = DateTime.Now;
-
-            rta = AsistenciaController.ActualizarSalidaAsistencia(asistencia, idSede);
-
-            if (!rta.Equals("ERROR"))
+            conteo++;
+         
+            try
             {
-                MensajeOk(rta.ToString());
+                if (conteo >= 20)
+                {
+                    Login login = new Login();
+                    login.Show();
+                    this.Hide();
+                    tmAsistencias.Stop();
+                }
+                AsistenciaEmpleado();
+                
             }
-            else
+            catch (Exception ex )
             {
-                MensajeError(rta);
+
+                MensajeError(ex.ToString());
             }
+        }  
+
+        private void cboActCargo_MouseClick_1(object sender, MouseEventArgs e)
+        {
+            ListarCargosAct();
+
         }
 
-        private void btnVolver_Click(object sender, EventArgs e)
+        private void cbActSede_MouseClick_1(object sender, MouseEventArgs e)
         {
-            lblTitulo.Text = "Gestión de turnos";
-            lblTitulo.Visible = true;
-            TabPrincipal.SelectedTab = Menu;
+            ListarSedesAct();
+        }
+
+        private void btnActEmpleado_Click(object sender, EventArgs e)
+        {
+            ActualizarEmpleado();
         }
     }
 }

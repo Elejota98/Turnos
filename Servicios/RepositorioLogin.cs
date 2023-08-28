@@ -19,7 +19,8 @@ namespace Servicios
             try
             {
                 sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
-                string cadena = ("SELECT Documento,NombreEmpleado,ApellidoEmpleado,ContraseñaEmpleado FROM T_Empleados WHERE Estado=1 and Documento='"+login.Documento+"'");
+                string cadena = ("SELECT  dbo.T_Empleados.Documento, dbo.T_Empleados.NombreEmpleado, dbo.T_Empleados.ApellidoEmpleado, dbo.T_Empleados.ContraseñaEmpleado, dbo.T_Cargos.NombreCargo" +
+                    " FROM dbo.T_Empleados INNER JOIN  dbo.T_Cargos ON dbo.T_Empleados.IdCargo = dbo.T_Cargos.IdCargo WHERE dbo.T_Empleados.Estado=1 and dbo.T_Empleados.Documento='" + login.Documento+"'");
                 SqlCommand comando = new SqlCommand(cadena, sqlCon);
                 sqlCon.Open();
                 resultado = comando.ExecuteReader();

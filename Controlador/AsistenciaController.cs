@@ -16,12 +16,15 @@ namespace Controlador
     {
         public static string RegistrarAsistencia(Asistencias asistencias, int idSede)
         {
+
             string rta = "";
             int tiempoRetardo = 0;
             int minutosDiferencia = 0;
             string idTarjeta = string.Empty;
+            TimeSpan horaSalida = TimeSpan.Zero;
             TimeSpan horaIngreso = TimeSpan.Zero;
             DataTable tabla;
+            bool fechaEncontrada = false;
 
             RepositorioAsistencias Datos = new RepositorioAsistencias();
             try
@@ -52,24 +55,120 @@ namespace Controlador
 
                         if (Convert.ToDateTime(tabla.Rows[i]["FechaAplicada"]).ToString("yyyy-MM-dd") == asistencias.FechaEntrada.ToString("yyyy-MM-dd"))
                         {
+                            fechaEncontrada = true;
                             horaIngreso = (TimeSpan)tabla.Rows[i]["HoraEntrada"];
                             asistencias.IdTurnoAplicado = Convert.ToInt32(tabla.Rows[i]["IdTurnoAplicado"]);
 
                         }
+                    }
+
+                    if(fechaEncontrada)
+                    {
+                        tabla = PoliticasController.ListarPoliticas();
+
+                        for (int i = 0; i < tabla.Rows.Count; i++)
+                        {
+                            if (tabla.Rows[i]["Nombre"].ToString() == "HoraExtra")
+                            {
+                                tiempoRetardo = Convert.ToInt32(tabla.Rows[i]["Tiempo"]);
+                            }
+                        }
+
+                        //Calcular el tiempo de ingreso con la hora de ingreso para verificar si tiene retardo
+                        TimeSpan horaEntradaAsistencias = asistencias.FechaEntrada.TimeOfDay;
+
+                        minutosDiferencia = (int)(horaEntradaAsistencias - horaIngreso).TotalMinutes;
+
+                        if (minutosDiferencia > tiempoRetardo)
+                        {
+                            //Registrar la asistencia 
+                            rta = Datos.RegistrarAsistencia(asistencias);
+                            if (rta.Equals("OK"))
+                            {
+                                tabla = RetardosController.ListarIdTurnoAplicado(asistencias, idSede);
+
+                                if (tabla.Rows.Count > 0)
+                                {
+                                    for (int i = 0; i < tabla.Rows.Count; i++)
+                                    {
+                                        asistencias.IdAsistencia = Convert.ToInt32(tabla.Rows[i]["IdAsistencia"]);
+                                    }
+
+                                    // INSERTAR EN LA TABLA RETARDOS
+                                    Retardos retardos = new Retardos()
+                                    {
+                                        FechaRetardo = DateTime.Now,
+                                        MinutosRetardos = Convert.ToDouble(minutosDiferencia),
+                                        IdAsistencia = asistencias.IdAsistencia
+
+                                    };
+
+                                    rta = RetardosController.RegistrarRetardo(retardos);
+
+                                    if (rta.Equals("OK"))
+                                    {
+                                        TimeSpan minutosRetardo = TimeSpan.FromMinutes(retardos.MinutosRetardos);
+                                        string tiempoRetardoFormateado = retardos.MinutosRetardos.ToString(@"hh\:mm");
+                                        return rta = "¡Registro exitoso! \n Hora de entrada: " + asistencias.FechaEntrada + "" +
+                                    " \n Tiempo de retardo: " + minutosRetardo + "";
+
+                                    }
+                                    else
+                                    {
+                                        rta = "ERROR";
+                                    }
+                                }
+
+                            }
+                            else
+                            {
+                                rta = "ERROR";
+                            }
+                        }
                         else
                         {
-                            return rta = "El empleado no tiene turnos asignado para el día de hoy";
+                            asistencias.FechaEntrada = asistencias.FechaEntrada.Date + horaIngreso;
+
+                            rta = Datos.RegistrarAsistencia(asistencias);
+                            if (rta.Equals("OK"))
+                            {
+                                return rta = "¡Registro exitoso! \n Hora de entrada: " + asistencias.FechaEntrada + "" +
+                                    " \n Tiempo de retardo: " + 0 + "";
+                            }
+                            else
+                            {
+                                rta = "ERROR";
+                            }
                         }
                     }
+                    else
+                    {
+
+                        //INSERTAR IDTURNOAPLICADO NULL
+
+                        rta = Datos.RegistrarAsistenciaSinTurnoAsignado(asistencias);
+                        if (rta.Equals("OK"))
+                        {
+                            return rta = "¡Registro sin turno asignado exitoso! \n Hora de entrada: " + asistencias.FechaEntrada + "";
+
+                        }
+                        else
+                        {
+                            return rta = "ERROR";
+                        }
+
+                    }
+
                 }
                 else
                 {
+
                     //INSERTAR IDTURNOAPLICADO NULL
 
                     rta = Datos.RegistrarAsistenciaSinTurnoAsignado(asistencias);
                     if (rta.Equals("OK"))
                     {
-                        return rta = "¡Registro exitoso! \n Hora de entrada: " + asistencias.FechaEntrada + "";
+                        return rta = "¡Registro sin turno asignado exitoso! \n Hora de entrada: " + asistencias.FechaEntrada + "";
 
                     }
                     else
@@ -78,84 +177,6 @@ namespace Controlador
                     }
 
                 }
-
-
-                tabla = PoliticasController.ListarPoliticas();
-
-                for (int i = 0; i < tabla.Rows.Count; i++)
-                {
-                    if (tabla.Rows[i]["Nombre"].ToString() == "HoraExtra")
-                    {
-                        tiempoRetardo = Convert.ToInt32(tabla.Rows[i]["Tiempo"]);
-                    }
-                }
-
-                //Calcular el tiempo de ingreso con la hora de ingreso para verificar si tiene retardo
-                TimeSpan horaEntradaAsistencias = asistencias.FechaEntrada.TimeOfDay;
-
-                minutosDiferencia = (int)(horaEntradaAsistencias - horaIngreso).TotalMinutes;
-
-                if (minutosDiferencia > tiempoRetardo)
-                {
-                    //Registrar la asistencia 
-                    rta = Datos.RegistrarAsistencia(asistencias);
-                    if (rta.Equals("OK"))
-                    {
-                        tabla = RetardosController.ListarIdTurnoAplicado(asistencias, idSede);
-
-                        if (tabla.Rows.Count > 0)
-                        {
-                            for (int i = 0; i < tabla.Rows.Count; i++)
-                            {
-                                asistencias.IdAsistencia = Convert.ToInt32(tabla.Rows[i]["IdAsitencia"]);
-                            }
-
-                            // INSERTAR EN LA TABLA RETARDOS
-                            Retardos retardos = new Retardos() {
-                                FechaRetardo = DateTime.Now,
-                                MinutosRetardos = Convert.ToDouble(minutosDiferencia),
-                                IdAsistencia = asistencias.IdAsistencia
-
-                            };
-
-                            rta = RetardosController.RegistrarRetardo(retardos);
-
-                            if (rta.Equals("OK"))
-                            {
-                                TimeSpan minutosRetardo = TimeSpan.FromMinutes(retardos.MinutosRetardos);
-                                string tiempoRetardoFormateado = retardos.MinutosRetardos.ToString(@"hh\:mm");
-                                return rta = "¡Registro exitoso! \n Hora de entrada: " + asistencias.FechaEntrada + "" +
-                            " \n Tiempo de retardo: " + minutosRetardo + "";
-
-                            }
-                            else
-                            {
-                                rta = "ERROR";
-                            }
-                        }
-
-                    }
-                    else
-                    {
-                        rta = "ERROR";
-                    }
-                }
-                else
-                {
-                    asistencias.FechaEntrada = asistencias.FechaEntrada.Date + horaIngreso;
-
-                    rta = Datos.RegistrarAsistencia(asistencias);
-                    if (rta.Equals("OK"))
-                    {
-                        return rta = "¡Registro exitoso! \n Hora de entrada: " + asistencias.FechaEntrada + "" +
-                            " \n Tiempo de retardo: " + 0 + "";
-                    }
-                    else
-                    {
-                        rta = "ERROR";
-                    }
-                }
-
             }
             catch (Exception ex)
             {
@@ -206,7 +227,7 @@ namespace Controlador
                         horaIngreso = (TimeSpan)tabla.Rows[i]["HoraEntrada"];
                         horaSalida = (TimeSpan)tabla.Rows[i]["HoraSalida"];
                         asistencias.IdTurnoAplicado = Convert.ToInt32(tabla.Rows[i]["IdTurnoAplicado"]);
-                        asistencias.IdAsistencia = Convert.ToInt32(tabla.Rows[i]["IdAsitencia"]);
+                        asistencias.IdAsistencia = Convert.ToInt32(tabla.Rows[i]["IdAsistencia"]);
                         
                     }
 
@@ -265,7 +286,7 @@ namespace Controlador
                         rta = Datos.ActualizaSalidaAsistencia(asistencias);
                         if (rta.Equals("OK"))
                         {
-                            return rta = "¡Registro exitoso! \n Hora de dalida: " + asistencias.FechaSalida + "" +
+                            return rta = "¡Registro exitoso! \n Hora de salida: " + asistencias.FechaSalida + "" +
                                 " \n Tiempo extra: " + 0 + "";
                         }
                         else
@@ -286,19 +307,23 @@ namespace Controlador
                     {
                         for (int i = 0; i < tabla.Rows.Count; i++)
                         {
-                            asistencias.IdAsistencia = Convert.ToInt32(tabla.Rows[i]["IdAsitencia"]);
+                            asistencias.IdAsistencia = Convert.ToInt32(tabla.Rows[i]["IdAsistencia"]);
                         }
 
                         rta = Datos.ActualizarSalidaSinTurnoAplicado(asistencias);
 
                         if (rta.Equals("OK"))
                         {
-                            return rta = "¡Registro exitoso! \n Hora de dalida: " + asistencias.FechaSalida + "";
+                            return rta = "¡Registro sin turno aplicado exitoso! \n Hora de salida: " + asistencias.FechaSalida + "";
                         }
                         else
                         {
                             return rta = "ERROR";
                         }
+                    }
+                    else
+                    {
+                        return rta = "SIN SALIDA";
                     }
 
                 }

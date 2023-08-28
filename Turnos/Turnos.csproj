@@ -142,5 +142,17 @@
   <ItemGroup>
     <None Include="Resources\candado.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Example1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Example11.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Example12.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Example2.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
