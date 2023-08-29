@@ -83,3 +83,5 @@ D:\PROYECTOS\Turnos\Turnos\obj\Debug\Turnos.csproj.CoreCompileInputs.cache
 D:\PROYECTOS\Turnos\Turnos\obj\Debug\Turnos.csproj.CopyComplete
 D:\PROYECTOS\Turnos\Turnos\obj\Debug\Turnos.Login.resources
 D:\PROYECTOS\Turnos\Turnos\bin\Debug\FontAwesome.Sharp.dll
+D:\PROYECTOS\PARQUEARSE\Turnos\Turnos\bin\Debug\FontAwesome.Sharp.dll
+D:\PROYECTOS\PARQUEARSE\Turnos\Turnos\obj\Debug\Turnos.Login.resources

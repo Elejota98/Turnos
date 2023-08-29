@@ -192,7 +192,7 @@ namespace Controlador
             RepositorioAsistencias Datos = new RepositorioAsistencias();
             return Datos.ObtenerDocumentoPorTarjeta(idTarjeta);
         }
-        public static string ActualizarSalidaAsistencia(Asistencias asistencias, int idSede)
+        public static string ActualizarSalidaAsistencia(Asistencias asistencias, int idSede, string documentoLogin)
         {
             string rta = "";
             int tiempoExtra = 0;
@@ -213,119 +213,126 @@ namespace Controlador
                     {
                         asistencias.Documento = lstDatos["Documento"].ToString();
                     }
+                    if (asistencias.Documento == documentoLogin)
+                    {
+                        tabla = Datos.ValidarFechaSalida(asistencias, idSede);
+                        if (tabla.Rows.Count > 0)
+                        {
+
+                            for (int i = 0; i < tabla.Rows.Count; i++)
+                            {
+                                horaIngreso = (TimeSpan)tabla.Rows[i]["HoraEntrada"];
+                                horaSalida = (TimeSpan)tabla.Rows[i]["HoraSalida"];
+                                asistencias.IdTurnoAplicado = Convert.ToInt32(tabla.Rows[i]["IdTurnoAplicado"]);
+                                asistencias.IdAsistencia = Convert.ToInt32(tabla.Rows[i]["IdAsistencia"]);
+
+                            }
+
+                            tabla = PoliticasController.ListarPoliticas();
+
+                            for (int i = 0; i < tabla.Rows.Count; i++)
+                            {
+                                if (tabla.Rows[i]["Nombre"].ToString() == "HoraExtra")
+                                {
+                                    tiempoExtra = Convert.ToInt32(tabla.Rows[i]["Tiempo"]);
+                                }
+                            }
+
+
+                            TimeSpan horaEntradaAsistencias = asistencias.FechaSalida.TimeOfDay;
+
+                            minutosDiferencia = (int)(horaEntradaAsistencias - horaSalida).TotalMinutes;
+
+                            if (minutosDiferencia >= tiempoExtra)
+                            {
+                                //registrar hora extras
+
+                                rta = Datos.ActualizaSalidaAsistencia(asistencias);
+                                if (rta.Equals("OK"))
+                                {
+                                    HorasExtras horasExtras = new HorasExtras()
+                                    {
+                                        FechaHoraExtra = DateTime.Now,
+                                        MinutosExtras = minutosDiferencia,
+                                        IdAsistencia = asistencias.IdAsistencia
+
+                                    };
+
+
+                                    rta = ExtrasController.RegistrarHorasExtras(horasExtras);
+
+                                    if (rta.Equals("OK"))
+                                    {
+                                        TimeSpan minutosExtra = TimeSpan.FromMinutes(horasExtras.MinutosExtras);
+                                        string tiempoRetardoFormateado = horasExtras.MinutosExtras.ToString(@"hh\:mm");
+                                        return rta = "¡Registro exitoso! \n Hora de salida: " + asistencias.FechaSalida + "" +
+                                    " \n Tiempo extra: " + minutosExtra + "";
+
+                                    }
+                                    else
+                                    {
+                                        rta = "ERROR";
+                                    }
+
+                                }
+                            }
+                            else
+                            {
+                                asistencias.FechaSalida = DateTime.Now;
+
+                                rta = Datos.ActualizaSalidaAsistencia(asistencias);
+                                if (rta.Equals("OK"))
+                                {
+                                    return rta = "¡Registro exitoso! \n Hora de salida: " + asistencias.FechaSalida + "" +
+                                        " \n Tiempo extra: " + 0 + "";
+                                }
+                                else
+                                {
+                                    rta = "ERROR";
+                                }
+                            }
+
+                        }
+
+                        else
+                        {
+
+                            //VALIDAR SALIDAS PENDIENTES IDTURNOAPLICADO NULL
+
+                            tabla = Datos.ValidarFechSalidaSinTurnoAplicado(asistencias);
+                            if (tabla.Rows.Count > 0)
+                            {
+                                for (int i = 0; i < tabla.Rows.Count; i++)
+                                {
+                                    asistencias.IdAsistencia = Convert.ToInt32(tabla.Rows[i]["IdAsistencia"]);
+                                }
+
+                                rta = Datos.ActualizarSalidaSinTurnoAplicado(asistencias);
+
+                                if (rta.Equals("OK"))
+                                {
+                                    return rta = "¡Registro sin turno aplicado exitoso! \n Hora de salida: " + asistencias.FechaSalida + "";
+                                }
+                                else
+                                {
+                                    return rta = "ERROR";
+                                }
+                            }
+                            else
+                            {
+                                return rta = "SIN SALIDA";
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        return rta = "La tarjeta no pertenece al usuario que inició sesión";
+                    }
                 }
                 else
                 {
                     return rta = "La Tarjeta no pertenece a ningún empleado";
-                }
-                tabla = Datos.ValidarFechaSalida(asistencias, idSede);
-                if (tabla.Rows.Count > 0)
-                {
-
-                    for (int i = 0; i < tabla.Rows.Count; i++)
-                    {
-                        horaIngreso = (TimeSpan)tabla.Rows[i]["HoraEntrada"];
-                        horaSalida = (TimeSpan)tabla.Rows[i]["HoraSalida"];
-                        asistencias.IdTurnoAplicado = Convert.ToInt32(tabla.Rows[i]["IdTurnoAplicado"]);
-                        asistencias.IdAsistencia = Convert.ToInt32(tabla.Rows[i]["IdAsistencia"]);
-                        
-                    }
-
-                    tabla = PoliticasController.ListarPoliticas();
-
-                    for (int i = 0; i < tabla.Rows.Count; i++)
-                    {
-                        if (tabla.Rows[i]["Nombre"].ToString() == "HoraExtra")
-                        {
-                            tiempoExtra = Convert.ToInt32(tabla.Rows[i]["Tiempo"]);
-                        }
-                    }
-
-
-                    TimeSpan horaEntradaAsistencias = asistencias.FechaSalida.TimeOfDay;
-
-                    minutosDiferencia = (int)(horaEntradaAsistencias - horaSalida).TotalMinutes;
-
-                    if (minutosDiferencia >= tiempoExtra)
-                    {
-                        //registrar hora extras
-
-                        rta = Datos.ActualizaSalidaAsistencia(asistencias);
-                        if (rta.Equals("OK"))
-                        {
-                            HorasExtras horasExtras = new HorasExtras()
-                            {
-                                FechaHoraExtra = DateTime.Now,
-                                MinutosExtras = minutosDiferencia,
-                                IdAsistencia = asistencias.IdAsistencia
-                                
-                            };
-
-
-                            rta = ExtrasController.RegistrarHorasExtras(horasExtras);
-
-                            if (rta.Equals("OK"))
-                            {
-                                TimeSpan minutosExtra = TimeSpan.FromMinutes(horasExtras.MinutosExtras);
-                                string tiempoRetardoFormateado = horasExtras.MinutosExtras.ToString(@"hh\:mm");
-                                return rta = "¡Registro exitoso! \n Hora de salida: " + asistencias.FechaSalida + "" +
-                            " \n Tiempo extra: " + minutosExtra + "";
-
-                            }
-                            else
-                            {
-                                rta = "ERROR";
-                            }
-
-                        }
-                    }
-                    else
-                    {
-                        asistencias.FechaSalida = DateTime.Now;
-
-                        rta = Datos.ActualizaSalidaAsistencia(asistencias);
-                        if (rta.Equals("OK"))
-                        {
-                            return rta = "¡Registro exitoso! \n Hora de salida: " + asistencias.FechaSalida + "" +
-                                " \n Tiempo extra: " + 0 + "";
-                        }
-                        else
-                        {
-                            rta = "ERROR";
-                        }
-                    }
-
-                }
-                
-                else
-                {
-
-                    //VALIDAR SALIDAS PENDIENTES IDTURNOAPLICADO NULL
-
-                    tabla = Datos.ValidarFechSalidaSinTurnoAplicado(asistencias);
-                    if (tabla.Rows.Count > 0)
-                    {
-                        for (int i = 0; i < tabla.Rows.Count; i++)
-                        {
-                            asistencias.IdAsistencia = Convert.ToInt32(tabla.Rows[i]["IdAsistencia"]);
-                        }
-
-                        rta = Datos.ActualizarSalidaSinTurnoAplicado(asistencias);
-
-                        if (rta.Equals("OK"))
-                        {
-                            return rta = "¡Registro sin turno aplicado exitoso! \n Hora de salida: " + asistencias.FechaSalida + "";
-                        }
-                        else
-                        {
-                            return rta = "ERROR";
-                        }
-                    }
-                    else
-                    {
-                        return rta = "SIN SALIDA";
-                    }
-
                 }
             }
 

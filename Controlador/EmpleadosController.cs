@@ -21,7 +21,8 @@ namespace Controlador
             tarjetas.IdTarjeta = TarjetasController.ObtenerIdTarjeta();
 
             if (tarjetas.IdTarjeta != "ERROR")
-            { 
+            {
+                empleados.IdTarjeta = tarjetas.IdTarjeta;
             tabla = Datos.VerificarExisteEmpleado(empleados);
             if (tabla.Rows.Count > 0)
             {
@@ -36,7 +37,7 @@ namespace Controlador
                     tabla = Datos.VerificarExisteEmpleadoPorTarjeta(empleados);
                     if (tabla.Rows.Count > 0)
                     {
-                        rta = "Esta tarjeta ya le pertenece a un empleado";
+                       return rta = "Esta tarjeta ya le pertenece a un empleado";
                     }
                     else
                     {
@@ -59,16 +60,24 @@ namespace Controlador
                     if (rta.Equals("OK"))
                     {
 
-                        rta = Datos.RegistrarEmpleado(empleados);
-                        if (rta.Equals("OK"))
-                        {
-                            rta = "OK";
-                        }
-                        else
-                        {
-                            rta = "Error en el momento de registrar el empleado \n Informar a Tecnología";
-                        }
-                        return rta;
+                            tabla = Datos.VerificarExisteEmpleadoPorTarjeta(empleados);
+                            if (tabla.Rows.Count > 0)
+                            {
+                                return rta = "Esta tarjeta ya le pertenece a un empleado";
+                            }
+                            else
+                            {
+                                rta = Datos.RegistrarEmpleado(empleados);
+                                if (rta.Equals("OK"))
+                                {
+                                    rta = "OK";
+                                }
+                                else
+                                {
+                                    rta = rta.ToString();
+                                }
+                                return rta;
+                            }
                     }
                     else
                     {
@@ -90,6 +99,7 @@ namespace Controlador
             string rta = "";
             RepositorioEmpleados Datos = new RepositorioEmpleados();
             DataTable tabla;
+        string documentoBd=string.Empty;
             Tarjetas tarjetas = new Tarjetas();
             tarjetas.IdTarjeta = TarjetasController.ObtenerIdTarjeta();
 
@@ -99,19 +109,31 @@ namespace Controlador
                     tabla = TarjetasController.VerificarExisteTarjeta(tarjetas);
                     if (tabla.Rows.Count > 0)
                     {
-                        tabla = Datos.VerificarExisteEmpleadoPorTarjeta(empleados);
+                    tabla = Datos.VerificarExisteEmpleadoPorTarjeta(empleados);
                         if (tabla.Rows.Count > 0)
                         {
-                        rta = Datos.ActualizarDatosEmpleado(empleados);
-                        if (rta.Equals("OK"))
+                        foreach (DataRow lstDatos in tabla.Rows)
                         {
-                            rta = "OK";
+                             documentoBd = lstDatos["Documento"].ToString();
+                        }
+                        if (empleados.Documento == documentoBd)
+                        {
+                            rta = Datos.ActualizarDatosEmpleado(empleados);
+                            if (rta.Equals("OK"))
+                            {
+                                rta = "OK";
+                            }
+                            else
+                            {
+                                rta = rta.ToString();
+                            }
+                            return rta;
                         }
                         else
                         {
-                            rta = rta.ToString();
+                            return rta = "La tarjeta ya está asignada a un empleado";
                         }
-                        return rta;
+                       
                         }
                     else
                     {

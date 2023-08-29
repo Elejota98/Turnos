@@ -89,9 +89,8 @@ namespace Servicios
             try
             {
                 sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
-                SqlCommand comando = new SqlCommand("P_VerificarExisteEmpleadoPorTarjeta", sqlCon);
-                comando.CommandType = CommandType.StoredProcedure;
-                comando.Parameters.Add("@IdTarjeta", SqlDbType.VarChar).Value = empleados.IdTarjeta;
+                string cadena = ("SELECT * FROM T_Empleados WHERE IdTarjeta='" + empleados.IdTarjeta + "' AND Estado=1");
+                SqlCommand comando = new SqlCommand(cadena,sqlCon);
                 sqlCon.Open();
                 resultado = comando.ExecuteReader();
                 tabla.Load(resultado);

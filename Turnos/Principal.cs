@@ -228,10 +228,7 @@ namespace Turnos
 
         #endregion
 
-        #region Novedades
-
-
-        #endregion
+   
 
         #region Empleados
 
@@ -389,7 +386,13 @@ namespace Turnos
                 if (rta.Equals("OK"))
                 {
                     MensajeOk("Empleado actualizado correctamente");
-                    ListarActEmpleados();
+                    //ListarActEmpleados();
+                    lblTitulo.Text = "Gestión empleados";
+                    lblTitulo.Visible = true;
+                    TabPrincipal.SelectedTab = Empleados;
+                    ListarCargos();
+                    ListarSedes();
+                    ListarEmpleados();
                 }
                 else
                 {
@@ -413,38 +416,38 @@ namespace Turnos
 
         #region EncriptarClave
 
+
         static string EncriptarClave(string clave)
         {
             string claveNew = clave.Substring(clave.Length - 4);
 
-            using (Aes aesAlg = Aes.Create())
-            {
-                aesAlg.GenerateIV();
-                aesAlg.Key = Encoding.UTF8.GetBytes(claveNew);
+            #region Old
 
-                ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
-                using (MemoryStream msEncrypt = new MemoryStream())
+            string EncryptionKey = "MAKV2SPBNI99212";
+            byte[] clearBytes = Encoding.Unicode.GetBytes(claveNew);
+            using (Aes encryptor = Aes.Create())
+            {
+                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
+                encryptor.Key = pdb.GetBytes(32);
+                encryptor.IV = pdb.GetBytes(16);
+                using (MemoryStream ms = new MemoryStream())
                 {
-                    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
                     {
-                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
-                        {
-                            swEncrypt.Write(clave);
-                        }
+                        cs.Write(clearBytes, 0, clearBytes.Length);
+                        cs.Close();
                     }
-                    return Convert.ToBase64String(aesAlg.IV.Concat(msEncrypt.ToArray()).ToArray());
+                    claveNew = Convert.ToBase64String(ms.ToArray());
                 }
             }
+            return claveNew;
+
+            //// Generar un hash bcrypt para la clave
+            //string contraseñaEncriptada = BCrypt.Net.BCrypt.HashPassword(claveNew);
+            //return contraseñaEncriptada;
+
+            #endregion
         }
-
-        //static string EncriptarClave(string clave)
-        //{
-        //    string claveNew = clave.Substring(clave.Length - 4);
-
-        //    // Generar un hash bcrypt para la clave
-        //  string  contraseñaEncriptada = BCrypt.Net.BCrypt.HashPassword(claveNew);
-        //    return contraseñaEncriptada;
-        //}
 
         #endregion
 
@@ -465,7 +468,7 @@ namespace Turnos
             {
                 tmAsistencias.Stop();
                 lblMensaje.Text = rta;
-                pnAsistencia.Visible = true;
+                lblMensaje.Visible = true;
                 lblMensaje.BackColor = Color.FromArgb(139, 180, 77);
                 lblMensaje.ForeColor = Color.White;
                 lblMensaje.Update();
@@ -496,7 +499,7 @@ namespace Turnos
                 asistencia.FechaEntrada = DateTime.Now;
                 asistencia.FechaSalida = DateTime.Now;
 
-                rta = AsistenciaController.ActualizarSalidaAsistencia(asistencia, idSede);
+                rta = AsistenciaController.ActualizarSalidaAsistencia(asistencia, idSede, Documento);
 
                 if (rta.Equals("SIN SALIDA"))
                 {
@@ -506,8 +509,10 @@ namespace Turnos
                 {
                     tmAsistencias.Stop();
                     lblMensaje.Text = rta;
+                    lblMensaje.BackColor = Color.FromArgb(122, 123, 123);
                     lblMensaje.ForeColor = Color.White;                    
-                    pnAsistencia.Visible = true;
+                    lblMensaje.Visible=true;
+                    //pnAsistencia.Visible = true;
                     lblMensaje.Update();
                     Thread.Sleep(tiempoMensaje);
                     Login login = new Login();
@@ -524,9 +529,11 @@ namespace Turnos
                     //tmAsistencias.Start();
 
                     tmAsistencias.Stop();
+                    lblMensaje.BackColor = Color.FromArgb(122, 123, 123);
                     lblMensaje.Text = rta.ToString();
                     lblMensaje.ForeColor = Color.White;
-                     pnAsistencia.Visible = true;
+                    //pnAsistencia.Visible = true;
+                    lblMensaje.Visible=true;
                     lblMensaje.Update();
                 Thread.Sleep(tiempoMensaje);
                     Login login = new Login();
@@ -538,10 +545,12 @@ namespace Turnos
             else if(rta.Equals("NO TARJETA"))
             {
                 rta = "No se encontró ninguna tarjeta en la lectora";
+                    lblMensaje.BackColor = Color.FromArgb(122, 123, 123);
                 tmAsistencias.Stop();
                 lblMensaje.ForeColor = Color.White;
                 lblMensaje.Text = rta.ToString();
-                pnAsistencia.Visible = true;
+                //pnAsistencia.Visible = true;
+                    lblMensaje.Visible=true;
                 lblMensaje.Update();
                 Thread.Sleep(tiempoMensaje);
                 Login login = new Login();
@@ -566,7 +575,7 @@ namespace Turnos
             MedidasFormularios();
             if (CargarImagenes())
             {
-                label15.Visible = false;
+                //label15.Visible = false;
             }
           
         }
@@ -610,21 +619,17 @@ namespace Turnos
         #endregion
 
         #region Botones
-
+        private void btnActEmpleado_Click(object sender, EventArgs e)
+        {
+            ActualizarEmpleado();
+        }
         private void btnActVolver_Click(object sender, EventArgs e)
         {
             lblTitulo.Text = "Gestión empleados";
             lblTitulo.Visible = true;
             TabPrincipal.SelectedTab = Empleados;
         }
-        private void btnAsistencia_Click_1(object sender, EventArgs e)
-        {
-            lblTitulo.Text = "Aistencia empleados";
-            lblTitulo.Visible = true;
-            pnAsistencia.Visible = false;
-            TabPrincipal.SelectedTab = Asistencia;
-            tmAsistencias.Start();
-        }
+
 
         private void btnActualizar_Click(object sender, EventArgs e)
         {
@@ -667,9 +672,12 @@ namespace Turnos
         {
             lblTitulo.Text = "Aistencia empleados";
             lblTitulo.Visible = true;
-            pnAsistencia.Visible = false;
+                    lblMensaje.Visible=true;
+            //pnAsistencia.Visible = false;
             TabPrincipal.SelectedTab = Asistencia;
+            trmMenu.Stop();
             tmAsistencias.Start();
+            conteo = 1;
         }
 
         private void btnEmpleados_Click(object sender, EventArgs e)
@@ -699,7 +707,7 @@ namespace Turnos
             asistencia.FechaEntrada = DateTime.Now;
             asistencia.FechaSalida = DateTime.Now;
 
-            rta = AsistenciaController.ActualizarSalidaAsistencia(asistencia, idSede);
+            rta = AsistenciaController.ActualizarSalidaAsistencia(asistencia, idSede, Documento);
 
             if (rta.Equals("SIN SALIDA"))
             {
@@ -733,10 +741,12 @@ namespace Turnos
             TabPrincipal.Appearance = TabAppearance.FlatButtons;
             TabPrincipal.ItemSize = new Size(0, 1);
             TabPrincipal.SizeMode = TabSizeMode.Fixed;
-            //if(Cargo!= "JEFE TALENTO HUMANO")
-            //{
-            //    btnEmpleados.Visible = false;
-            //}
+            trmMenu.Start();
+            tmAsistencias.Stop();
+            if(Cargo== "Empleado")
+            {
+                btnEmpleados.Visible = false;
+            }
         }
 
         private void cbActSede_SelectedIndexChanged(object sender, EventArgs e)
@@ -789,9 +799,43 @@ namespace Turnos
             ListarSedesAct();
         }
 
-        private void btnActEmpleado_Click(object sender, EventArgs e)
+        private void trmMenu_Tick(object sender, EventArgs e)
         {
-            ActualizarEmpleado();
+            conteo++;
+
+            try
+            {
+                if (Cargo == "Empleado")
+                {
+                    if (conteo >= 50)
+                    {
+                        Login login = new Login();
+                        login.Show();
+                        this.Hide();
+                        trmMenu.Stop();
+                        btnEmpleados.Visible = false;
+                    }
+                }
+                else
+                {
+
+                }
+               
+
+            }
+            catch (Exception ex)
+            {
+
+                MensajeError(ex.ToString());
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Login login = new Login();
+            login.Show();
+            this.Hide();
+            trmMenu.Stop();
         }
     }
 }

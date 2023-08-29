@@ -36,6 +36,7 @@ namespace Turnos
                     Principal principal = new Principal();
                     principal.Nombre = login.NombresEmpleado.ToString();
                     principal.Cargo = login.CargoEmpleado.ToString();
+                    principal.Documento = login.Documento.ToString();
                     principal.Show();
                     this.Hide();
 
@@ -71,6 +72,11 @@ namespace Turnos
         private void Login_Load(object sender, EventArgs e)
         {
             timeFecha.Enabled= true;
+        }
+
+        private void btnCerrar_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
