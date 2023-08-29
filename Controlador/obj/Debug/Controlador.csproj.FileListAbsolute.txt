@@ -50,3 +50,13 @@ D:\PROYECTOS\Turnos\Controlador\bin\Debug\System.Buffers.xml
 D:\PROYECTOS\Turnos\Controlador\bin\Debug\System.Memory.xml
 D:\PROYECTOS\Turnos\Controlador\bin\Debug\System.Numerics.Vectors.xml
 D:\PROYECTOS\Turnos\Controlador\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+D:\PROYECTOS\PARQUEARSE\Turnos\Controlador\bin\Debug\BCrypt.Net-Next.dll
+D:\PROYECTOS\PARQUEARSE\Turnos\Controlador\bin\Debug\System.Buffers.dll
+D:\PROYECTOS\PARQUEARSE\Turnos\Controlador\bin\Debug\System.Memory.dll
+D:\PROYECTOS\PARQUEARSE\Turnos\Controlador\bin\Debug\System.Numerics.Vectors.dll
+D:\PROYECTOS\PARQUEARSE\Turnos\Controlador\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+D:\PROYECTOS\PARQUEARSE\Turnos\Controlador\bin\Debug\BCrypt.Net-Next.xml
+D:\PROYECTOS\PARQUEARSE\Turnos\Controlador\bin\Debug\System.Buffers.xml
+D:\PROYECTOS\PARQUEARSE\Turnos\Controlador\bin\Debug\System.Memory.xml
+D:\PROYECTOS\PARQUEARSE\Turnos\Controlador\bin\Debug\System.Numerics.Vectors.xml
+D:\PROYECTOS\PARQUEARSE\Turnos\Controlador\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml

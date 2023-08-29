@@ -32,24 +32,22 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnTitulo = new System.Windows.Forms.Panel();
             this.lblNombre = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.lblTitulo = new System.Windows.Forms.Label();
             this.TabPrincipal = new System.Windows.Forms.TabControl();
             this.Menu = new System.Windows.Forms.TabPage();
-            this.btnEmpleados = new FontAwesome.Sharp.IconButton();
-            this.btnAsistencia = new FontAwesome.Sharp.IconButton();
-            this.imgFondoAsistencia = new FontAwesome.Sharp.IconPictureBox();
             this.Asistencia = new System.Windows.Forms.TabPage();
-            this.label15 = new System.Windows.Forms.Label();
-            this.pnAsistencia = new System.Windows.Forms.Panel();
             this.lblMensaje = new System.Windows.Forms.Label();
             this.Empleados = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.btnVolver = new System.Windows.Forms.Button();
             this.dvgListadoEmpleados = new System.Windows.Forms.DataGridView();
+            this.chkSeleccionar = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.label13 = new System.Windows.Forms.Label();
             this.btnActualizar = new System.Windows.Forms.Button();
             this.txtDocumentoBuscar = new System.Windows.Forms.TextBox();
@@ -69,36 +67,37 @@
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.ActualizarDatosEmpleado = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.tbActDocumento = new System.Windows.Forms.TextBox();
-            this.tbActNombres = new System.Windows.Forms.TextBox();
-            this.tbActApellidos = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.tbActTelefono = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.cboActCargo = new System.Windows.Forms.ComboBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.cbActSede = new System.Windows.Forms.ComboBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.tmAsistencias = new System.Windows.Forms.Timer(this.components);
-            this.chkSeleccionar = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.btnActEmpleado = new System.Windows.Forms.Button();
-            this.lbl159 = new System.Windows.Forms.Label();
-            this.tbActTarjeta = new System.Windows.Forms.TextBox();
             this.panel5 = new System.Windows.Forms.Panel();
             this.btnActVolver = new System.Windows.Forms.Button();
             this.dvgActListadoEmpleados = new System.Windows.Forms.DataGridView();
             this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.label16 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.tbActTarjeta = new System.Windows.Forms.TextBox();
+            this.lbl159 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.btnActEmpleado = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cbActSede = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.cboActCargo = new System.Windows.Forms.ComboBox();
+            this.tbActDocumento = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.tbActNombres = new System.Windows.Forms.TextBox();
+            this.tbActTelefono = new System.Windows.Forms.TextBox();
+            this.tbActApellidos = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.tmAsistencias = new System.Windows.Forms.Timer(this.components);
+            this.btnEmpleados = new FontAwesome.Sharp.IconButton();
+            this.btnAsistencia = new FontAwesome.Sharp.IconButton();
+            this.imgFondoAsistencia = new FontAwesome.Sharp.IconPictureBox();
+            this.imgAsistencia = new System.Windows.Forms.PictureBox();
             this.pnTitulo.SuspendLayout();
             this.TabPrincipal.SuspendLayout();
             this.Menu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.imgFondoAsistencia)).BeginInit();
             this.Asistencia.SuspendLayout();
-            this.pnAsistencia.SuspendLayout();
             this.Empleados.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -106,9 +105,11 @@
             this.pnlRegistro.SuspendLayout();
             this.ActualizarDatosEmpleado.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.panel3.SuspendLayout();
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dvgActListadoEmpleados)).BeginInit();
+            this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgFondoAsistencia)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgAsistencia)).BeginInit();
             this.SuspendLayout();
             // 
             // pnTitulo
@@ -120,7 +121,7 @@
             this.pnTitulo.Location = new System.Drawing.Point(0, 0);
             this.pnTitulo.Margin = new System.Windows.Forms.Padding(2);
             this.pnTitulo.Name = "pnTitulo";
-            this.pnTitulo.Size = new System.Drawing.Size(1009, 88);
+            this.pnTitulo.Size = new System.Drawing.Size(1024, 88);
             this.pnTitulo.TabIndex = 2;
             // 
             // lblNombre
@@ -165,12 +166,12 @@
             this.TabPrincipal.Controls.Add(this.Asistencia);
             this.TabPrincipal.Controls.Add(this.Empleados);
             this.TabPrincipal.Controls.Add(this.ActualizarDatosEmpleado);
-            this.TabPrincipal.Dock = System.Windows.Forms.DockStyle.Top;
+            this.TabPrincipal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TabPrincipal.Location = new System.Drawing.Point(0, 88);
             this.TabPrincipal.Margin = new System.Windows.Forms.Padding(2);
             this.TabPrincipal.Name = "TabPrincipal";
             this.TabPrincipal.SelectedIndex = 0;
-            this.TabPrincipal.Size = new System.Drawing.Size(1009, 1319);
+            this.TabPrincipal.Size = new System.Drawing.Size(1024, 680);
             this.TabPrincipal.TabIndex = 6;
             // 
             // Menu
@@ -183,105 +184,28 @@
             this.Menu.Margin = new System.Windows.Forms.Padding(2);
             this.Menu.Name = "Menu";
             this.Menu.Padding = new System.Windows.Forms.Padding(2);
-            this.Menu.Size = new System.Drawing.Size(1001, 1293);
+            this.Menu.Size = new System.Drawing.Size(1016, 654);
             this.Menu.TabIndex = 0;
             this.Menu.Text = "tabMenu";
             // 
-            // btnEmpleados
-            // 
-            this.btnEmpleados.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(180)))), ((int)(((byte)(77)))));
-            this.btnEmpleados.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(180)))), ((int)(((byte)(77)))));
-            this.btnEmpleados.FlatAppearance.BorderSize = 0;
-            this.btnEmpleados.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEmpleados.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEmpleados.ForeColor = System.Drawing.Color.White;
-            this.btnEmpleados.IconChar = FontAwesome.Sharp.IconChar.PersonCirclePlus;
-            this.btnEmpleados.IconColor = System.Drawing.Color.White;
-            this.btnEmpleados.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnEmpleados.Location = new System.Drawing.Point(475, 235);
-            this.btnEmpleados.Name = "btnEmpleados";
-            this.btnEmpleados.Size = new System.Drawing.Size(250, 160);
-            this.btnEmpleados.TabIndex = 3;
-            this.btnEmpleados.Text = "Empleados";
-            this.btnEmpleados.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnEmpleados.UseVisualStyleBackColor = false;
-            this.btnEmpleados.Click += new System.EventHandler(this.btnEmpleados_Click);
-            // 
-            // btnAsistencia
-            // 
-            this.btnAsistencia.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(180)))), ((int)(((byte)(77)))));
-            this.btnAsistencia.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(180)))), ((int)(((byte)(77)))));
-            this.btnAsistencia.FlatAppearance.BorderSize = 0;
-            this.btnAsistencia.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAsistencia.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAsistencia.ForeColor = System.Drawing.Color.White;
-            this.btnAsistencia.IconChar = FontAwesome.Sharp.IconChar.RightToBracket;
-            this.btnAsistencia.IconColor = System.Drawing.Color.White;
-            this.btnAsistencia.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnAsistencia.Location = new System.Drawing.Point(182, 235);
-            this.btnAsistencia.Name = "btnAsistencia";
-            this.btnAsistencia.Size = new System.Drawing.Size(250, 160);
-            this.btnAsistencia.TabIndex = 2;
-            this.btnAsistencia.Text = "Asistencia";
-            this.btnAsistencia.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnAsistencia.UseVisualStyleBackColor = false;
-            this.btnAsistencia.Click += new System.EventHandler(this.btnAsistencia_Click);
-            // 
-            // imgFondoAsistencia
-            // 
-            this.imgFondoAsistencia.BackColor = System.Drawing.Color.Transparent;
-            this.imgFondoAsistencia.BackgroundImage = global::Turnos.Properties.Resources.Example11;
-            this.imgFondoAsistencia.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.imgFondoAsistencia.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.imgFondoAsistencia.IconChar = FontAwesome.Sharp.IconChar.None;
-            this.imgFondoAsistencia.IconColor = System.Drawing.SystemColors.ControlText;
-            this.imgFondoAsistencia.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.imgFondoAsistencia.IconSize = 618;
-            this.imgFondoAsistencia.Location = new System.Drawing.Point(-4, 0);
-            this.imgFondoAsistencia.Name = "imgFondoAsistencia";
-            this.imgFondoAsistencia.Size = new System.Drawing.Size(1009, 618);
-            this.imgFondoAsistencia.TabIndex = 4;
-            this.imgFondoAsistencia.TabStop = false;
-            // 
             // Asistencia
             // 
-            this.Asistencia.Controls.Add(this.label15);
-            this.Asistencia.Controls.Add(this.pnAsistencia);
+            this.Asistencia.Controls.Add(this.lblMensaje);
+            this.Asistencia.Controls.Add(this.imgAsistencia);
             this.Asistencia.Location = new System.Drawing.Point(4, 22);
             this.Asistencia.Margin = new System.Windows.Forms.Padding(2);
             this.Asistencia.Name = "Asistencia";
             this.Asistencia.Padding = new System.Windows.Forms.Padding(2);
-            this.Asistencia.Size = new System.Drawing.Size(1001, 1293);
+            this.Asistencia.Size = new System.Drawing.Size(1016, 654);
             this.Asistencia.TabIndex = 1;
             this.Asistencia.Text = "tabAsistencia";
             this.Asistencia.UseVisualStyleBackColor = true;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(410, 627);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(181, 39);
-            this.label15.TabIndex = 11;
-            this.label15.Text = "MENSAJE";
-            // 
-            // pnAsistencia
-            // 
-            this.pnAsistencia.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
-            this.pnAsistencia.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pnAsistencia.Controls.Add(this.lblMensaje);
-            this.pnAsistencia.Location = new System.Drawing.Point(7, 345);
-            this.pnAsistencia.Margin = new System.Windows.Forms.Padding(2);
-            this.pnAsistencia.Name = "pnAsistencia";
-            this.pnAsistencia.Size = new System.Drawing.Size(987, 230);
-            this.pnAsistencia.TabIndex = 0;
             // 
             // lblMensaje
             // 
             this.lblMensaje.AutoSize = true;
             this.lblMensaje.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMensaje.Location = new System.Drawing.Point(37, 33);
+            this.lblMensaje.Location = new System.Drawing.Point(130, 453);
             this.lblMensaje.Name = "lblMensaje";
             this.lblMensaje.Size = new System.Drawing.Size(181, 39);
             this.lblMensaje.TabIndex = 10;
@@ -295,7 +219,7 @@
             this.Empleados.Location = new System.Drawing.Point(4, 22);
             this.Empleados.Margin = new System.Windows.Forms.Padding(2);
             this.Empleados.Name = "Empleados";
-            this.Empleados.Size = new System.Drawing.Size(1001, 1293);
+            this.Empleados.Size = new System.Drawing.Size(1016, 654);
             this.Empleados.TabIndex = 2;
             this.Empleados.Text = "tbEmpleados";
             this.Empleados.UseVisualStyleBackColor = true;
@@ -343,7 +267,7 @@
             // 
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -354,7 +278,7 @@
             this.chkSeleccionar});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(180)))), ((int)(((byte)(77)))));
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -364,7 +288,7 @@
             this.dvgListadoEmpleados.Name = "dvgListadoEmpleados";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -372,6 +296,14 @@
             this.dvgListadoEmpleados.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dvgListadoEmpleados.Size = new System.Drawing.Size(964, 263);
             this.dvgListadoEmpleados.TabIndex = 21;
+            // 
+            // chkSeleccionar
+            // 
+            this.chkSeleccionar.HeaderText = "Seleccionar";
+            this.chkSeleccionar.Name = "chkSeleccionar";
+            this.chkSeleccionar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.chkSeleccionar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.chkSeleccionar.Visible = false;
             // 
             // label13
             // 
@@ -576,7 +508,7 @@
             this.ActualizarDatosEmpleado.Location = new System.Drawing.Point(4, 22);
             this.ActualizarDatosEmpleado.Margin = new System.Windows.Forms.Padding(2);
             this.ActualizarDatosEmpleado.Name = "ActualizarDatosEmpleado";
-            this.ActualizarDatosEmpleado.Size = new System.Drawing.Size(1001, 1293);
+            this.ActualizarDatosEmpleado.Size = new System.Drawing.Size(1016, 654);
             this.ActualizarDatosEmpleado.TabIndex = 3;
             this.ActualizarDatosEmpleado.Text = "tbActualizarDatosEmpleados";
             this.ActualizarDatosEmpleado.UseVisualStyleBackColor = true;
@@ -589,205 +521,8 @@
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1001, 1293);
+            this.panel2.Size = new System.Drawing.Size(1016, 654);
             this.panel2.TabIndex = 16;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(180)))), ((int)(((byte)(77)))));
-            this.label8.Location = new System.Drawing.Point(674, 95);
-            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(55, 24);
-            this.label8.TabIndex = 15;
-            this.label8.Text = "Sede";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(180)))), ((int)(((byte)(77)))));
-            this.label7.Location = new System.Drawing.Point(361, 93);
-            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(61, 24);
-            this.label7.TabIndex = 12;
-            this.label7.Text = "Cargo";
-            // 
-            // tbActDocumento
-            // 
-            this.tbActDocumento.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbActDocumento.Location = new System.Drawing.Point(144, 31);
-            this.tbActDocumento.Name = "tbActDocumento";
-            this.tbActDocumento.Size = new System.Drawing.Size(177, 29);
-            this.tbActDocumento.TabIndex = 1;
-            // 
-            // tbActNombres
-            // 
-            this.tbActNombres.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbActNombres.Location = new System.Drawing.Point(450, 31);
-            this.tbActNombres.Name = "tbActNombres";
-            this.tbActNombres.Size = new System.Drawing.Size(177, 29);
-            this.tbActNombres.TabIndex = 2;
-            // 
-            // tbActApellidos
-            // 
-            this.tbActApellidos.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbActApellidos.Location = new System.Drawing.Point(764, 31);
-            this.tbActApellidos.Name = "tbActApellidos";
-            this.tbActApellidos.Size = new System.Drawing.Size(177, 29);
-            this.tbActApellidos.TabIndex = 3;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(180)))), ((int)(((byte)(77)))));
-            this.label9.Location = new System.Drawing.Point(39, 91);
-            this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(85, 24);
-            this.label9.TabIndex = 11;
-            this.label9.Text = "Teléfono";
-            // 
-            // tbActTelefono
-            // 
-            this.tbActTelefono.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbActTelefono.Location = new System.Drawing.Point(144, 88);
-            this.tbActTelefono.Name = "tbActTelefono";
-            this.tbActTelefono.Size = new System.Drawing.Size(177, 29);
-            this.tbActTelefono.TabIndex = 4;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(180)))), ((int)(((byte)(77)))));
-            this.label10.Location = new System.Drawing.Point(661, 34);
-            this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(88, 24);
-            this.label10.TabIndex = 10;
-            this.label10.Text = "Apellidos";
-            // 
-            // cboActCargo
-            // 
-            this.cboActCargo.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboActCargo.FormattingEnabled = true;
-            this.cboActCargo.Location = new System.Drawing.Point(450, 90);
-            this.cboActCargo.Name = "cboActCargo";
-            this.cboActCargo.Size = new System.Drawing.Size(181, 32);
-            this.cboActCargo.TabIndex = 5;
-            this.cboActCargo.Text = "Seleccione...";
-            this.cboActCargo.MouseClick += new System.Windows.Forms.MouseEventHandler(this.cboActCargo_MouseClick_1);
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(180)))), ((int)(((byte)(77)))));
-            this.label11.Location = new System.Drawing.Point(348, 31);
-            this.label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(88, 24);
-            this.label11.TabIndex = 9;
-            this.label11.Text = "Nombres";
-            // 
-            // cbActSede
-            // 
-            this.cbActSede.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbActSede.FormattingEnabled = true;
-            this.cbActSede.Location = new System.Drawing.Point(764, 90);
-            this.cbActSede.Name = "cbActSede";
-            this.cbActSede.Size = new System.Drawing.Size(182, 32);
-            this.cbActSede.TabIndex = 6;
-            this.cbActSede.Text = "Seleccione...";
-            this.cbActSede.MouseClick += new System.Windows.Forms.MouseEventHandler(this.cbActSede_MouseClick_1);
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(180)))), ((int)(((byte)(77)))));
-            this.label12.Location = new System.Drawing.Point(16, 31);
-            this.label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(108, 24);
-            this.label12.TabIndex = 8;
-            this.label12.Text = "Documento";
-            // 
-            // tmAsistencias
-            // 
-            this.tmAsistencias.Tick += new System.EventHandler(this.tmAsistencias_Tick);
-            // 
-            // chkSeleccionar
-            // 
-            this.chkSeleccionar.HeaderText = "Seleccionar";
-            this.chkSeleccionar.Name = "chkSeleccionar";
-            this.chkSeleccionar.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.chkSeleccionar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.chkSeleccionar.Visible = false;
-            // 
-            // panel3
-            // 
-            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel3.Controls.Add(this.tbActTarjeta);
-            this.panel3.Controls.Add(this.lbl159);
-            this.panel3.Controls.Add(this.label12);
-            this.panel3.Controls.Add(this.btnActEmpleado);
-            this.panel3.Controls.Add(this.label8);
-            this.panel3.Controls.Add(this.cbActSede);
-            this.panel3.Controls.Add(this.label7);
-            this.panel3.Controls.Add(this.label11);
-            this.panel3.Controls.Add(this.cboActCargo);
-            this.panel3.Controls.Add(this.tbActDocumento);
-            this.panel3.Controls.Add(this.label10);
-            this.panel3.Controls.Add(this.tbActNombres);
-            this.panel3.Controls.Add(this.tbActTelefono);
-            this.panel3.Controls.Add(this.tbActApellidos);
-            this.panel3.Controls.Add(this.label9);
-            this.panel3.Location = new System.Drawing.Point(8, 28);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(985, 205);
-            this.panel3.TabIndex = 16;
-            // 
-            // btnActEmpleado
-            // 
-            this.btnActEmpleado.BackColor = System.Drawing.Color.Green;
-            this.btnActEmpleado.FlatAppearance.BorderSize = 0;
-            this.btnActEmpleado.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnActEmpleado.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnActEmpleado.ForeColor = System.Drawing.Color.White;
-            this.btnActEmpleado.Location = new System.Drawing.Point(879, 166);
-            this.btnActEmpleado.Margin = new System.Windows.Forms.Padding(2);
-            this.btnActEmpleado.Name = "btnActEmpleado";
-            this.btnActEmpleado.Size = new System.Drawing.Size(88, 35);
-            this.btnActEmpleado.TabIndex = 16;
-            this.btnActEmpleado.Text = "Guardar";
-            this.btnActEmpleado.UseVisualStyleBackColor = false;
-            this.btnActEmpleado.Click += new System.EventHandler(this.btnActEmpleado_Click);
-            // 
-            // lbl159
-            // 
-            this.lbl159.AutoSize = true;
-            this.lbl159.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl159.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(180)))), ((int)(((byte)(77)))));
-            this.lbl159.Location = new System.Drawing.Point(39, 149);
-            this.lbl159.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lbl159.Name = "lbl159";
-            this.lbl159.Size = new System.Drawing.Size(67, 24);
-            this.lbl159.TabIndex = 17;
-            this.lbl159.Text = "Tarjeta";
-            // 
-            // tbActTarjeta
-            // 
-            this.tbActTarjeta.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbActTarjeta.Location = new System.Drawing.Point(144, 149);
-            this.tbActTarjeta.Name = "tbActTarjeta";
-            this.tbActTarjeta.Size = new System.Drawing.Size(177, 29);
-            this.tbActTarjeta.TabIndex = 18;
             // 
             // panel5
             // 
@@ -819,9 +554,25 @@
             // 
             // dvgActListadoEmpleados
             // 
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dvgActListadoEmpleados.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dvgActListadoEmpleados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dvgActListadoEmpleados.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewCheckBoxColumn1});
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(180)))), ((int)(((byte)(77)))));
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dvgActListadoEmpleados.DefaultCellStyle = dataGridViewCellStyle5;
             this.dvgActListadoEmpleados.Location = new System.Drawing.Point(3, 47);
             this.dvgActListadoEmpleados.Name = "dvgActListadoEmpleados";
             this.dvgActListadoEmpleados.Size = new System.Drawing.Size(964, 279);
@@ -855,11 +606,267 @@
             this.textBox1.Size = new System.Drawing.Size(135, 28);
             this.textBox1.TabIndex = 19;
             // 
+            // panel3
+            // 
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.tbActTarjeta);
+            this.panel3.Controls.Add(this.lbl159);
+            this.panel3.Controls.Add(this.label12);
+            this.panel3.Controls.Add(this.btnActEmpleado);
+            this.panel3.Controls.Add(this.label8);
+            this.panel3.Controls.Add(this.cbActSede);
+            this.panel3.Controls.Add(this.label7);
+            this.panel3.Controls.Add(this.label11);
+            this.panel3.Controls.Add(this.cboActCargo);
+            this.panel3.Controls.Add(this.tbActDocumento);
+            this.panel3.Controls.Add(this.label10);
+            this.panel3.Controls.Add(this.tbActNombres);
+            this.panel3.Controls.Add(this.tbActTelefono);
+            this.panel3.Controls.Add(this.tbActApellidos);
+            this.panel3.Controls.Add(this.label9);
+            this.panel3.Location = new System.Drawing.Point(8, 28);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(985, 205);
+            this.panel3.TabIndex = 16;
+            // 
+            // tbActTarjeta
+            // 
+            this.tbActTarjeta.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbActTarjeta.Location = new System.Drawing.Point(144, 149);
+            this.tbActTarjeta.Name = "tbActTarjeta";
+            this.tbActTarjeta.Size = new System.Drawing.Size(177, 29);
+            this.tbActTarjeta.TabIndex = 18;
+            // 
+            // lbl159
+            // 
+            this.lbl159.AutoSize = true;
+            this.lbl159.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl159.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(180)))), ((int)(((byte)(77)))));
+            this.lbl159.Location = new System.Drawing.Point(39, 149);
+            this.lbl159.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl159.Name = "lbl159";
+            this.lbl159.Size = new System.Drawing.Size(67, 24);
+            this.lbl159.TabIndex = 17;
+            this.lbl159.Text = "Tarjeta";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(180)))), ((int)(((byte)(77)))));
+            this.label12.Location = new System.Drawing.Point(16, 31);
+            this.label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(108, 24);
+            this.label12.TabIndex = 8;
+            this.label12.Text = "Documento";
+            // 
+            // btnActEmpleado
+            // 
+            this.btnActEmpleado.BackColor = System.Drawing.Color.Green;
+            this.btnActEmpleado.FlatAppearance.BorderSize = 0;
+            this.btnActEmpleado.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnActEmpleado.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnActEmpleado.ForeColor = System.Drawing.Color.White;
+            this.btnActEmpleado.Location = new System.Drawing.Point(879, 166);
+            this.btnActEmpleado.Margin = new System.Windows.Forms.Padding(2);
+            this.btnActEmpleado.Name = "btnActEmpleado";
+            this.btnActEmpleado.Size = new System.Drawing.Size(88, 35);
+            this.btnActEmpleado.TabIndex = 16;
+            this.btnActEmpleado.Text = "Guardar";
+            this.btnActEmpleado.UseVisualStyleBackColor = false;
+            this.btnActEmpleado.Click += new System.EventHandler(this.btnActEmpleado_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(180)))), ((int)(((byte)(77)))));
+            this.label8.Location = new System.Drawing.Point(674, 95);
+            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(55, 24);
+            this.label8.TabIndex = 15;
+            this.label8.Text = "Sede";
+            // 
+            // cbActSede
+            // 
+            this.cbActSede.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbActSede.FormattingEnabled = true;
+            this.cbActSede.Location = new System.Drawing.Point(764, 90);
+            this.cbActSede.Name = "cbActSede";
+            this.cbActSede.Size = new System.Drawing.Size(182, 32);
+            this.cbActSede.TabIndex = 6;
+            this.cbActSede.Text = "Seleccione...";
+            this.cbActSede.MouseClick += new System.Windows.Forms.MouseEventHandler(this.cbActSede_MouseClick_1);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(180)))), ((int)(((byte)(77)))));
+            this.label7.Location = new System.Drawing.Point(361, 93);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(61, 24);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "Cargo";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(180)))), ((int)(((byte)(77)))));
+            this.label11.Location = new System.Drawing.Point(348, 31);
+            this.label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(88, 24);
+            this.label11.TabIndex = 9;
+            this.label11.Text = "Nombres";
+            // 
+            // cboActCargo
+            // 
+            this.cboActCargo.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboActCargo.FormattingEnabled = true;
+            this.cboActCargo.Location = new System.Drawing.Point(450, 90);
+            this.cboActCargo.Name = "cboActCargo";
+            this.cboActCargo.Size = new System.Drawing.Size(181, 32);
+            this.cboActCargo.TabIndex = 5;
+            this.cboActCargo.Text = "Seleccione...";
+            this.cboActCargo.MouseClick += new System.Windows.Forms.MouseEventHandler(this.cboActCargo_MouseClick_1);
+            // 
+            // tbActDocumento
+            // 
+            this.tbActDocumento.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbActDocumento.Location = new System.Drawing.Point(144, 31);
+            this.tbActDocumento.Name = "tbActDocumento";
+            this.tbActDocumento.Size = new System.Drawing.Size(177, 29);
+            this.tbActDocumento.TabIndex = 1;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(180)))), ((int)(((byte)(77)))));
+            this.label10.Location = new System.Drawing.Point(661, 34);
+            this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(88, 24);
+            this.label10.TabIndex = 10;
+            this.label10.Text = "Apellidos";
+            // 
+            // tbActNombres
+            // 
+            this.tbActNombres.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbActNombres.Location = new System.Drawing.Point(450, 31);
+            this.tbActNombres.Name = "tbActNombres";
+            this.tbActNombres.Size = new System.Drawing.Size(177, 29);
+            this.tbActNombres.TabIndex = 2;
+            // 
+            // tbActTelefono
+            // 
+            this.tbActTelefono.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbActTelefono.Location = new System.Drawing.Point(144, 88);
+            this.tbActTelefono.Name = "tbActTelefono";
+            this.tbActTelefono.Size = new System.Drawing.Size(177, 29);
+            this.tbActTelefono.TabIndex = 4;
+            // 
+            // tbActApellidos
+            // 
+            this.tbActApellidos.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbActApellidos.Location = new System.Drawing.Point(764, 31);
+            this.tbActApellidos.Name = "tbActApellidos";
+            this.tbActApellidos.Size = new System.Drawing.Size(177, 29);
+            this.tbActApellidos.TabIndex = 3;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(180)))), ((int)(((byte)(77)))));
+            this.label9.Location = new System.Drawing.Point(39, 91);
+            this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(85, 24);
+            this.label9.TabIndex = 11;
+            this.label9.Text = "Teléfono";
+            // 
+            // tmAsistencias
+            // 
+            this.tmAsistencias.Tick += new System.EventHandler(this.tmAsistencias_Tick);
+            // 
+            // btnEmpleados
+            // 
+            this.btnEmpleados.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(180)))), ((int)(((byte)(77)))));
+            this.btnEmpleados.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(180)))), ((int)(((byte)(77)))));
+            this.btnEmpleados.FlatAppearance.BorderSize = 0;
+            this.btnEmpleados.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEmpleados.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEmpleados.ForeColor = System.Drawing.Color.White;
+            this.btnEmpleados.IconChar = FontAwesome.Sharp.IconChar.PersonCirclePlus;
+            this.btnEmpleados.IconColor = System.Drawing.Color.White;
+            this.btnEmpleados.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnEmpleados.Location = new System.Drawing.Point(475, 235);
+            this.btnEmpleados.Name = "btnEmpleados";
+            this.btnEmpleados.Size = new System.Drawing.Size(250, 160);
+            this.btnEmpleados.TabIndex = 3;
+            this.btnEmpleados.Text = "Empleados";
+            this.btnEmpleados.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnEmpleados.UseVisualStyleBackColor = false;
+            this.btnEmpleados.Click += new System.EventHandler(this.btnEmpleados_Click);
+            // 
+            // btnAsistencia
+            // 
+            this.btnAsistencia.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(180)))), ((int)(((byte)(77)))));
+            this.btnAsistencia.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(180)))), ((int)(((byte)(77)))));
+            this.btnAsistencia.FlatAppearance.BorderSize = 0;
+            this.btnAsistencia.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAsistencia.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAsistencia.ForeColor = System.Drawing.Color.White;
+            this.btnAsistencia.IconChar = FontAwesome.Sharp.IconChar.RightToBracket;
+            this.btnAsistencia.IconColor = System.Drawing.Color.White;
+            this.btnAsistencia.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnAsistencia.Location = new System.Drawing.Point(182, 235);
+            this.btnAsistencia.Name = "btnAsistencia";
+            this.btnAsistencia.Size = new System.Drawing.Size(250, 160);
+            this.btnAsistencia.TabIndex = 2;
+            this.btnAsistencia.Text = "Asistencia";
+            this.btnAsistencia.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnAsistencia.UseVisualStyleBackColor = false;
+            this.btnAsistencia.Click += new System.EventHandler(this.btnAsistencia_Click);
+            // 
+            // imgFondoAsistencia
+            // 
+            this.imgFondoAsistencia.BackColor = System.Drawing.Color.Transparent;
+            this.imgFondoAsistencia.BackgroundImage = global::Turnos.Properties.Resources.Example11;
+            this.imgFondoAsistencia.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.imgFondoAsistencia.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.imgFondoAsistencia.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.imgFondoAsistencia.IconChar = FontAwesome.Sharp.IconChar.None;
+            this.imgFondoAsistencia.IconColor = System.Drawing.SystemColors.ControlText;
+            this.imgFondoAsistencia.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.imgFondoAsistencia.IconSize = 650;
+            this.imgFondoAsistencia.Location = new System.Drawing.Point(2, 2);
+            this.imgFondoAsistencia.Name = "imgFondoAsistencia";
+            this.imgFondoAsistencia.Size = new System.Drawing.Size(1012, 650);
+            this.imgFondoAsistencia.TabIndex = 4;
+            this.imgFondoAsistencia.TabStop = false;
+            // 
+            // imgAsistencia
+            // 
+            this.imgAsistencia.BackgroundImage = global::Turnos.Properties.Resources.FondoAsistencia1;
+            this.imgAsistencia.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.imgAsistencia.Location = new System.Drawing.Point(2, 2);
+            this.imgAsistencia.Name = "imgAsistencia";
+            this.imgAsistencia.Size = new System.Drawing.Size(1012, 650);
+            this.imgAsistencia.TabIndex = 1;
+            this.imgAsistencia.TabStop = false;
+            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1009, 727);
+            this.ClientSize = new System.Drawing.Size(1024, 768);
             this.Controls.Add(this.TabPrincipal);
             this.Controls.Add(this.pnTitulo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -873,11 +880,8 @@
             this.pnTitulo.PerformLayout();
             this.TabPrincipal.ResumeLayout(false);
             this.Menu.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.imgFondoAsistencia)).EndInit();
             this.Asistencia.ResumeLayout(false);
             this.Asistencia.PerformLayout();
-            this.pnAsistencia.ResumeLayout(false);
-            this.pnAsistencia.PerformLayout();
             this.Empleados.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
@@ -887,11 +891,13 @@
             this.pnlRegistro.PerformLayout();
             this.ActualizarDatosEmpleado.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dvgActListadoEmpleados)).EndInit();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgFondoAsistencia)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgAsistencia)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -933,7 +939,6 @@
         private System.Windows.Forms.Button btnActualizar;
         private System.Windows.Forms.TextBox txtDocumentoBuscar;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Panel pnAsistencia;
         private System.Windows.Forms.Label lblTitulo;
         private System.Windows.Forms.Label lblNombre;
         private System.Windows.Forms.Label label14;
@@ -942,7 +947,6 @@
         private System.Windows.Forms.DataGridView dvgListadoEmpleados;
         private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.Timer tmAsistencias;
-        private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label lblMensaje;
         private FontAwesome.Sharp.IconButton btnAsistencia;
         private FontAwesome.Sharp.IconButton btnEmpleados;
@@ -958,6 +962,7 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn1;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.PictureBox imgAsistencia;
     }
 }
 

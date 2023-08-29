@@ -133,6 +133,26 @@ namespace Turnos.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap FondoAsistencia {
+            get {
+                object obj = ResourceManager.GetObject("FondoAsistencia", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FondoAsistencia1 {
+            get {
+                object obj = ResourceManager.GetObject("FondoAsistencia1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap fondoEmpleados {
             get {
                 object obj = ResourceManager.GetObject("fondoEmpleados", resourceCulture);

@@ -68,7 +68,11 @@ namespace Controlador
 
             try
             {
-                if (login.Contraseña == login.ContraseñaNueva)
+                login.ContraseñaNueva = EncriptarClave(login.ContraseñaNueva);
+
+                bool contraseñaCorrecta = BCrypt.Net.BCrypt.Verify(login.ContraseñaNueva, login.Contraseña);
+
+                if (contraseñaCorrecta)
                 {
                     ok = true;
                 }
@@ -89,10 +93,10 @@ namespace Controlador
 
         static string EncriptarClave(string clave)
         {
-            string claveNew = clave.Substring(clave.Length - 4);
+          
 
             // Generar un hash bcrypt para la clave
-            string contraseñaEncriptada = BCrypt.Net.BCrypt.HashPassword(claveNew);
+            string contraseñaEncriptada = BCrypt.Net.BCrypt.HashPassword(clave);
             return contraseñaEncriptada;
         }
     }

@@ -228,10 +228,7 @@ namespace Turnos
 
         #endregion
 
-        #region Novedades
-
-
-        #endregion
+   
 
         #region Empleados
 
@@ -389,7 +386,13 @@ namespace Turnos
                 if (rta.Equals("OK"))
                 {
                     MensajeOk("Empleado actualizado correctamente");
-                    ListarActEmpleados();
+                    //ListarActEmpleados();
+                    lblTitulo.Text = "Gestión empleados";
+                    lblTitulo.Visible = true;
+                    TabPrincipal.SelectedTab = Empleados;
+                    ListarCargos();
+                    ListarSedes();
+                    ListarEmpleados();
                 }
                 else
                 {
@@ -413,38 +416,15 @@ namespace Turnos
 
         #region EncriptarClave
 
+
         static string EncriptarClave(string clave)
         {
             string claveNew = clave.Substring(clave.Length - 4);
 
-            using (Aes aesAlg = Aes.Create())
-            {
-                aesAlg.GenerateIV();
-                aesAlg.Key = Encoding.UTF8.GetBytes(claveNew);
-
-                ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
-                using (MemoryStream msEncrypt = new MemoryStream())
-                {
-                    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
-                    {
-                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
-                        {
-                            swEncrypt.Write(clave);
-                        }
-                    }
-                    return Convert.ToBase64String(aesAlg.IV.Concat(msEncrypt.ToArray()).ToArray());
-                }
-            }
+            // Generar un hash bcrypt para la clave
+            string contraseñaEncriptada = BCrypt.Net.BCrypt.HashPassword(claveNew);
+            return contraseñaEncriptada;
         }
-
-        //static string EncriptarClave(string clave)
-        //{
-        //    string claveNew = clave.Substring(clave.Length - 4);
-
-        //    // Generar un hash bcrypt para la clave
-        //  string  contraseñaEncriptada = BCrypt.Net.BCrypt.HashPassword(claveNew);
-        //    return contraseñaEncriptada;
-        //}
 
         #endregion
 
@@ -465,7 +445,7 @@ namespace Turnos
             {
                 tmAsistencias.Stop();
                 lblMensaje.Text = rta;
-                pnAsistencia.Visible = true;
+                lblMensaje.Visible = true;
                 lblMensaje.BackColor = Color.FromArgb(139, 180, 77);
                 lblMensaje.ForeColor = Color.White;
                 lblMensaje.Update();
@@ -506,8 +486,10 @@ namespace Turnos
                 {
                     tmAsistencias.Stop();
                     lblMensaje.Text = rta;
+                    lblMensaje.BackColor = Color.FromArgb(122, 123, 123);
                     lblMensaje.ForeColor = Color.White;                    
-                    pnAsistencia.Visible = true;
+                    lblMensaje.Visible=true;
+                    //pnAsistencia.Visible = true;
                     lblMensaje.Update();
                     Thread.Sleep(tiempoMensaje);
                     Login login = new Login();
@@ -524,9 +506,11 @@ namespace Turnos
                     //tmAsistencias.Start();
 
                     tmAsistencias.Stop();
+                    lblMensaje.BackColor = Color.FromArgb(122, 123, 123);
                     lblMensaje.Text = rta.ToString();
                     lblMensaje.ForeColor = Color.White;
-                     pnAsistencia.Visible = true;
+                    //pnAsistencia.Visible = true;
+                    lblMensaje.Visible=true;
                     lblMensaje.Update();
                 Thread.Sleep(tiempoMensaje);
                     Login login = new Login();
@@ -538,10 +522,12 @@ namespace Turnos
             else if(rta.Equals("NO TARJETA"))
             {
                 rta = "No se encontró ninguna tarjeta en la lectora";
+                    lblMensaje.BackColor = Color.FromArgb(122, 123, 123);
                 tmAsistencias.Stop();
                 lblMensaje.ForeColor = Color.White;
                 lblMensaje.Text = rta.ToString();
-                pnAsistencia.Visible = true;
+                //pnAsistencia.Visible = true;
+                    lblMensaje.Visible=true;
                 lblMensaje.Update();
                 Thread.Sleep(tiempoMensaje);
                 Login login = new Login();
@@ -566,7 +552,7 @@ namespace Turnos
             MedidasFormularios();
             if (CargarImagenes())
             {
-                label15.Visible = false;
+                //label15.Visible = false;
             }
           
         }
@@ -610,7 +596,10 @@ namespace Turnos
         #endregion
 
         #region Botones
-
+        private void btnActEmpleado_Click(object sender, EventArgs e)
+        {
+            ActualizarEmpleado();
+        }
         private void btnActVolver_Click(object sender, EventArgs e)
         {
             lblTitulo.Text = "Gestión empleados";
@@ -621,7 +610,8 @@ namespace Turnos
         {
             lblTitulo.Text = "Aistencia empleados";
             lblTitulo.Visible = true;
-            pnAsistencia.Visible = false;
+                    lblMensaje.Visible=true;
+            //pnAsistencia.Visible = false;
             TabPrincipal.SelectedTab = Asistencia;
             tmAsistencias.Start();
         }
@@ -667,7 +657,8 @@ namespace Turnos
         {
             lblTitulo.Text = "Aistencia empleados";
             lblTitulo.Visible = true;
-            pnAsistencia.Visible = false;
+                    lblMensaje.Visible=true;
+            //pnAsistencia.Visible = false;
             TabPrincipal.SelectedTab = Asistencia;
             tmAsistencias.Start();
         }
@@ -789,9 +780,6 @@ namespace Turnos
             ListarSedesAct();
         }
 
-        private void btnActEmpleado_Click(object sender, EventArgs e)
-        {
-            ActualizarEmpleado();
-        }
+
     }
 }
