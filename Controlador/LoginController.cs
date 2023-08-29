@@ -68,11 +68,8 @@ namespace Controlador
 
             try
             {
-                login.ContraseñaNueva = EncriptarClave(login.ContraseñaNueva);
 
-                bool contraseñaCorrecta = BCrypt.Net.BCrypt.Verify(login.ContraseñaNueva, login.Contraseña);
-
-                if (contraseñaCorrecta)
+                if (Decrypt(login.Contraseña) == login.ContraseñaNueva)
                 {
                     ok = true;
                 }
@@ -90,14 +87,27 @@ namespace Controlador
 
         }
 
-
-        static string EncriptarClave(string clave)
+        ///NRE ENCRIPTAR CLAVE 
+        private static string Decrypt(string cipherText)
         {
-          
-
-            // Generar un hash bcrypt para la clave
-            string contraseñaEncriptada = BCrypt.Net.BCrypt.HashPassword(clave);
-            return contraseñaEncriptada;
+            string EncryptionKey = "MAKV2SPBNI99212";
+            byte[] cipherBytes = Convert.FromBase64String(cipherText);
+            using (Aes encryptor = Aes.Create())
+            {
+                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
+                encryptor.Key = pdb.GetBytes(32);
+                encryptor.IV = pdb.GetBytes(16);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateDecryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(cipherBytes, 0, cipherBytes.Length);
+                        cs.Close();
+                    }
+                    cipherText = Encoding.Unicode.GetString(ms.ToArray());
+                }
+            }
+            return cipherText;
         }
     }
 }

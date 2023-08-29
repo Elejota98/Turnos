@@ -421,9 +421,32 @@ namespace Turnos
         {
             string claveNew = clave.Substring(clave.Length - 4);
 
-            // Generar un hash bcrypt para la clave
-            string contraseñaEncriptada = BCrypt.Net.BCrypt.HashPassword(claveNew);
-            return contraseñaEncriptada;
+            #region Old
+
+            string EncryptionKey = "MAKV2SPBNI99212";
+            byte[] clearBytes = Encoding.Unicode.GetBytes(claveNew);
+            using (Aes encryptor = Aes.Create())
+            {
+                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
+                encryptor.Key = pdb.GetBytes(32);
+                encryptor.IV = pdb.GetBytes(16);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(clearBytes, 0, clearBytes.Length);
+                        cs.Close();
+                    }
+                    claveNew = Convert.ToBase64String(ms.ToArray());
+                }
+            }
+            return claveNew;
+
+            //// Generar un hash bcrypt para la clave
+            //string contraseñaEncriptada = BCrypt.Net.BCrypt.HashPassword(claveNew);
+            //return contraseñaEncriptada;
+
+            #endregion
         }
 
         #endregion
@@ -476,7 +499,7 @@ namespace Turnos
                 asistencia.FechaEntrada = DateTime.Now;
                 asistencia.FechaSalida = DateTime.Now;
 
-                rta = AsistenciaController.ActualizarSalidaAsistencia(asistencia, idSede);
+                rta = AsistenciaController.ActualizarSalidaAsistencia(asistencia, idSede, Documento);
 
                 if (rta.Equals("SIN SALIDA"))
                 {
@@ -606,15 +629,7 @@ namespace Turnos
             lblTitulo.Visible = true;
             TabPrincipal.SelectedTab = Empleados;
         }
-        private void btnAsistencia_Click_1(object sender, EventArgs e)
-        {
-            lblTitulo.Text = "Aistencia empleados";
-            lblTitulo.Visible = true;
-                    lblMensaje.Visible=true;
-            //pnAsistencia.Visible = false;
-            TabPrincipal.SelectedTab = Asistencia;
-            tmAsistencias.Start();
-        }
+
 
         private void btnActualizar_Click(object sender, EventArgs e)
         {
@@ -660,7 +675,9 @@ namespace Turnos
                     lblMensaje.Visible=true;
             //pnAsistencia.Visible = false;
             TabPrincipal.SelectedTab = Asistencia;
+            trmMenu.Stop();
             tmAsistencias.Start();
+            conteo = 1;
         }
 
         private void btnEmpleados_Click(object sender, EventArgs e)
@@ -690,7 +707,7 @@ namespace Turnos
             asistencia.FechaEntrada = DateTime.Now;
             asistencia.FechaSalida = DateTime.Now;
 
-            rta = AsistenciaController.ActualizarSalidaAsistencia(asistencia, idSede);
+            rta = AsistenciaController.ActualizarSalidaAsistencia(asistencia, idSede, Documento);
 
             if (rta.Equals("SIN SALIDA"))
             {
@@ -724,10 +741,12 @@ namespace Turnos
             TabPrincipal.Appearance = TabAppearance.FlatButtons;
             TabPrincipal.ItemSize = new Size(0, 1);
             TabPrincipal.SizeMode = TabSizeMode.Fixed;
-            //if(Cargo!= "JEFE TALENTO HUMANO")
-            //{
-            //    btnEmpleados.Visible = false;
-            //}
+            trmMenu.Start();
+            tmAsistencias.Stop();
+            if(Cargo== "Empleado")
+            {
+                btnEmpleados.Visible = false;
+            }
         }
 
         private void cbActSede_SelectedIndexChanged(object sender, EventArgs e)
@@ -780,6 +799,43 @@ namespace Turnos
             ListarSedesAct();
         }
 
+        private void trmMenu_Tick(object sender, EventArgs e)
+        {
+            conteo++;
 
+            try
+            {
+                if (Cargo == "Empleado")
+                {
+                    if (conteo >= 50)
+                    {
+                        Login login = new Login();
+                        login.Show();
+                        this.Hide();
+                        trmMenu.Stop();
+                        btnEmpleados.Visible = false;
+                    }
+                }
+                else
+                {
+
+                }
+               
+
+            }
+            catch (Exception ex)
+            {
+
+                MensajeError(ex.ToString());
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Login login = new Login();
+            login.Show();
+            this.Hide();
+            trmMenu.Stop();
+        }
     }
 }
