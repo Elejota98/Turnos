@@ -1,0 +1,15 @@
+D:\PROYECTOS\PARQUEARSE\Turnos\TurnosSincronizacion\bin\Debug\TurnosSincronizacion.exe.config
+D:\PROYECTOS\PARQUEARSE\Turnos\TurnosSincronizacion\bin\Debug\TurnosSincronizacion.exe
+D:\PROYECTOS\PARQUEARSE\Turnos\TurnosSincronizacion\bin\Debug\TurnosSincronizacion.pdb
+D:\PROYECTOS\PARQUEARSE\Turnos\TurnosSincronizacion\obj\Debug\TurnosSincronizacion.csproj.AssemblyReference.cache
+D:\PROYECTOS\PARQUEARSE\Turnos\TurnosSincronizacion\obj\Debug\TurnosSincronizacion.csproj.SuggestedBindingRedirects.cache
+D:\PROYECTOS\PARQUEARSE\Turnos\TurnosSincronizacion\obj\Debug\TurnosSincronizacion.csproj.CoreCompileInputs.cache
+D:\PROYECTOS\PARQUEARSE\Turnos\TurnosSincronizacion\obj\Debug\TurnosSincronizacion.exe
+D:\PROYECTOS\PARQUEARSE\Turnos\TurnosSincronizacion\obj\Debug\TurnosSincronizacion.pdb
+D:\PROYECTOS\PARQUEARSE\Turnos\TurnosSincronizacion\bin\Debug\ControladorSincronizacion.dll
+D:\PROYECTOS\PARQUEARSE\Turnos\TurnosSincronizacion\bin\Debug\ServiciosSincronizacion.dll
+D:\PROYECTOS\PARQUEARSE\Turnos\TurnosSincronizacion\bin\Debug\Modelo.dll
+D:\PROYECTOS\PARQUEARSE\Turnos\TurnosSincronizacion\bin\Debug\ControladorSincronizacion.pdb
+D:\PROYECTOS\PARQUEARSE\Turnos\TurnosSincronizacion\bin\Debug\ServiciosSincronizacion.pdb
+D:\PROYECTOS\PARQUEARSE\Turnos\TurnosSincronizacion\bin\Debug\Modelo.pdb
+D:\PROYECTOS\PARQUEARSE\Turnos\TurnosSincronizacion\obj\Debug\TurnosSincronizacion.csproj.CopyComplete

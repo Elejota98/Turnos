@@ -133,6 +133,9 @@
   <data name="Example2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Example2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="cerca (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\cerca (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="btnActualizar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\Imagenes\btnActualizar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -157,7 +160,7 @@
   <data name="FondoAsistencia" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\FondoAsistencia.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="cerca (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\cerca (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="FondoMenu.fw" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FondoMenu.fw.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

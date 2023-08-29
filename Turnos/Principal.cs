@@ -586,11 +586,16 @@ namespace Turnos
             //fondoEmpleado.BackgroundImage = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Imagenes\fondoEmpleados.png"));
 
             string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Imagenes\Encabezado.png");
+            string imgFondoAsistencias = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Imagenes\FondoMenu.png");
+
 
             if (File.Exists(imagePath))
             {
                 pnTitulo.BackgroundImage = Image.FromFile(imagePath);
                 BackgroundImageLayout = ImageLayout.Stretch;
+                imgFondoAsistencia.BackgroundImage = Image.FromFile(imgFondoAsistencias);
+                BackgroundImageLayout = ImageLayout.Stretch;
+
                 ok = true;
             }
 

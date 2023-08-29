@@ -1,0 +1,9 @@
+D:\PROYECTOS\PARQUEARSE\Turnos\ServiciosSincronizacion\obj\Debug\ServiciosSincronizacion.csproj.AssemblyReference.cache
+D:\PROYECTOS\PARQUEARSE\Turnos\ServiciosSincronizacion\obj\Debug\ServiciosSincronizacion.csproj.CoreCompileInputs.cache
+D:\PROYECTOS\PARQUEARSE\Turnos\ServiciosSincronizacion\bin\Debug\ServiciosSincronizacion.dll
+D:\PROYECTOS\PARQUEARSE\Turnos\ServiciosSincronizacion\bin\Debug\ServiciosSincronizacion.pdb
+D:\PROYECTOS\PARQUEARSE\Turnos\ServiciosSincronizacion\bin\Debug\Modelo.dll
+D:\PROYECTOS\PARQUEARSE\Turnos\ServiciosSincronizacion\bin\Debug\Modelo.pdb
+D:\PROYECTOS\PARQUEARSE\Turnos\ServiciosSincronizacion\obj\Debug\ServiciosSincronizacion.csproj.CopyComplete
+D:\PROYECTOS\PARQUEARSE\Turnos\ServiciosSincronizacion\obj\Debug\ServiciosSincronizacion.dll
+D:\PROYECTOS\PARQUEARSE\Turnos\ServiciosSincronizacion\obj\Debug\ServiciosSincronizacion.pdb
