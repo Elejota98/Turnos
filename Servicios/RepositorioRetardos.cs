@@ -20,14 +20,11 @@ namespace Servicios
             try
             {
                 sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
-                string cadena = ("SELECT      top (1)  dbo.T_Asistencias.IdAsistencia " +
-                            " FROM dbo.T_Turnos INNER JOIN " +
-                         "dbo.T_TurnosAplicados ON dbo.T_Turnos.IdTurno = dbo.T_TurnosAplicados.IdTurno INNER JOIN "+
-                         "dbo.T_Empleados ON dbo.T_TurnosAplicados.Documento = dbo.T_Empleados.Documento INNER JOIN "+
-                         "dbo.T_Sedes ON dbo.T_Turnos.IdSede = dbo.T_Sedes.IdSede AND dbo.T_Empleados.IdSede = dbo.T_Sedes.IdSede INNER JOIN " +
-                         "dbo.T_Asistencias ON dbo.T_TurnosAplicados.IdTurnoAplicado = dbo.T_Asistencias.IdTurnoAplicado AND dbo.T_Empleados.Documento = dbo.T_Asistencias.Documento WHERE  dbo.T_Sedes.IdSede="+asistencias.IdSede+" and dbo.T_TurnosAplicados.IdTurnoAplicado="+asistencias.IdTurnoAplicado+" " +
-                    "AND dbo.T_TurnosAplicados.Documento ="+asistencias.Documento+" ORDER BY T_Asistencias.FechaEntrada DESC");
-                SqlCommand comando = new SqlCommand(cadena, sqlCon);
+                SqlCommand comando = new SqlCommand("P_ListarIdTurnoAplicado", sqlCon);
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.Add("@Documento", SqlDbType.VarChar).Value = asistencias.Documento;
+                comando.Parameters.Add("@IdSede", SqlDbType.Int).Value = asistencias.IdSede;
+                comando.Parameters.Add("@IdTurnoAplicado", SqlDbType.Int).Value = asistencias.IdTurnoAplicado;
                 sqlCon.Open();
                 resultado = comando.ExecuteReader();
                 tabla.Load(resultado);

@@ -200,13 +200,10 @@ namespace Servicios
             try
             {
                 sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
-                string cadena = ("SELECT  TOP(1) dbo.T_Asistencias.IdAsistencia FROM    dbo.T_Asistencias INNER JOIN" +
-                    "   dbo.T_Empleados ON dbo.T_Asistencias.Documento = dbo.T_Empleados.Documento INNER JOIN" +
-                    " dbo.T_Sedes ON dbo.T_Empleados.IdSede = dbo.T_Sedes.IdSede" +
-                    " WHERE dbo.T_Asistencias.Documento='"+asistencias.Documento+ "' and dbo.T_Asistencias.IdTurnoAplicado IS NULL AND dbo.T_Asistencias.FechaSalida = '1900-01-01 00:00:00.000'" +
-                    " AND dbo.T_Asistencias.IdSede="+asistencias.IdSede+" " +
-                    "ORDER BY 1 DESC ");
-                SqlCommand comando = new SqlCommand(cadena, sqlCon);
+                SqlCommand comando = new SqlCommand("P_ValidarFechSalidaSinTurnoAplicado", sqlCon);
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.Add("@Documento", SqlDbType.VarChar).Value = asistencias.Documento;
+                comando.Parameters.Add("@IdSede", SqlDbType.Int).Value = asistencias.IdSede;
                 sqlCon.Open();
                 resultado = comando.ExecuteReader();
                 tabla.Load(resultado);
@@ -231,8 +228,10 @@ namespace Servicios
             try
             {
                 sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
-                string cadena = ("UPDATE T_Asistencias SET FechaSalida=GETDATE() WHERE IdAsistencia="+asistencias.IdAsistencia+" AND IdSede="+asistencias.IdSede+"");
-                SqlCommand comando = new SqlCommand(cadena, sqlCon);
+                SqlCommand comando = new SqlCommand("P_ActualizarSalidaSinTurnoAplicado", sqlCon);
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.Add("@IdAsistencia", SqlDbType.Int).Value = asistencias.IdAsistencia;
+                comando.Parameters.Add("@IdSede", SqlDbType.Int).Value = asistencias.IdSede;
                 sqlCon.Open();
                 comando.ExecuteNonQuery();
                 rta = "OK";

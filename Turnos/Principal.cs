@@ -36,7 +36,6 @@ namespace Turnos
         int tiempoMensaje = 5000;
         #endregion
 
-
         public Principal()
         {
             InitializeComponent();
