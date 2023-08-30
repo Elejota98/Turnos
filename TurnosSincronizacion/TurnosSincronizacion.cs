@@ -10,6 +10,7 @@ using System.Timers;
 using System.Threading.Tasks;
 using System.Configuration;
 using ControladorSincronizacion;
+using Modelo;
 
 namespace TurnosSincronizacion
 {
@@ -18,11 +19,13 @@ namespace TurnosSincronizacion
 
         #region Definiciones
         private Timer oTimer;
-
+        Sedes sedes = new Sedes();
+        Empleados empleados = new Empleados();
+        Turnos turnos = new Turnos();
         private static object objLock = new object();
         private static TurnosSincronizacion Agente = new TurnosSincronizacion();
         public string rta = string.Empty;
-
+        
 
         #endregion
 
@@ -132,12 +135,26 @@ namespace TurnosSincronizacion
 
                 lock (objLock)
                 {
+                    sedes.IdSede = _IdSede;
+                    empleados.IdSede=_IdSede;
+                    turnos.IdSede = _IdSede;
 
                     #region Tarjetas
-                    if(SincronizacionController.SincronizarTarjetas())
-
+                    SincronizacionController.SincronizarTarjetas();
                     #endregion
 
+                    #region Sedes
+                    SincronizacionController.SincronziacionSedes(sedes);
+                    #endregion
+
+                    #region Empleados
+                    SincronizacionController.SincronizacionEmpleados(empleados);
+                    #endregion
+
+                    #region Turnos
+
+                    SincronizacionController.SincronizacionTurnos(turnos);
+                    #endregion
 
 
                     oTimer.Enabled = true;

@@ -62,6 +62,10 @@
       <Project>{84f10ed1-fb18-4101-86c9-c2ae7f1196a3}</Project>
       <Name>ControladorSincronizacion</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modelo\Modelo.csproj">
+      <Project>{6fd670cc-ce10-45e5-b2d0-5363306a4888}</Project>
+      <Name>Modelo</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

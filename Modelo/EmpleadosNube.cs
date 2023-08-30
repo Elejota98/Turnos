@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Modelo
 {
-    public class Empleados
+    public class EmpleadosNube
     {
         public string Documento { get; set; }
         public string NombreEmpleado { get; set; }

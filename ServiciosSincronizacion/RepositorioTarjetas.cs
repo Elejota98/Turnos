@@ -13,29 +13,29 @@ namespace ServiciosSincronizacion
     {
         public DataTable ObtenerDatosTarjetas()
         {
-            DataTable tabla = new DataTable();
-            SqlConnection sqlCon = new SqlConnection();
-            SqlDataReader resultado;
-            try
-            {
-                sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
-                SqlCommand comando = new SqlCommand("P_ObtenerTarjetasSincronizacion", sqlCon);
-                comando.CommandType = CommandType.StoredProcedure;
-                sqlCon.Open();
-                resultado = comando.ExecuteReader();
-                tabla.Load(resultado);
-                return tabla;
+        DataTable tabla = new DataTable();
+        SqlConnection sqlCon = new SqlConnection();
+        SqlDataReader resultado;
+        try
+        {
+            sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
+            SqlCommand comando = new SqlCommand("P_ObtenerTarjetasSincronizacion", sqlCon);
+            comando.CommandType = CommandType.StoredProcedure;
+            sqlCon.Open();
+            resultado = comando.ExecuteReader();
+            tabla.Load(resultado);
+            return tabla;
 
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
 
-            }
-            finally
-            {
-                if (sqlCon.State == ConnectionState.Open) sqlCon.Close();
-            }
+        }
+        finally
+        {
+            if (sqlCon.State == ConnectionState.Open) sqlCon.Close();
+        }
         }
 
         public DataTable ValidarTarjetaSincronizacion(Tarjetas tarjetas)
