@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Modelo;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -10,7 +11,7 @@ namespace Servicios
 {
     public class RepositorioPoliticas
     {
-        public DataTable ListarPoliticas()
+        public DataTable ListarPoliticas(Politicas politicas)
         {
             DataTable tabla = new DataTable();
             SqlConnection sqlCon = new SqlConnection();
@@ -19,17 +20,19 @@ namespace Servicios
             try
             {
                 sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
-                string cadena = ("SELECT * FROM T_POLITICAS WHERE ESTADO=1");
-                SqlCommand comando = new SqlCommand(cadena, sqlCon);
+                SqlCommand comando = new SqlCommand("P_ListarPoliticas", sqlCon);
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.Add("@IdSede", SqlDbType.VarChar).Value = politicas.IdSede;
                 sqlCon.Open();
-                SqlDataReader rta = comando.ExecuteReader();
-                tabla.Load(rta);
+                resultado = comando.ExecuteReader();
+                tabla.Load(resultado);
                 return tabla;
+
             }
             catch (Exception ex)
             {
-                throw ex;
 
+                throw ex;
             }
             finally
             {

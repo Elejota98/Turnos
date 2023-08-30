@@ -13,5 +13,6 @@ namespace Modelo
         public bool Estado { get; set; }
         public bool Sincronizacion { get; set; }
         public int Tiempo { get; set; }
+        public int IdSede { get; set; }
     }
 }

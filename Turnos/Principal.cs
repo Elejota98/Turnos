@@ -228,8 +228,6 @@ namespace Turnos
 
         #endregion
 
-   
-
         #region Empleados
 
         public void ListarCargos()
@@ -460,8 +458,9 @@ namespace Turnos
             Asistencias asistencia = new Asistencias();
             asistencia.FechaEntrada = DateTime.Now;
             asistencia.FechaSalida=DateTime.Now;
+            asistencia.IdSede = idSede;
 
-            rta = AsistenciaController.RegistrarAsistencia(asistencia, idSede);
+            rta = AsistenciaController.RegistrarAsistencia(asistencia);
 
 
             if (!rta.Equals("ERROR"))
@@ -498,8 +497,9 @@ namespace Turnos
                 Asistencias asistencia = new Asistencias();
                 asistencia.FechaEntrada = DateTime.Now;
                 asistencia.FechaSalida = DateTime.Now;
+                asistencia.IdSede = idSede;
 
-                rta = AsistenciaController.ActualizarSalidaAsistencia(asistencia, idSede, Documento);
+                rta = AsistenciaController.ActualizarSalidaAsistencia(asistencia, Documento);
 
                 if (rta.Equals("SIN SALIDA"))
                 {
@@ -711,8 +711,9 @@ namespace Turnos
             Asistencias asistencia = new Asistencias();
             asistencia.FechaEntrada = DateTime.Now;
             asistencia.FechaSalida = DateTime.Now;
+            asistencia.IdSede = idSede;
 
-            rta = AsistenciaController.ActualizarSalidaAsistencia(asistencia, idSede, Documento);
+            rta = AsistenciaController.ActualizarSalidaAsistencia(asistencia, Documento);
 
             if (rta.Equals("SIN SALIDA"))
             {

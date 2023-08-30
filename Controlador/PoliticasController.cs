@@ -1,4 +1,5 @@
-﻿using Servicios;
+﻿using Modelo;
+using Servicios;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,12 +11,12 @@ namespace Controlador
 {
     public class PoliticasController
     {
-        public static DataTable ListarPoliticas()
+        public static DataTable ListarPoliticas(Politicas politicas)
         {
             DataTable tabla;
             RepositorioPoliticas Datos = new RepositorioPoliticas();
 
-            return tabla = Datos.ListarPoliticas();
+            return tabla = Datos.ListarPoliticas(politicas);
         }
     }
 }
