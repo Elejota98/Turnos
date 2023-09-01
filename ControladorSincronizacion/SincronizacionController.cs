@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,13 +23,13 @@ namespace ControladorSincronizacion
             string rta = "";
             DataTable tabla = new DataTable();
             RepositorioTarjetas Datos = new RepositorioTarjetas();
-            Tarjetas tarjetas = new Tarjetas(); 
+            Tarjetas tarjetas = new Tarjetas();
             try
             {
                 tabla = Datos.ObtenerDatosTarjetas();
                 if (tabla.Rows.Count > 0)
                 {
-                    foreach (DataRow row in tabla.Rows) 
+                    foreach (DataRow row in tabla.Rows)
                     {
                         tarjetas.IdTarjeta = row["IdTarjeta"].ToString();
                         tarjetas.FechaCreacion = Convert.ToDateTime(row["FechaCreacion"]);
@@ -37,7 +38,7 @@ namespace ControladorSincronizacion
                     }
 
                     tabla = Datos.ValidarTarjetaSincronizacion(tarjetas);
-                    if(tabla.Rows.Count > 0)
+                    if (tabla.Rows.Count > 0)
                     {
                         rta = Datos.ActualizarEstadoTarjetasSincronizacion(tarjetas);
                         if (rta.Equals("OK"))
@@ -75,7 +76,7 @@ namespace ControladorSincronizacion
 
 
             }
-            catch (Exception ex )
+            catch (Exception ex)
             {
 
                 throw ex;
@@ -112,7 +113,7 @@ namespace ControladorSincronizacion
                     }
 
                     tabla = Datos.ValidarSedeSincronizacion(sedes);
-                    if(tabla.Rows.Count > 0)
+                    if (tabla.Rows.Count > 0)
                     {
                         rta = Datos.ActualizarEstadoSedesSincronizacion(sedes);
                         if (rta.Equals("OK"))
@@ -170,7 +171,7 @@ namespace ControladorSincronizacion
             string rta = "";
             DataTable tabla = new DataTable();
             SqlConnection sqlCon = new SqlConnection();
-            RepositorioEmpleados Datos = new RepositorioEmpleados();  
+            RepositorioEmpleados Datos = new RepositorioEmpleados();
             {
                 try
                 {
@@ -202,7 +203,7 @@ namespace ControladorSincronizacion
                             if (rta.Equals("OK"))
                             {
                                 rta = Datos.ActualizarEstadoEmpleadosSincronizacion(empleados);
-                                if(rta.Equals("OK"))
+                                if (rta.Equals("OK"))
                                 {
                                     ok = true;
                                 }
@@ -215,7 +216,7 @@ namespace ControladorSincronizacion
                             {
                                 ok = false;
                             }
-                           
+
                         }
                         else
                         {
@@ -289,7 +290,7 @@ namespace ControladorSincronizacion
 
                     }
 
-                        tabla = Datos.ValidarTurnoSincronizacion(turnos);
+                    tabla = Datos.ValidarTurnoSincronizacion(turnos);
                     if (tabla.Rows.Count > 0)
                     {
                         rta = Datos.ActualizaDatosTurnosSincronizacion(turnos);
@@ -346,6 +347,343 @@ namespace ControladorSincronizacion
 
         #endregion
 
+        #region TurnosAplicados
+
+        public static bool SincronizacionTurnosAplicados(TurnosAplicados turnosAplicados)
+        {
+            bool ok = false;
+            string rta = "";
+            DataTable tabla = new DataTable();
+            SqlConnection sqlCon = new SqlConnection();
+            TurnosAplicadosNube turnosAplicadosNube = new TurnosAplicadosNube();
+            RepositorioTurnosAplicados Datos = new RepositorioTurnosAplicados();
+            try
+            {
+
+                tabla = Datos.ObtenerTurnosAplicadosSincronizacion(turnosAplicados);
+                if (tabla.Rows.Count > 0)
+                {
+                    foreach (DataRow lstTurnosAplicados in tabla.Rows)
+                    {
+                        turnosAplicados.IdTurnoAplicado = Convert.ToInt32(lstTurnosAplicados["IdTurnoAplicado"]);
+                        turnosAplicados.FechaAplicada = Convert.ToDateTime(lstTurnosAplicados["FechaAplicada"]);
+                        turnosAplicados.FechaCreacion = Convert.ToDateTime(lstTurnosAplicados["FechaCreacion"].ToString());
+                        turnosAplicados.Estado = Convert.ToBoolean(lstTurnosAplicados["Estado"]);
+                        turnosAplicados.Sincronizacion = true;
+                        turnosAplicados.Documento = lstTurnosAplicados["Documento"].ToString();
+                        turnosAplicados.IdTurno = Convert.ToInt32(lstTurnosAplicados["IdTurno"]);
+                        turnosAplicados.IdSede = Convert.ToInt32(lstTurnosAplicados["IdSede"]);
+
+                    }
+
+
+                    tabla = Datos.ValidarTurnosAplicadosSincronizacion(turnosAplicados);
+                    if (tabla.Rows.Count > 0)
+                    {
+                        foreach (DataRow lstTurnosAplicados in tabla.Rows)
+                        {
+                            turnosAplicadosNube.IdTurnoAplicado = Convert.ToInt32(lstTurnosAplicados["IdTurnoAplicado"]);
+                            turnosAplicadosNube.FechaAplicada = Convert.ToDateTime(lstTurnosAplicados["FechaAplicada"]);
+                            turnosAplicadosNube.FechaCreacion = Convert.ToDateTime(lstTurnosAplicados["FechaCreacion"]);
+                            turnosAplicadosNube.Estado = Convert.ToBoolean(lstTurnosAplicados["Estado"]);
+                            turnosAplicadosNube.Sincronizacion = true;
+                            turnosAplicadosNube.Documento = lstTurnosAplicados["Documento"].ToString();
+                            turnosAplicadosNube.IdTurno = Convert.ToInt32(lstTurnosAplicados["IdTurno"]);
+                            turnosAplicadosNube.IdSede = Convert.ToInt32(lstTurnosAplicados["IdSede"]);
+
+                        }
+
+                        if (turnosAplicadosNube.FechaCreacion != turnosAplicados.FechaCreacion || turnosAplicadosNube.Documento != turnosAplicados.Documento || turnosAplicadosNube.IdSede != turnosAplicados.IdSede || turnosAplicados.IdTurno != turnosAplicadosNube.IdTurno)
+                        {
+                            rta = Datos.ActualizaDatosTurnosAplicadosSincronizacion(turnosAplicados);
+                            if (rta.Equals("OK"))
+                            {
+                                rta = Datos.ActualizarEstadoTurnosAplicadosSincronizacion(turnosAplicados);
+                                if (rta.Equals("OK"))
+                                {
+                                    ok = true;
+                                }
+                                else
+                                {
+                                    ok = false;
+                                }
+                            }
+                            else
+                            {
+                                ok = false;
+                            }
+                        }
+                        else
+                        {
+                            rta = Datos.ActualizarEstadoTurnosAplicadosSincronizacion(turnosAplicados);
+                            if (rta.Equals("OK"))
+                            {
+                                ok = true;
+                            }
+                            else
+                            {
+                                ok = false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        rta = Datos.RegistrarTurnosAplicadosSincronizacion(turnosAplicados);
+                        if (rta.Equals("OK"))
+                        {
+                            rta = Datos.ActualizarEstadoTurnosAplicadosSincronizacion(turnosAplicados);
+                            if (rta.Equals("OK"))
+                            {
+                                ok = true;
+                            }
+                            else
+                            {
+                                ok = false;
+                            }
+                        }
+                        else
+                        {
+                            ok = false;
+                        }
+
+
+                    }
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+                ok = false;
+            }
+            return ok;
+
+
+        }
+
+
+
+        #endregion
+
+        #region Asistencia
+
+        public static bool SincronizacionAsistencias(Asistencias asistencias)
+        {
+            AsistenciasNube asistenciasNube = new AsistenciasNube();
+            bool ok = false;
+            string rta = "";
+            DataTable tabla = new DataTable();
+            SqlConnection sqlCon = new SqlConnection();
+            RepositorioAsistencias Datos = new RepositorioAsistencias();
+            try
+            {
+                tabla = Datos.ObtenerAsistenciasSincronizacion(asistencias);
+                if (tabla.Rows.Count > 0)
+                {
+                    foreach (DataRow lstAsistencias in tabla.Rows)
+                    {
+                        asistencias.IdAsistencia = Convert.ToInt32(lstAsistencias["IdAsistencia"]);
+                        asistencias.FechaEntrada = Convert.ToDateTime(lstAsistencias["FechaEntrada"]);
+                        asistencias.FechaSalida = Convert.ToDateTime(lstAsistencias["FechaSalida"]);
+                        asistencias.Estado = Convert.ToBoolean(lstAsistencias["Estado"]);
+                        asistencias.Sincronizacion = Convert.ToBoolean(lstAsistencias["Sincronizacion"]);
+                        asistencias.Documento = lstAsistencias["Documento"].ToString();
+                        asistencias.IdTurnoAplicado = lstAsistencias["IdTurnoAplicado"] != DBNull.Value ? Convert.ToInt32(lstAsistencias["IdTurnoAplicado"]) : (int?)null;
+                        asistencias.IdSede = Convert.ToInt32(lstAsistencias["IdSede"]);
+
+                    }
+
+                    tabla = Datos.ValidarAsistenciaSincronizacion(asistencias);
+                    if (tabla.Rows.Count > 0)
+                    {
+                        foreach (DataRow lstAsistencias in tabla.Rows)
+                        {
+                            asistenciasNube.IdAsistencia = Convert.ToInt32(lstAsistencias["IdAsistencia"]);
+                            asistenciasNube.FechaEntrada = Convert.ToDateTime(lstAsistencias["FechaEntrada"]);
+                            asistenciasNube.FechaSalida = Convert.ToDateTime(lstAsistencias["FechaSalida"]);
+                            asistenciasNube.Estado = Convert.ToBoolean(lstAsistencias["Estado"]);
+                            asistenciasNube.Sincronizacion = Convert.ToBoolean(lstAsistencias["Sincronizacion"]);
+                            asistenciasNube.Documento = lstAsistencias["Documento"].ToString();
+                            asistenciasNube.IdTurnoAplicado = lstAsistencias["IdTurnoAplicado"] != DBNull.Value ? Convert.ToInt32(lstAsistencias["IdTurnoAplicado"]) : (int?)null;
+                            asistenciasNube.IdSede = Convert.ToInt32(lstAsistencias["IdSede"]);
+
+                        }
+
+                        if (asistencias.Documento == asistenciasNube.Documento)
+                        {
+                            if (asistencias.IdSede == asistenciasNube.IdSede)
+                            {
+                                if (asistencias.FechaEntrada == asistenciasNube.FechaEntrada)
+                                {
+                                    if (asistencias.FechaSalida == asistenciasNube.FechaSalida)
+                                    {
+
+                                        rta = Datos.ActualizarEstadoAsistenciaSincronizacion(asistencias);
+                                        if (rta.Equals("OK"))
+                                        {
+                                            ok = true;
+                                        }
+                                        else
+                                        {
+                                            ok = false;
+                                        }
+                                    }
+                                    else
+                                    {
+
+                                        rta = Datos.ActualizaAsistenciaSalidaSincronizacion(asistencias);
+                                        if (rta.Equals("OK"))
+                                        {
+                                            rta = Datos.ActualizarEstadoAsistenciaSincronizacion(asistencias);
+                                            if (rta.Equals("OK"))
+                                            {
+                                                ok = true;
+                                            }
+                                            else
+                                            {
+                                                ok = false;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            ok = false;
+                                        }
+
+                                    }
+                                }
+                                else
+                                {
+                                    ok = false;
+                                }
+                            }
+                            else
+                            {
+                                ok = false;
+                            }
+                        }
+                        else
+                        {
+                            ok = false;
+                        }
+                    }
+                    else
+                    {
+                        //registrar asistencia 
+                        rta = Datos.RegistrarAsistenciaSincronizacion(asistencias);
+                        if (rta.Equals("OK"))
+                        {
+                            rta = Datos.ActualizarEstadoAsistenciaSincronizacion(asistencias);
+                            if (rta.Equals("OK"))
+                            {
+                                ok = true;
+                            }
+                            else
+                            {
+                                ok = false;
+                            }
+                        }
+                        else
+                        {
+                            ok = false;
+                        }
+                    }
+
+
+
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                ok = false;
+            }
+            return ok;
+        }
+
+        #endregion
+
+        #region Retardos 
+
+        public static bool SincronizacionRetardos(Retardos retardos)
+        {
+            bool ok = false;
+            string rta = "";
+            DataTable tabla = new DataTable();
+            SqlConnection sqlCon = new SqlConnection();
+            RepositorioRetardos Datos = new RepositorioRetardos();
+            try
+            {
+                tabla = Datos.ObtenerRetardosSincronizacion(retardos);
+                if(tabla.Rows.Count > 0)
+                {
+                    foreach (DataRow lstRetardos in tabla.Rows)
+                    {
+                        retardos.IdRetardo = Convert.ToInt32(lstRetardos["IdRetardo"]);
+                        retardos.FechaRetardo = Convert.ToDateTime(lstRetardos["FechaRetardo"]);
+                        TimeSpan tiempoRetardos = (TimeSpan)lstRetardos["MinutosRegistrados"];
+                        double minutosTotales = tiempoRetardos.TotalMinutes;
+                        retardos.MinutosRetardos = minutosTotales;
+                        retardos.Estado = Convert.ToBoolean(lstRetardos["Estado"]);
+                        retardos.Sincronizacion = Convert.ToBoolean(lstRetardos["Sincronizacion"]);
+                        retardos.Observacion = lstRetardos["Observacion"].ToString();
+                        retardos.IdAsistencia = Convert.ToInt32(lstRetardos["IdAsistencia"]);
+                        retardos.IdSede = Convert.ToInt32(lstRetardos["IdSede"]);
+
+                    }
+
+                    tabla = Datos.ValidarRetardoSincronizacion(retardos);
+                    if (tabla.Rows.Count > 0)
+                    {
+                        rta = Datos.ActualizarEstadoRetardosSincronizacion(retardos);
+                        if (rta.Equals("OK"))
+                        {
+                            ok = true;
+                        }
+                        else
+                        {
+                            ok = false;
+                        }
+
+                    }
+                    else
+                    {
+                        rta = Datos.RegistrarRetardosSincronizacion(retardos);
+                        if (rta.Equals("OK"))
+                        {
+                            rta = Datos.ActualizarEstadoRetardosSincronizacion(retardos);
+                            if (rta.Equals("OK"))
+                            {
+                                ok = true;
+                            }
+                            else
+                            {
+                                ok = false;
+                            }
+                        }
+                        else
+                        {
+                            ok = false;
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex )
+            {
+
+                ok = false;
+            }
+
+            return ok;
+
+        }
+
+
+        #endregion
 
     }
 }

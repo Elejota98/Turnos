@@ -22,6 +22,9 @@ namespace TurnosSincronizacion
         Sedes sedes = new Sedes();
         Empleados empleados = new Empleados();
         Turnos turnos = new Turnos();
+        TurnosAplicados turnosAplicados = new TurnosAplicados();
+        Asistencias asistencias =  new Asistencias();
+        Retardos retardos = new Retardos();
         private static object objLock = new object();
         private static TurnosSincronizacion Agente = new TurnosSincronizacion();
         public string rta = string.Empty;
@@ -138,6 +141,9 @@ namespace TurnosSincronizacion
                     sedes.IdSede = _IdSede;
                     empleados.IdSede=_IdSede;
                     turnos.IdSede = _IdSede;
+                    turnosAplicados.IdSede= _IdSede;
+                    asistencias.IdSede = _IdSede;
+                    retardos.IdSede = _IdSede;
 
                     #region Tarjetas
                     SincronizacionController.SincronizarTarjetas();
@@ -156,6 +162,18 @@ namespace TurnosSincronizacion
                     SincronizacionController.SincronizacionTurnos(turnos);
                     #endregion
 
+                    #region TurnosAplicados
+                    SincronizacionController.SincronizacionTurnosAplicados(turnosAplicados);
+
+                    #endregion
+
+                    #region Asistencia
+                    SincronizacionController.SincronizacionAsistencias(asistencias);
+                    #endregion
+
+                    #region Retardos
+                    SincronizacionController.SincronizacionRetardos(retardos);
+                    #endregion
 
                     oTimer.Enabled = true;
                 }

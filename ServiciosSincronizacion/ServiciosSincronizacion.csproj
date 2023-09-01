@@ -43,11 +43,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositorioAsistencias.cs" />
     <Compile Include="RepositorioConexion.cs" />
     <Compile Include="RepositorioEmpleados.cs" />
+    <Compile Include="RepositorioRetardos.cs" />
     <Compile Include="RepositorioSedes.cs" />
     <Compile Include="RepositorioTarjetas.cs" />
     <Compile Include="RepositorioTurnos.cs" />
+    <Compile Include="RepositorioTurnosAplicados.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Modelo\Modelo.csproj">

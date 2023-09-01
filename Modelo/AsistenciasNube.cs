@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Modelo
 {
-    public class Asistencias
+    public class AsistenciasNube
     {
         public int IdAsistencia { get; set; }
         public int IdSede { get; set; }
