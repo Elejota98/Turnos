@@ -46,6 +46,7 @@
     <Compile Include="RepositorioAsistencias.cs" />
     <Compile Include="RepositorioConexion.cs" />
     <Compile Include="RepositorioEmpleados.cs" />
+    <Compile Include="RepositorioExtras.cs" />
     <Compile Include="RepositorioRetardos.cs" />
     <Compile Include="RepositorioSedes.cs" />
     <Compile Include="RepositorioTarjetas.cs" />

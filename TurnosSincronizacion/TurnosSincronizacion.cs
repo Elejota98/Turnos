@@ -25,6 +25,7 @@ namespace TurnosSincronizacion
         TurnosAplicados turnosAplicados = new TurnosAplicados();
         Asistencias asistencias =  new Asistencias();
         Retardos retardos = new Retardos();
+        HorasExtras horasExtras= new HorasExtras();
         private static object objLock = new object();
         private static TurnosSincronizacion Agente = new TurnosSincronizacion();
         public string rta = string.Empty;
@@ -144,7 +145,8 @@ namespace TurnosSincronizacion
                     turnosAplicados.IdSede= _IdSede;
                     asistencias.IdSede = _IdSede;
                     retardos.IdSede = _IdSede;
-
+                    horasExtras.IdSede = _IdSede;
+                    
                     #region Tarjetas
                     SincronizacionController.SincronizarTarjetas();
                     #endregion
@@ -173,6 +175,10 @@ namespace TurnosSincronizacion
 
                     #region Retardos
                     SincronizacionController.SincronizacionRetardos(retardos);
+                    #endregion
+
+                    #region HorasExtras
+                    SincronizacionController.SincronizacionHorasExtras(horasExtras);
                     #endregion
 
                     oTimer.Enabled = true;

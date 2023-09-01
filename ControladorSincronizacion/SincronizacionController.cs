@@ -685,5 +685,81 @@ namespace ControladorSincronizacion
 
         #endregion
 
+        #region HorasExtras
+        public static bool SincronizacionHorasExtras(HorasExtras horasExtras)
+        {
+            bool ok = false;
+            string rta = "";
+            DataTable tabla = new DataTable();
+            SqlConnection sqlCon = new SqlConnection();
+            RepositorioExtras Datos = new RepositorioExtras();
+            try
+            {
+                tabla = Datos.ObtenerExtrasSincronizacion(horasExtras);
+                if (tabla.Rows.Count > 0)
+                {
+                    foreach (DataRow lstExtras in tabla.Rows)
+                    {
+                        horasExtras.IdHoraExtra = Convert.ToInt32(lstExtras["IdHoraExtra"]);
+                        horasExtras.Observacion = lstExtras["Observacion"].ToString();
+                        horasExtras.FechaHoraExtra = Convert.ToDateTime(lstExtras["FechaHoraExtra"]);
+                        TimeSpan tiempoRetardos = (TimeSpan)lstExtras["MinutosExtras"];
+                        double minutosTotales = tiempoRetardos.TotalMinutes;
+                        horasExtras.MinutosExtras = minutosTotales;
+                        horasExtras.Sincronizacion = Convert.ToBoolean(lstExtras["Sincronizacion"]);
+                        horasExtras.Estado = Convert.ToBoolean(lstExtras["Estado"]);
+                        horasExtras.IdAsistencia = Convert.ToInt32(lstExtras["IdAsistencia"]);
+                        horasExtras.IdSede = Convert.ToInt32(lstExtras["IdSede"]);
+
+                    }
+
+                    tabla = Datos.ValidarExtrasSincronizacion(horasExtras);
+                    if(tabla.Rows.Count > 0)
+                    {
+                        rta = Datos.ActualizarEstadoExtraSincronizacion(horasExtras);
+                        if (rta.Equals("OK"))
+                        {
+                            ok = true;
+                        }
+                        else
+                        {
+                            ok = false;
+                        }
+                    }
+                    else
+                    {
+                        rta = Datos.RegistrarHorasExtrasSincronizacion(horasExtras);
+                        if (rta.Equals("OK"))
+                        {
+                            rta = Datos.ActualizarEstadoExtraSincronizacion(horasExtras);
+                            if (rta.Equals("OK"))
+                            {
+                                ok = true;
+                            }
+                            else
+                            {
+                                ok = false;
+                            }
+                        }
+                        else
+                        {
+                            ok = false;
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex )
+            {
+
+                ok = false;
+            }
+
+            return ok;
+                 
+        }
+
+        #endregion
+
     }
 }
