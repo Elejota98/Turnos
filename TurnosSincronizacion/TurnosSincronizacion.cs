@@ -146,7 +146,9 @@ namespace TurnosSincronizacion
                     asistencias.IdSede = _IdSede;
                     retardos.IdSede = _IdSede;
                     horasExtras.IdSede = _IdSede;
-                    
+
+                    #region Subida 
+
                     #region Tarjetas
                     SincronizacionController.SincronizarTarjetas();
                     #endregion
@@ -179,6 +181,18 @@ namespace TurnosSincronizacion
 
                     #region HorasExtras
                     SincronizacionController.SincronizacionHorasExtras(horasExtras);
+                    #endregion
+
+
+                    #endregion
+
+                    #region Bajada
+
+                    #region Empleados
+
+                    #endregion
+
+
                     #endregion
 
                     oTimer.Enabled = true;
