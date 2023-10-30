@@ -75,7 +75,6 @@ D:\PROYECTOS\Turnos\Turnos\bin\Debug\System.Numerics.Vectors.xml
 D:\PROYECTOS\Turnos\Turnos\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 D:\PROYECTOS\Turnos\Turnos\bin\Debug\Servicios.pdb
 D:\PROYECTOS\Turnos\Turnos\obj\Debug\Turnos.csproj.AssemblyReference.cache
-D:\PROYECTOS\Turnos\Turnos\obj\Debug\Turnos.csproj.SuggestedBindingRedirects.cache
 D:\PROYECTOS\Turnos\Turnos\obj\Debug\Turnos.Principal.resources
 D:\PROYECTOS\Turnos\Turnos\obj\Debug\Turnos.Properties.Resources.resources
 D:\PROYECTOS\Turnos\Turnos\obj\Debug\Turnos.csproj.GenerateResource.cache
