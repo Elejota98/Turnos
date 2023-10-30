@@ -174,11 +174,8 @@ namespace Servicios
             try
             {
                 sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
-                string cadena = ("SELECT        dbo.T_Empleados.Documento, dbo.T_Empleados.NombreEmpleado, dbo.T_Empleados.ApellidoEmpleado," +
-                    " dbo.T_Empleados.TelefonoEmpleado, dbo.T_Empleados.IdTarjeta, dbo.T_Cargos.NombreCargo,  dbo.T_Sedes.NombreSede " +
-                    " FROM   dbo.T_Empleados INNER JOIN dbo.T_Sedes ON dbo.T_Empleados.IdSede = dbo.T_Sedes.IdSede INNER JOIN  dbo.T_Cargos ON dbo.T_Empleados.IdCargo = dbo.T_Cargos.IdCargo" +
-                    " WHERE dbo.T_Empleados.Estado=1 ");
-                SqlCommand comando = new SqlCommand(cadena, sqlCon);
+                SqlCommand comando = new SqlCommand("P_ListarEmpleados", sqlCon);
+                comando.CommandType = CommandType.StoredProcedure;
                 sqlCon.Open();
                 SqlDataReader rta = comando.ExecuteReader();
                 tabla.Load(rta);

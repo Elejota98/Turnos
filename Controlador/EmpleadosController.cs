@@ -20,6 +20,12 @@ namespace Controlador
             Tarjetas tarjetas = new Tarjetas();
             tarjetas.IdTarjeta = TarjetasController.ObtenerIdTarjeta();
 
+            if (empleados.TelefonoEmpleado == "")
+            {
+                empleados.TelefonoEmpleado = "0";
+            }
+
+
             if (tarjetas.IdTarjeta != "ERROR")
             {
                 empleados.IdTarjeta = tarjetas.IdTarjeta;

@@ -18,5 +18,6 @@ namespace Modelo
         public int IdCargo { get; set; }
         public string IdTarjeta { get; set; }
         public int IdSede { get; set; }
+        public bool Sincronizacion { get; set; }
     }
 }

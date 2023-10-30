@@ -36,7 +36,6 @@ namespace Turnos
         int tiempoMensaje = 5000;
         #endregion
 
-
         public Principal()
         {
             InitializeComponent();
@@ -227,8 +226,6 @@ namespace Turnos
 
 
         #endregion
-
-   
 
         #region Empleados
 
@@ -460,8 +457,9 @@ namespace Turnos
             Asistencias asistencia = new Asistencias();
             asistencia.FechaEntrada = DateTime.Now;
             asistencia.FechaSalida=DateTime.Now;
+            asistencia.IdSede = idSede;
 
-            rta = AsistenciaController.RegistrarAsistencia(asistencia, idSede);
+            rta = AsistenciaController.RegistrarAsistencia(asistencia);
 
 
             if (!rta.Equals("ERROR"))
@@ -498,8 +496,9 @@ namespace Turnos
                 Asistencias asistencia = new Asistencias();
                 asistencia.FechaEntrada = DateTime.Now;
                 asistencia.FechaSalida = DateTime.Now;
+                asistencia.IdSede = idSede;
 
-                rta = AsistenciaController.ActualizarSalidaAsistencia(asistencia, idSede, Documento);
+                rta = AsistenciaController.ActualizarSalidaAsistencia(asistencia, Documento);
 
                 if (rta.Equals("SIN SALIDA"))
                 {
@@ -586,11 +585,16 @@ namespace Turnos
             //fondoEmpleado.BackgroundImage = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Imagenes\fondoEmpleados.png"));
 
             string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Imagenes\Encabezado.png");
+            string imgFondoAsistencias = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Imagenes\FondoMenu.png");
+
 
             if (File.Exists(imagePath))
             {
                 pnTitulo.BackgroundImage = Image.FromFile(imagePath);
                 BackgroundImageLayout = ImageLayout.Stretch;
+                imgFondoAsistencia.BackgroundImage = Image.FromFile(imgFondoAsistencias);
+                BackgroundImageLayout = ImageLayout.Stretch;
+
                 ok = true;
             }
 
@@ -706,8 +710,9 @@ namespace Turnos
             Asistencias asistencia = new Asistencias();
             asistencia.FechaEntrada = DateTime.Now;
             asistencia.FechaSalida = DateTime.Now;
+            asistencia.IdSede = idSede;
 
-            rta = AsistenciaController.ActualizarSalidaAsistencia(asistencia, idSede, Documento);
+            rta = AsistenciaController.ActualizarSalidaAsistencia(asistencia, Documento);
 
             if (rta.Equals("SIN SALIDA"))
             {

@@ -24,6 +24,7 @@ namespace Servicios
                 TimeSpan minutosRetardo = TimeSpan.FromMinutes(horasExtras.MinutosExtras);
                 comando.Parameters.Add("@MinutosExtras", SqlDbType.Time).Value = minutosRetardo;
                 comando.Parameters.Add("@IdAsistencia", SqlDbType.Int).Value = horasExtras.IdAsistencia;
+                comando.Parameters.Add("@IdSede", SqlDbType.Int).Value = horasExtras.IdSede;
                 sqlCon.Open();
                 comando.ExecuteNonQuery();
                 rta = "OK";

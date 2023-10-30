@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Security.Permissions;
 using System.Text;
@@ -14,9 +15,10 @@ namespace Controlador
 {
     public class AsistenciaController
     {
-        public static string RegistrarAsistencia(Asistencias asistencias, int idSede)
+        public static string RegistrarAsistencia(Asistencias asistencias)
         {
-
+            Politicas politicas = new Politicas();
+            Retardos retardo = new Retardos();
             string rta = "";
             int tiempoRetardo = 0;
             int minutosDiferencia = 0;
@@ -47,7 +49,7 @@ namespace Controlador
 
                 //Traer la hora de ingreso
 
-                tabla = Datos.ListarDatosTurnosAplicados(asistencias, idSede);
+                tabla = Datos.ListarDatosTurnosAplicados(asistencias);
                 if (tabla.Rows.Count > 0)
                 {
                     for (int i = 0; i < tabla.Rows.Count; i++)
@@ -64,7 +66,8 @@ namespace Controlador
 
                     if(fechaEncontrada)
                     {
-                        tabla = PoliticasController.ListarPoliticas();
+                        politicas.IdSede = asistencias.IdSede;
+                        tabla = PoliticasController.ListarPoliticas(politicas);
 
                         for (int i = 0; i < tabla.Rows.Count; i++)
                         {
@@ -81,11 +84,12 @@ namespace Controlador
 
                         if (minutosDiferencia > tiempoRetardo)
                         {
+                         
                             //Registrar la asistencia 
                             rta = Datos.RegistrarAsistencia(asistencias);
                             if (rta.Equals("OK"))
                             {
-                                tabla = RetardosController.ListarIdTurnoAplicado(asistencias, idSede);
+                                tabla = RetardosController.ListarIdTurnoAplicado(asistencias);
 
                                 if (tabla.Rows.Count > 0)
                                 {
@@ -99,7 +103,9 @@ namespace Controlador
                                     {
                                         FechaRetardo = DateTime.Now,
                                         MinutosRetardos = Convert.ToDouble(minutosDiferencia),
-                                        IdAsistencia = asistencias.IdAsistencia
+                                        IdAsistencia = asistencias.IdAsistencia,
+                                        IdSede = asistencias.IdSede
+                                        
 
                                     };
 
@@ -192,8 +198,9 @@ namespace Controlador
             RepositorioAsistencias Datos = new RepositorioAsistencias();
             return Datos.ObtenerDocumentoPorTarjeta(idTarjeta);
         }
-        public static string ActualizarSalidaAsistencia(Asistencias asistencias, int idSede, string documentoLogin)
+        public static string ActualizarSalidaAsistencia(Asistencias asistencias, string documentoLogin)
         {
+            Politicas politicas = new Politicas();
             string rta = "";
             int tiempoExtra = 0;
             int minutosDiferencia = 0;
@@ -215,7 +222,7 @@ namespace Controlador
                     }
                     if (asistencias.Documento == documentoLogin)
                     {
-                        tabla = Datos.ValidarFechaSalida(asistencias, idSede);
+                        tabla = Datos.ValidarFechaSalida(asistencias);
                         if (tabla.Rows.Count > 0)
                         {
 
@@ -228,7 +235,13 @@ namespace Controlador
 
                             }
 
-                            tabla = PoliticasController.ListarPoliticas();
+
+
+
+
+                            politicas.IdSede = asistencias.IdSede;
+
+                            tabla = PoliticasController.ListarPoliticas(politicas);
 
                             for (int i = 0; i < tabla.Rows.Count; i++)
                             {
@@ -237,6 +250,11 @@ namespace Controlador
                                     tiempoExtra = Convert.ToInt32(tabla.Rows[i]["Tiempo"]);
                                 }
                             }
+
+
+
+
+
 
 
                             TimeSpan horaEntradaAsistencias = asistencias.FechaSalida.TimeOfDay;
@@ -254,7 +272,8 @@ namespace Controlador
                                     {
                                         FechaHoraExtra = DateTime.Now,
                                         MinutosExtras = minutosDiferencia,
-                                        IdAsistencia = asistencias.IdAsistencia
+                                        IdAsistencia = asistencias.IdAsistencia,
+                                        IdSede = asistencias.IdSede
 
                                     };
 

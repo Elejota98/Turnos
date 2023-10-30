@@ -12,11 +12,11 @@ namespace Controlador
 {
     public class RetardosController
     {
-        public static DataTable ListarIdTurnoAplicado (Asistencias asistencias, int IdSede)
+        public static DataTable ListarIdTurnoAplicado (Asistencias asistencias)
         {
             DataTable tabla = new DataTable ();
             RepositorioRetardos Datos = new RepositorioRetardos ();
-            return tabla = Datos.ListarIdTurnoAplicado(asistencias, IdSede);
+            return tabla = Datos.ListarIdTurnoAplicado(asistencias);
 
         }
 

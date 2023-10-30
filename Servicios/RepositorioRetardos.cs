@@ -12,7 +12,7 @@ namespace Servicios
 {
     public class RepositorioRetardos
     {
-        public DataTable ListarIdTurnoAplicado(Asistencias asistencias, int idsede)
+        public DataTable ListarIdTurnoAplicado(Asistencias asistencias)
         {
             DataTable tabla = new DataTable();
             SqlConnection sqlCon = new SqlConnection();
@@ -20,14 +20,11 @@ namespace Servicios
             try
             {
                 sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
-                string cadena = ("SELECT      top (1)  dbo.T_Asistencias.IdAsistencia " +
-                            " FROM dbo.T_Turnos INNER JOIN " +
-                         "dbo.T_TurnosAplicados ON dbo.T_Turnos.IdTurno = dbo.T_TurnosAplicados.IdTurno INNER JOIN "+
-                         "dbo.T_Empleados ON dbo.T_TurnosAplicados.Documento = dbo.T_Empleados.Documento INNER JOIN "+
-                         "dbo.T_Sedes ON dbo.T_Turnos.IdSede = dbo.T_Sedes.IdSede AND dbo.T_Empleados.IdSede = dbo.T_Sedes.IdSede INNER JOIN " +
-                         "dbo.T_Asistencias ON dbo.T_TurnosAplicados.IdTurnoAplicado = dbo.T_Asistencias.IdTurnoAplicado AND dbo.T_Empleados.Documento = dbo.T_Asistencias.Documento WHERE  dbo.T_Sedes.IdSede="+idsede+" and dbo.T_TurnosAplicados.IdTurnoAplicado="+asistencias.IdTurnoAplicado+" " +
-                    "AND dbo.T_TurnosAplicados.Documento ="+asistencias.Documento+" ORDER BY T_Asistencias.FechaEntrada DESC");
-                SqlCommand comando = new SqlCommand(cadena, sqlCon);
+                SqlCommand comando = new SqlCommand("P_ListarIdTurnoAplicado", sqlCon);
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.Add("@Documento", SqlDbType.VarChar).Value = asistencias.Documento;
+                comando.Parameters.Add("@IdSede", SqlDbType.Int).Value = asistencias.IdSede;
+                comando.Parameters.Add("@IdTurnoAplicado", SqlDbType.Int).Value = asistencias.IdTurnoAplicado;
                 sqlCon.Open();
                 resultado = comando.ExecuteReader();
                 tabla.Load(resultado);
@@ -59,6 +56,7 @@ namespace Servicios
                 TimeSpan minutosRetardo = TimeSpan.FromMinutes(retardos.MinutosRetardos);
                 comando.Parameters.Add("@MinutosRetardo", SqlDbType.Time).Value = minutosRetardo;
                 comando.Parameters.Add("@IdAsistencia", SqlDbType.Int).Value = retardos.IdAsistencia;
+                comando.Parameters.Add("@IdSede",SqlDbType.Int).Value = retardos.IdSede;
                 sqlCon.Open();
                 comando.ExecuteNonQuery();
                 rta = "OK";

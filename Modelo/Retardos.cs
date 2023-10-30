@@ -15,5 +15,6 @@ namespace Modelo
         public bool Sincronizacion { get; set; }
         public string Observacion { get; set; }
         public int IdAsistencia { get; set; }
+        public int IdSede { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace Servicios
     public class RepositorioAsistencias
     {
        
-        public DataTable ListarDatosTurnosAplicados(Asistencias asistencias, int idSede)
+        public DataTable ListarDatosTurnosAplicados(Asistencias asistencias)
         {
             DataTable tabla = new DataTable();
             SqlConnection sqlCon = new SqlConnection();
@@ -25,7 +25,7 @@ namespace Servicios
                 SqlCommand comando = new SqlCommand("P_ListarDatosTurnosAplicados", sqlCon);
                 comando.CommandType = CommandType.StoredProcedure;
                 comando.Parameters.Add("@Documento", SqlDbType.VarChar).Value = asistencias.Documento;
-                comando.Parameters.Add("@IdSede", SqlDbType.Int).Value = idSede;
+                comando.Parameters.Add("@IdSede", SqlDbType.Int).Value = asistencias.IdSede;
                 sqlCon.Open();
                 resultado = comando.ExecuteReader();
                 tabla.Load(resultado);
@@ -51,10 +51,10 @@ namespace Servicios
             try
             {
                 sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
-                string cadena = ("INSERT INTO T_Asistencias(FechaEntrada,FechaSalida,Estado,Sincronizacion,Documento,IdTurnoAplicado) " +
-                    "VALUES(GETDATE(),'1900-01-01 00:00:00.000',1,0," + asistencias.Documento
-                    + ", NULL)");
-                SqlCommand comando = new SqlCommand(cadena, sqlCon);
+                SqlCommand comando = new SqlCommand("P_RegistrarAsistenciaSinTurnoAsignado", sqlCon);
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.Add("@Documento", SqlDbType.VarChar).Value = asistencias.Documento;
+                comando.Parameters.Add("@IdSede", SqlDbType.Int).Value = asistencias.IdSede;
                 sqlCon.Open();
                 comando.ExecuteNonQuery();
                 rta = "OK";
@@ -84,6 +84,8 @@ namespace Servicios
                 comando.Parameters.Add("@FechaEntrada", SqlDbType.DateTime).Value = asistencias.FechaEntrada;
                 comando.Parameters.Add("@Documento", SqlDbType.VarChar).Value = asistencias.Documento;
                 comando.Parameters.Add("@IdTurnoAplicado", SqlDbType.Int).Value = asistencias.IdTurnoAplicado;
+                comando.Parameters.Add("@IdSede", SqlDbType.Int).Value = asistencias.IdSede;
+
                 sqlCon.Open();
                 comando.ExecuteNonQuery();
                 rta = "OK";
@@ -142,6 +144,7 @@ namespace Servicios
                 comando.Parameters.Add("@FechaSalida", SqlDbType.DateTime).Value = asistencias.FechaSalida;
                 comando.Parameters.Add("@Documento", SqlDbType.VarChar).Value = asistencias.Documento;
                 comando.Parameters.Add("@IdTurnoAplicado", SqlDbType.Int).Value = asistencias.IdTurnoAplicado;
+                comando.Parameters.Add("@IdSede", SqlDbType.Int).Value = asistencias.IdSede;
                 sqlCon.Open();
                 comando.ExecuteNonQuery();
                 rta = "OK";
@@ -159,7 +162,7 @@ namespace Servicios
             return rta;
         }
 
-        public  DataTable ValidarFechaSalida(Asistencias asistencias, int idSede)
+        public  DataTable ValidarFechaSalida(Asistencias asistencias)
         {
             DataTable tabla = new DataTable();
             SqlConnection sqlCon = new SqlConnection();
@@ -170,7 +173,7 @@ namespace Servicios
                 SqlCommand comando = new SqlCommand("P_ValidarFechaSalidaAsistencia", sqlCon);
                 comando.CommandType = CommandType.StoredProcedure;
                 comando.Parameters.Add("@Documento", SqlDbType.VarChar).Value = asistencias.Documento;
-                comando.Parameters.Add("@IdSede", SqlDbType.Int).Value = idSede;
+                comando.Parameters.Add("@IdSede", SqlDbType.Int).Value = asistencias.IdSede;
                 sqlCon.Open();
                 resultado = comando.ExecuteReader();
                 tabla.Load(resultado);
@@ -197,12 +200,10 @@ namespace Servicios
             try
             {
                 sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
-                string cadena = ("SELECT  TOP(1) dbo.T_Asistencias.IdAsistencia FROM    dbo.T_Asistencias INNER JOIN" +
-                    "   dbo.T_Empleados ON dbo.T_Asistencias.Documento = dbo.T_Empleados.Documento INNER JOIN" +
-                    " dbo.T_Sedes ON dbo.T_Empleados.IdSede = dbo.T_Sedes.IdSede" +
-                    " WHERE dbo.T_Asistencias.Documento='"+asistencias.Documento+ "' and dbo.T_Asistencias.IdTurnoAplicado IS NULL AND dbo.T_Asistencias.FechaSalida = '1900-01-01 00:00:00.000' " +
-                    "ORDER BY 1 DESC ");
-                SqlCommand comando = new SqlCommand(cadena, sqlCon);
+                SqlCommand comando = new SqlCommand("P_ValidarFechSalidaSinTurnoAplicado", sqlCon);
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.Add("@Documento", SqlDbType.VarChar).Value = asistencias.Documento;
+                comando.Parameters.Add("@IdSede", SqlDbType.Int).Value = asistencias.IdSede;
                 sqlCon.Open();
                 resultado = comando.ExecuteReader();
                 tabla.Load(resultado);
@@ -227,8 +228,10 @@ namespace Servicios
             try
             {
                 sqlCon = RepositorioConexion.GetInstancia().CrearConexionLocal();
-                string cadena = ("UPDATE T_Asistencias SET FechaSalida=GETDATE() WHERE IdAsistencia="+asistencias.IdAsistencia+"");
-                SqlCommand comando = new SqlCommand(cadena, sqlCon);
+                SqlCommand comando = new SqlCommand("P_ActualizarSalidaSinTurnoAplicado", sqlCon);
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.Add("@IdAsistencia", SqlDbType.Int).Value = asistencias.IdAsistencia;
+                comando.Parameters.Add("@IdSede", SqlDbType.Int).Value = asistencias.IdSede;
                 sqlCon.Open();
                 comando.ExecuteNonQuery();
                 rta = "OK";
