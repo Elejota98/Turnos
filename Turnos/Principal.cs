@@ -512,6 +512,7 @@ namespace Turnos
                     lblMensaje.ForeColor = Color.White;                    
                     lblMensaje.Visible=true;
                     //pnAsistencia.Visible = true;
+                    lblMensaje.Text = rta.ToString();
                     lblMensaje.Update();
                     Thread.Sleep(tiempoMensaje);
                     Login login = new Login();
@@ -533,6 +534,7 @@ namespace Turnos
                     lblMensaje.ForeColor = Color.White;
                     //pnAsistencia.Visible = true;
                     lblMensaje.Visible=true;
+                    lblMensaje.Text = rta.ToString();
                     lblMensaje.Update();
                 Thread.Sleep(tiempoMensaje);
                     Login login = new Login();
@@ -676,7 +678,7 @@ namespace Turnos
         {
             lblTitulo.Text = "Aistencia empleados";
             lblTitulo.Visible = true;
-                    lblMensaje.Visible=true;
+             lblMensaje.Visible=true;
             //pnAsistencia.Visible = false;
             TabPrincipal.SelectedTab = Asistencia;
             trmMenu.Stop();

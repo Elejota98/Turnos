@@ -1,4 +1,6 @@
-﻿using Modelo;
+﻿using EGlobalT.Device.SmartCardReaders;
+using EGlobalT.Device.SmartCardReaders.Entities;
+using Modelo;
 using Servicios;
 using System;
 using System.Collections.Generic;
@@ -13,38 +15,61 @@ namespace Controlador
     {
         public static string ObtenerIdTarjeta()
         {
-
             string rta = "";
-            RepositorioTarjetas Datos = new RepositorioTarjetas();
 
-            if (Datos.ConectarLectora())
+            Rspsta_Conexion_LECTOR RespCin = new Rspsta_Conexion_LECTOR();
+            Lectora_ACR122U Lector = new Lectora_ACR122U();
+            Rspsta_LecturaTarjeta_SectorBloque_LECTOR RspLect = new Rspsta_LecturaTarjeta_SectorBloque_LECTOR();
+            Rspsta_CheckPassword_Tarjeta_LECTOR res = new Rspsta_CheckPassword_Tarjeta_LECTOR();
+            Rspsta_CodigoTarjeta_LECTOR RspId = new Rspsta_CodigoTarjeta_LECTOR();
+            RespCin = Lector.Conectar(true);
+            if (RespCin.Conectado)
             {
-                if (Datos.DetectarTarjeta())
+                RspId = Lector.ObtenerIDTarjeta();
+
+                if (RspId.CodigoTarjeta != string.Empty)
                 {
-                    rta = Datos.ObtenerIdTarjeta();
-                    if (!rta.Equals("ERROR"))
-                    {
-                        return rta;
-                    }
-                    else
-                    {
-                        rta = "ERROR";
-                    }
+                    rta = RspId.CodigoTarjeta;
                 }
                 else
                 {
                     rta = "ERROR";
                 }
+
+                Lector.Desconectar();
             }
-            else
-            {
-                rta = "ERROR";
-            }
+
+
+            //RepositorioTarjetas Datos = new RepositorioTarjetas();
+
+            //if (Datos.ConectarLectora())
+            //{
+            //    if (Datos.DetectarTarjeta())
+            //    {
+            //        rta = Datos.ObtenerIdTarjeta();
+            //        if (!rta.Equals("ERROR"))
+            //        {
+            //            return rta;
+            //        }
+            //        else
+            //        {
+            //            rta = "ERROR";
+            //        }
+            //    }
+            //    else
+            //    {
+            //        rta = "ERROR";
+            //    }
+            //}
+            //else
+            //{
+            //    rta = "ERROR";
+            //}
 
             return rta;
 
-
         }
+
         public static bool PitarTarjeta()
         {
             bool ok = false;
